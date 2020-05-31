@@ -18,6 +18,7 @@ namespace RogueLike
         }
         static void Main(string[] args)
         {
+            /*
             if (args[0] == "-c" && args[2] == "-r")
             {
                 
@@ -37,7 +38,7 @@ namespace RogueLike
                 input.MenuOptions(temp);
 
             }while (quit == false);
-            
+            */
             
         }
     }

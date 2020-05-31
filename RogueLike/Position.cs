@@ -5,12 +5,12 @@ namespace RogueLike
         /// <summary>
         /// Gets and sets a row value.
         /// </summary>
-        public byte Row { get; private set; }
+        public byte Row { get; set; }
 
         /// <summary>
         /// Gets and sets a column value.
         /// </summary>
-        public byte Column { get; private set; }
+        public byte Column { get; set; }
     
         /// <summary>
         /// Gets and sets a value indicating if the piece is playable.

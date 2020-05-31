@@ -1,8 +1,11 @@
 namespace RogueLike
 {
+    /// <summary>
+    /// PowerUp class
+    /// </summary>
     public class PowerUp
     {
         protected Position  position;
-        protected int       heal;
+        public int          heal { get; protected set; }
     }
 }

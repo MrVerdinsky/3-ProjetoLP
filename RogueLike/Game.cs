@@ -55,6 +55,7 @@ namespace RogueLike
                         if (PowerUpPosition(player, powerUp))
                             player.PickPowerUp(powerUp);
                     ////////////////////////////////////////////////////////////
+                    Console.WriteLine("\nHP --------- " + player.HP); /////////////// TEMPORARIO PARA TESTAR
                     
                     // Player Movement and Map render -> MOVEMENT 2 ////////////
                     render.Map(map, rows, columns);

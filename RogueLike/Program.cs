@@ -6,7 +6,7 @@ namespace RogueLike
     {
         private static Renderer print;
         private static Input input;
-        public Board[,] Board { get; private set; }
+        public Map[,] Map { get; private set; }
         private static int Columns;
         private static int Row;
         private static bool quit;

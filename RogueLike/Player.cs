@@ -5,7 +5,8 @@ namespace RogueLike
     /// </summary>
     sealed public class Player : Character
     {
-        private int HP;
+        internal int    HP          { get; private set; }
+        internal bool   IsAlive     { get; private set; }
 
         /// <summary>
         /// Creates the player
@@ -15,9 +16,10 @@ namespace RogueLike
         /// <param name="gameColumns">Used to give player's initial HP</param>
         public Player (Position position, int gameRows, int gameColumns)
         {
-            base.Position = position;
-            base.movement = 2;
-            HP = (gameRows * gameColumns) / 4;
+            base.Position   = position;
+            base.movement   = 2;
+            HP              = (gameRows * gameColumns) / 4;
+            IsAlive         = true;
         }
 
         /// <summary>
@@ -29,8 +31,7 @@ namespace RogueLike
             HP -= enemy.damage;
             if (HP - enemy.damage < 1)
             {
-                // Player dies
-
+                IsAlive = false;
             }
         }
 
@@ -40,7 +41,7 @@ namespace RogueLike
         /// <param name="powerUp">To get heal value from powerUp</param>
         public void HealHP(PowerUp powerUp)
         {
-            HP += powerUp.heal;
+            HP += powerUp.Heal;
         }
 
         /// <summary>
@@ -49,25 +50,35 @@ namespace RogueLike
         /// <param name="input">Gets which character the user pressed</param>
         public void Move(char input)
         {
-            switch(input)
+            // If movement is > 0, removes 1 movement and moves the player
+            if (base.movement > 0)
             {
-                case 'a':
-                    this.Position.Column -= 1;
-                    break;
-                case 'd':
-                    this.Position.Column += 1;
-                    break;
-                case 'w':
-                    this.Position.Row += 1;
-                    break;
-                case 's':
-                    this.Position.Row -= 1;
-                    break;
-                default:
-                    // PEDIR AO RENDER PARA IMRPIMIR
-                    break;
+                base.movement -= 1;
+
+                switch(input)
+                {
+                    case 'a':
+                        this.Position.Column -= 1;
+                        break;
+                    case 'd':
+                        this.Position.Column += 1;
+                        break;
+                    case 'w':
+                        this.Position.Row -= 1;
+                        break;
+                    case 's':
+                        this.Position.Row += 1;
+                        break;
+                    default:
+                        // PEDIR AO RENDER PARA IMRPIMIR QUE N ACEITA COMANDO
+                        break;
+                }
             }
-                
+            // If the player has no movements left
+            else
+            {
+                // PEDIR AO RENDER PARA IMPRIMIR QUE NAO DA PARA ANDAR MAIS
+            }
         }
     } 
 }

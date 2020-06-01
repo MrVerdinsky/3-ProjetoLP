@@ -15,7 +15,7 @@
 |Gonçalo Verde|Luiz Santos|Pedro Marques|
 |:-:|:-:|:-:|
 |Add Classes - Input/Renderer/Add Initial Game Input||Add Classes - Character/Enemy/PowerUp
-||Improve Input|Add - Map Creation/Map Render/Player Creation|
+|Add - Main Menu / Menu Input|Improve Input|Add - Map Creation/Map Render/Player Creation|
 
 
 ## Repositório git

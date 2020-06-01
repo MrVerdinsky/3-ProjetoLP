@@ -8,22 +8,29 @@ namespace RogueLike
         /// </summary>
         /// <param name="numberOfRows">Number of rows</param>
         /// <param name="numberOfColumns">Number of columns</param>
-        public void Map(int numberOfRows, int numberOfColumns)
+        public void Map(Map[,] map, int rows, int columns)
         {
             Console.WriteLine();
-            for (int i = 1; i <= numberOfRows; i++)
+            for (int i = 0; i < rows; i++)
             {   
                 // For FIRST row
-                if (i == 1)
-                {
-                    for (int j = 1; j <= numberOfColumns; j++)
-                        Console.Write(" __ ");
-                    Console.WriteLine();
-                }
+                
+                for (int j = 0; j < columns; j++)
+                    Console.Write(" __ ");
+                Console.WriteLine();
+                
+
                 // For the OTHER rows
-                for (int j = 1; j <= numberOfColumns; j++)
+                // A magia acontece aqui V
+                for (int j = 0; j < columns; j++)
                 {
-                    Console.Write("|__|");
+                    // If the square is empty
+                    if (map[i,j].Position.Playable)
+                        Console.Write("|__|");
+
+                    // If the square has a player
+                    if (map[i,j].Position.HasPlayer)
+                        Console.Write("|P1|");
                 }
                 Console.WriteLine();
             }

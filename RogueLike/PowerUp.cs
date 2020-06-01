@@ -16,9 +16,9 @@ namespace RogueLike
         /// <param name="heal">Heal amount</param>
         public PowerUp(Position position, int heal)
         {
-            Position    = position;
-            Heal        = heal;
-            Picked      = false;
+            Position            = position;
+            Heal                = heal;
+            Picked              = false;
         }
     }
 }

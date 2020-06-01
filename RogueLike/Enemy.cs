@@ -14,9 +14,9 @@ namespace RogueLike
         /// <param name="damage">Sets the enemy damage</param>
         public Enemy (Position position, int damage)
         {
-            base.movement   = 1;
-            base.Position   = position;
-            this.damage     = damage;
+            base.Position           = position;
+            base.movement           = 1;
+            this.damage             = damage;
         }
     }
 }

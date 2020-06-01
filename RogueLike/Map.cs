@@ -2,13 +2,11 @@ namespace RogueLike
 {
     sealed public class Map
     {
-        private int numberOfRows;
-        private int numberOfColumns;
+        internal Position Position      { get; private set; }
 
-        public Map(int numberOfRows, int numberOfColumns)
+        public Map(Position position)
         {
-            this.numberOfRows       = numberOfRows;
-            this.numberOfColumns    = numberOfColumns;
+            Position = position;
         }
     }
 }

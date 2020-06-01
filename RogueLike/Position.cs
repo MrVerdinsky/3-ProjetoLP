@@ -2,50 +2,38 @@ namespace RogueLike
 {
     sealed public class Position
     {
-        /// <summary>
-        /// Gets and sets a row value.
-        /// </summary>
-        public byte Row { get; set; }
-
-        /// <summary>
-        /// Gets and sets a column value.
-        /// </summary>
-        public byte Column { get; set; }
-    
-        /// <summary>
-        /// Gets and sets a value indicating if the piece is playable.
-        /// </summary>
-        public bool IsPlayable { get; set; }
-
-        /// <summary>
-        /// Gets and sets a value indicating if the position is occupied.
-        /// </summary>
-        public bool Occupied { get; private set; }
+        internal int Row        { get; set; }
+        internal int Column     { get; set; }
+        internal bool Playable      { get; set; } = true;
+        internal bool HasPlayer     { get; set; } = false;
+        internal bool HasEnemy      { get; set; } = false;
+        internal bool HasPowerUp    { get; set; } = false;
+        internal bool HasWall       { get; set; } = false;
         
+
         /// <summary>
-        /// Constructor used when using the Class Position with the Class
-        /// Board
+        /// Playable position
         /// </summary>
-        /// <param name="row">Row value  of the board </param>
-        /// <param name="column">Column value of the board</param>
-        /// <param name="isPlayable">Specifies whether the position is playable. 
-        /// </param>
-        public Position(byte row, byte column, bool isPlayable)
+        /// <param name="row">Number of row</param>
+        /// <param name="column">Number of column</param>
+        public Position(int row, int column)
         {
-            Row = row;
-            Column = column;
-            IsPlayable = isPlayable;
-        }        
-        /// <summary>
-        /// Constructor used when using the Class Position with the Class
-        /// Player.
-        /// </summary>
-        /// <param name="row">Row value  of the board.</param>
-        /// <param name="column">Column value of the board.</param>
-        public Position(byte row, byte column)
-        {
-            Row = row;
-            Column = column;
+            Row     = row;
+            Column  = column;
         }
+
+
+        public void PlayerFree(){
+            HasPlayer    = false;
+            Playable     = true;
+        }
+        public void EnemyFree(){
+            HasEnemy    = false;
+            Playable    = true;
+        }
+        public void PowerUpFree(){
+            HasPowerUp  = false;
+        }
+
     }
 }

@@ -16,10 +16,10 @@ namespace RogueLike
         /// <param name="gameColumns">Used to give player's initial HP</param>
         public Player (Position position, int gameRows, int gameColumns)
         {
-            base.Position   = position;
-            base.movement   = 2;
-            HP              = (gameRows * gameColumns) / 4;
-            IsAlive         = true;
+            base.Position           = position;
+            base.movement           = 2;
+            HP                      = (gameRows * gameColumns) / 4;
+            IsAlive                 = true;
         }
 
         /// <summary>

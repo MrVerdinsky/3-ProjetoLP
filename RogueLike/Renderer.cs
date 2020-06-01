@@ -11,18 +11,16 @@ namespace RogueLike
         public void Map(Map[,] map, int rows, int columns)
         {
             Console.WriteLine();
+            Console.Write("| P - Player | M - Minion |  B - Boss |\n");
+            Console.Write("| SP - Small Power-Up | SM - Medium Power-Up |" + 
+                                " BP - Big Power-Up |\n");
+            Console.Write("| O - Obstacle | E - Exit |\n");
             for (int i = 0; i < rows; i++)
             {   
                 // For FIRST row
                 
                 for (int j = 0; j < columns; j++)
                     Console.Write(" __ ");
-                if (i == 0) Console.Write("\tP - Player");
-                if (i == 1) Console.Write("\tB - Boss");
-                if (i == 2) Console.Write("\tMP - Medium Power-Up");
-                if (i == 3) Console.Write("\tSP - Small Power-Up");
-                if (i == 4) Console.Write("\tO - Obstacle");
-
                 Console.WriteLine();
         
                 
@@ -41,10 +39,6 @@ namespace RogueLike
 
 
                 }
-                if(i == 0) Console.Write("\tM - Minion");
-                if(i == 1) Console.Write("\tSP - Small Power-Up");
-                if(i == 2) Console.Write("\tBP - Big Power-Up");
-                if(i == 3) Console.Write("\tE - Exit");
                 Console.WriteLine();
             }
         }

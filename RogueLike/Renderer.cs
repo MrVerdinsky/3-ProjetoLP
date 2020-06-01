@@ -63,5 +63,13 @@ namespace RogueLike
         {
             Console.WriteLine("Thanks for playing.");
         }
+
+        public void IntroErrorMessage()
+        {
+            Console.WriteLine("\nIn order to start the game, please enter" +
+                " your choices as it shows in the next example:\n" +
+                "dotnet run -p RogueLike -- -r [NUMBER] -c [NUMBER]");
+        }
+
     }
 }

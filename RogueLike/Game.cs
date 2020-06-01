@@ -30,15 +30,20 @@ namespace RogueLike
             if (playerInput == "1")
             {
                 CreateMap(numberOfRows, numberOfColumns);
-                CreatePlayer(0, numberOfRows, numberOfColumns); // < meter o numero random em vez do 0
+                CreatePlayer(0, numberOfRows, numberOfColumns); ///////////////////////// < meter o numero random em vez do 0
                 gameOver = false;
                 while (gameOver == false)
                 {
                     // Renders map
                     render.Map(map, numberOfRows, numberOfColumns);
 
+                    // TESTEEEEEEEEEEEEEEEEEE <<<<<<<<<<<<<<>>>>>>>>>>
+                    map[player.Position.Row,player.Position.Column].Position.PlayerFree();
+                    player.Move('d');
+                    map[player.Position.Row,player.Position.Column].Position.PlayerOccupy();
 
-
+                    render.Map(map, numberOfRows, numberOfColumns);
+                    // TESTEEEEEEEEEEEEEEEEEE <<<<<<<<<<<<<<>>>>>>>>>>
 
 
 

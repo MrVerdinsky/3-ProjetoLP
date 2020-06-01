@@ -35,5 +35,16 @@ namespace RogueLike
             HasPowerUp  = false;
         }
 
+        public void PlayerOccupy(){
+            HasPlayer   = true;
+            Playable    = false;
+        }
+        public void EnemyOccupy(){
+            HasEnemy    = true;
+            Playable    = false;
+        }
+        public void PowerUpOccupy(){
+            HasPowerUp  = true;
+        }
     }
 }

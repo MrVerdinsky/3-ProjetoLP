@@ -51,5 +51,26 @@ namespace RogueLike
             //returns player's input here if he chooses new game or quits.
             return playerInput;
         }
+        /// <summary>
+        /// Gets a map with all positions updated
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="map"></param>
+        /// <returns></returns>
+        public Map[,] GetPosition(Player player, Map[,] map)
+        {
+            // players input
+            char playerInput; 
+            // Frees the player position
+            map[player.Position.Row, player.Position.Column].Position.PlayerFree();
+            // Gets player input
+            playerInput = Console.ReadKey().KeyChar;
+            // Moves player to new position
+            player.Move(playerInput);
+            // Occupies inserted position with player
+            map[player.Position.Row,player.Position.Column].Position.PlayerOccupy();
+
+            return map;
+        }
     }
 }

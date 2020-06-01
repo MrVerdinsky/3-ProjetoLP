@@ -10,7 +10,7 @@ namespace RogueLike
         internal bool         Picked    { get; set; }
 
         /// <summary>
-        /// Creates LargePowerUp
+        /// Creates a PowerUp
         /// </summary>
         /// <param name="position">Position of the PowerUp</param>
         /// <param name="heal">Heal amount</param>

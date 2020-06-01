@@ -36,18 +36,8 @@ namespace RogueLike
                 {
                     // Renders map
                     render.Map(map, numberOfRows, numberOfColumns);
+                    map = input.GetPosition(player, map);
 
-                    // TESTEEEEEEEEEEEEEEEEEE <<<<<<<<<<<<<<>>>>>>>>>>
-                    map[player.Position.Row,player.Position.Column].Position.PlayerFree();
-                    player.Move('d');
-                    map[player.Position.Row,player.Position.Column].Position.PlayerOccupy();
-
-                    render.Map(map, numberOfRows, numberOfColumns);
-                    // TESTEEEEEEEEEEEEEEEEEE <<<<<<<<<<<<<<>>>>>>>>>>
-
-
-
-                    Quit();
                 }
             }
 

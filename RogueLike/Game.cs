@@ -7,6 +7,8 @@ namespace RogueLike
         bool gameOver;
         Player player;
         Map[,] map;
+        
+
 
         public Game(int numberOfRows, int numberOfColumns)
         {
@@ -14,30 +16,40 @@ namespace RogueLike
             Renderer render = new Renderer();
             Input input     = new Input(); 
             map             = new Map[numberOfRows, numberOfColumns];
+            string playerInput;
 
             // Prints Initial Menu
             render.PrintMenu();
 
             // Gets user Input
+            playerInput = input.MenuOptions();
 
 
-            CreateMap(numberOfRows, numberOfColumns);
-            CreatePlayer(0, numberOfRows, numberOfColumns);
             // Runs Gameloop
-            gameOver = false;
-            while (gameOver == false)
+            //Starts the game loop after choosing option 1.
+            if (playerInput == "1")
             {
-                // Renders map
-                render.Map(map, numberOfRows, numberOfColumns);
+                CreateMap(numberOfRows, numberOfColumns);
+                CreatePlayer(0, numberOfRows, numberOfColumns); // < meter o numero random em vez do 0
+                gameOver = false;
+                while (gameOver == false)
+                {
+                    // Renders map
+                    render.Map(map, numberOfRows, numberOfColumns);
 
-                
 
 
-                // Quits the game
-                Quit();
+
+
+
+                    Quit();
+                }
             }
 
-
+            // If players choses option 5 on the menu Quits the game
+            else if (playerInput == "5")
+            {
+            }
         }
 
 
@@ -86,9 +98,6 @@ namespace RogueLike
         }
         
 
-        private void Quit()
-        {
-            gameOver = true;
-        }
+        private void Quit() => gameOver = true;
     }
 }

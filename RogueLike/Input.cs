@@ -4,37 +4,52 @@ namespace RogueLike
     sealed public class Input
     {
 
-        int playerInput;
-        string temp;
+        string playerInput;
         private static Renderer print;
         public Input()
         {
             print = new Renderer();
         }
-        public void MenuOptions(string input)
+        //Controls all Menu Options until players chooses new game
+        public string MenuOptions()
         {
-            playerInput = Convert.ToByte(input);
-            switch(playerInput)
+            //Keeps running until players starts new game
+            do
             {
-                case 1:
+                playerInput = Console.ReadLine();
+                
+                switch(playerInput)
+                    {
+                case "1":
                     Console.WriteLine("New Game");
                     break;
-                case 2:
+                case "2":
                     Console.WriteLine("HighScores");
                     break;
-                case 3:
-                    Console.WriteLine("HighScores");
+                case "3":
+                    Console.WriteLine("Instructions");
                     break;
-                case 4:
+                case "4":
                     print.PrintCredits();
                     break;
-                case 5:
-                    Console.WriteLine("Goodbye");
-                    break;
+                case "5":
+                    print.PrintExitMsg();
+                    return playerInput;
+                
+                //Returns the input here so the players goes back to main menu
+                case "":
+                    print.PrintMenu();
+                    MenuOptions();
+                    return playerInput;
                 default:
-                    Console.WriteLine("Unknown Option");
+                    print.PrintInputError();
                     break;
-            }
+                    }
+
+            }while(playerInput != "1");
+
+            //returns player's input here if he chooses new game or quits.
+            return playerInput;
         }
     }
 }

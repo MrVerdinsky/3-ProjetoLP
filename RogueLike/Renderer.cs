@@ -51,5 +51,15 @@ namespace RogueLike
             Console.WriteLine("Luiz Santos");
             Console.WriteLine("Gonçalo Vila Verde");
         }
+
+        public void PrintInputError()
+        {
+            Console.WriteLine("Option Unkown");
+        }
+        
+        public void PrintExitMsg()
+        {
+            Console.WriteLine("Thanks for playing.");
+        }
     }
 }

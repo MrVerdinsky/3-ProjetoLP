@@ -2,44 +2,29 @@
 
 namespace RogueLike
 {
+    /// <summary>
+    /// Program Class
+    /// </summary>
     class Program
     {
-        private static Renderer print;
-        private static Input input;
-        public Map[,] Map { get; private set; }
-        private static int Columns;
-        private static int Row;
-        private static bool quit;
-        private static string temp;
-        public Program()
-        {
-            print = new Renderer();
-            input = new Input();
-        }
+        /// <summary>
+        /// Initial method
+        /// </summary>
+        /// <param name="args">Receives user choices</param>
         static void Main(string[] args)
         {
-            /*
             if (args[0] == "-c" && args[2] == "-r")
             {
-                
-                Columns = Convert.ToByte(args[1]);
-                Row = Convert.ToByte(args[3]);
+                Game game = new Game(
+                    Convert.ToInt16(args[1]),
+                    Convert.ToInt16(args[3]));
             }
-            else
+            if (args[0] == "-r" && args[2] == "-c")
             {
-                Columns = 0;
-                Row = 0;
+                Game game = new Game(
+                    Convert.ToInt16(args[3]),
+                    Convert.ToInt16(args[1]));
             }
-            quit = false;
-            print.PrintMenu();
-            do
-            {
-                temp = Console.ReadLine();
-                input.MenuOptions(temp);
-
-            }while (quit == false);
-            */
-            
         }
     }
 }

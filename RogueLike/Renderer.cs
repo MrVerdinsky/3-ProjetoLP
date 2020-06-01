@@ -17,7 +17,14 @@ namespace RogueLike
                 
                 for (int j = 0; j < columns; j++)
                     Console.Write(" __ ");
+                if (i == 0) Console.Write("\tP - Player");
+                if (i == 1) Console.Write("\tB - Boss");
+                if (i == 2) Console.Write("\tMP - Medium Power-Up");
+                if (i == 3) Console.Write("\tSP - Small Power-Up");
+                if (i == 4) Console.Write("\tO - Obstacle");
+
                 Console.WriteLine();
+        
                 
 
                 // For the OTHER rows
@@ -32,6 +39,10 @@ namespace RogueLike
                     if (map[i,j].Position.HasPlayer)
                         Console.Write("|P1|");
                 }
+                if(i == 0) Console.Write("\tM - Minion");
+                if(i == 1) Console.Write("\tSP - Small Power-Up");
+                if(i == 2) Console.Write("\tBP - Big Power-Up");
+                if(i == 3) Console.Write("\tE - Exit");
                 Console.WriteLine();
             }
         }

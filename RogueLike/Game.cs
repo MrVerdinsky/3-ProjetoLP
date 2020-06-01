@@ -17,7 +17,9 @@ namespace RogueLike
             Input input     = new Input(); 
             map             = new Map[rows, columns];
             string playerInput;
-            Enemy[] enemies = new Enemy[1];
+
+            Enemy[] enemies     = new Enemy[1];
+            PowerUp[] powerUps  = new PowerUp[1];
 
             // Prints Initial Menu
             render.PrintMenu();
@@ -34,6 +36,8 @@ namespace RogueLike
                 CreatePlayer(0, rows, columns); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
                 
                 enemies[0] = new Enemy(new Position(1,1), 1); ////////////////// < INIMIGO PARA TESTAR
+                powerUps[0]  = new PowerUp(new Position(0,1), 4); ////////////////// < POWERUP PARA TESTAR
+                
 
                 gameOver = false;
                 while (gameOver == false)
@@ -42,12 +46,24 @@ namespace RogueLike
                     player.MovementReset(); 
 
 
-
-                    // Player Movement and Map render -> 2 Movements
+                    ////////////////////////////////////////////////////////////
+                    // Player Movement and Map render -> MOVEMENT 1 ////////////
                     render.Map(map, rows, columns);
                     map = input.GetPosition(player, map);
+                    // Checks if the player got any powerUp
+                    foreach (PowerUp powerUp in powerUps)
+                        if (PowerUpPosition(player, powerUp))
+                            player.PickPowerUp(powerUp);
+                    ////////////////////////////////////////////////////////////
+                    
+                    // Player Movement and Map render -> MOVEMENT 2 ////////////
                     render.Map(map, rows, columns);
                     map = input.GetPosition(player, map);
+                    // Checks if the player got any powerUp
+                    foreach (PowerUp powerUp in powerUps)
+                        if (PowerUpPosition(player, powerUp))
+                            player.PickPowerUp(powerUp);
+                    ////////////////////////////////////////////////////////////
 
 
                     // Player gets damage if the he's 1 square distance
@@ -55,8 +71,6 @@ namespace RogueLike
                         if (DamagePosition(player, enemy))
                             player.TakeDamage(enemy);
                     
-
-
 
                     Console.WriteLine("\nHP --------- " + player.HP); /////////////// TEMPORARIO PARA TESTAR
                 }
@@ -106,6 +120,21 @@ namespace RogueLike
                     p1.Position.Row == en.Position.Row ||
                     p1.Position.Column == en.Position.Column +1 &&
                     p1.Position.Row == en.Position.Row)
+                    occupied = true;
+            return occupied;
+        }
+
+        /// <summary>
+        /// Compares character position with powerUp position
+        /// </summary>
+        /// <param name="p1">Character position</param>
+        /// <param name="powerUp">PowerUp position</param>
+        /// <returns>True if both positions are the same</returns>
+        private bool PowerUpPosition(Character p1, PowerUp powerUp)
+        {
+            bool occupied = false;
+                if (p1.Position.Row == powerUp.Position.Row &&
+                    p1.Position.Column == powerUp.Position.Column)
                     occupied = true;
             return occupied;
         }

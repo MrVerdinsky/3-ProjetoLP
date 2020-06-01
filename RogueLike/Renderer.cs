@@ -31,6 +31,8 @@ namespace RogueLike
                     // If the square has a player
                     if (map[i,j].Position.HasPlayer)
                         Console.Write("|P1|");
+
+
                 }
                 Console.WriteLine();
             }

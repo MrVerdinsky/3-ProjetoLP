@@ -5,7 +5,7 @@ namespace RogueLike
     sealed public class Game
     {
         bool gameOver;
-
+        string playerInput;
         public Game(int numberOfRows, int numberOfColumns)
         {
             // Instances / Variables
@@ -21,13 +21,22 @@ namespace RogueLike
 
             // Runs Gameloop
             gameOver = false;
-            while (gameOver == false)
+            playerInput = input.MenuOptions();
+            
+            //Starts the game loop after choosing option 1.
+            if (playerInput == "1")
             {
-                // Renders map
-                render.Map(numberOfRows, numberOfColumns);
+                while (gameOver == false)
+                {
+                    // Renders map
+                    render.Map(numberOfRows, numberOfColumns);
+                    Quit();
+                }
+            }
 
-
-
+            //If players choses option 5 on the menu
+            else if (playerInput == "5")
+            {
                 // Quits the game
                 Quit();
             }

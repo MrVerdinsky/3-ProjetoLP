@@ -1,14 +1,14 @@
 namespace RogueLike
 {
-    public class Map
+    sealed public class Map
     {
-        private int numberOfColumns;
         private int numberOfRows;
+        private int numberOfColumns;
 
-        public Map(int numberOfColumns, int numberOfRows)
+        public Map(int numberOfRows, int numberOfColumns)
         {
-            this.numberOfColumns       = numberOfColumns;
-            this.numberOfRows           = numberOfRows;
+            this.numberOfRows       = numberOfRows;
+            this.numberOfColumns    = numberOfColumns;
         }
     }
 }

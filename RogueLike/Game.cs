@@ -2,20 +2,42 @@ using System; // SO PARA TESTES, APAGAR <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 namespace RogueLike
 {
-    public class Game
+    sealed public class Game
     {
-        public Game(int numberOfColumns, int numberOfRows)
+        bool gameOver;
+
+        public Game(int numberOfRows, int numberOfColumns)
         {
-            // Creates a new map with the numbers provided
-            Map map = new Map(numberOfColumns, numberOfRows);
+            // Instances / Variables
+            Renderer render = new Renderer();
+            Input input     = new Input(); 
+            Map map         = new Map(numberOfRows, numberOfColumns);
+
+            // Prints Initial Menu
+            render.PrintMenu();
+
+            // Gets user Input
+
+
+            // Runs Gameloop
+            gameOver = false;
+            while (gameOver == false)
+            {
+                // Renders map
+                render.Map(numberOfRows, numberOfColumns);
 
 
 
+                // Quits the game
+                Quit();
+            }
 
 
+        }
 
-
-
+        public void Quit()
+        {
+            gameOver = true;
         }
     }
 }

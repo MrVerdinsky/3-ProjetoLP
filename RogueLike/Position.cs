@@ -1,6 +1,6 @@
 namespace RogueLike
 {
-    public class Position
+    sealed public class Position
     {
         /// <summary>
         /// Gets and sets a row value.

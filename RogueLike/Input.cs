@@ -1,7 +1,7 @@
 using System;
 namespace RogueLike
 {
-    public class Input
+    sealed public class Input
     {
 
         int playerInput;

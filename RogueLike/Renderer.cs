@@ -1,8 +1,34 @@
 using System;
 namespace RogueLike
 {
-    public class Renderer
+    sealed public class Renderer
     {
+        /// <summary>
+        /// Prints the game map
+        /// </summary>
+        /// <param name="numberOfRows">Number of rows</param>
+        /// <param name="numberOfColumns">Number of columns</param>
+        public void Map(int numberOfRows, int numberOfColumns)
+        {
+            Console.WriteLine();
+            for (int i = 1; i <= numberOfRows; i++)
+            {   
+                // For FIRST row
+                if (i == 1)
+                {
+                    for (int j = 1; j <= numberOfColumns; j++)
+                        Console.Write(" __ ");
+                    Console.WriteLine();
+                }
+                // For the OTHER rows
+                for (int j = 1; j <= numberOfColumns; j++)
+                {
+                    Console.Write("|__|");
+                }
+                Console.WriteLine();
+            }
+        }
+
         public void PrintMenu()
         {
             Console.WriteLine("1. New game");

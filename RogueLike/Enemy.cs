@@ -15,7 +15,7 @@ namespace RogueLike
         public Enemy (Position position, int damage)
         {
             base.Position           = position;
-            base.movement           = 1;
+            base.Movement           = 1;
             this.damage             = damage;
         }
     }

@@ -17,7 +17,7 @@ namespace RogueLike
         public Player (Position position, int gameRows, int gameColumns)
         {
             base.Position           = position;
-            base.movement           = 2;
+            base.Movement           = 2;
             HP                      = (gameRows * gameColumns) / 4;
             IsAlive                 = true;
         }
@@ -51,9 +51,9 @@ namespace RogueLike
         public void Move(char input)
         {
             // If movement is > 0, removes 1 movement and moves the player
-            if (base.movement > 0)
+            if (base.Movement > 0)
             {
-                base.movement -= 1;
+                base.Movement -= 1;
 
                 switch(input)
                 {
@@ -79,6 +79,11 @@ namespace RogueLike
             {
                 // PEDIR AO RENDER PARA IMPRIMIR QUE NAO DA PARA ANDAR MAIS
             }
+        }
+
+        public void MovementReset()
+        {
+            base.Movement = 2;
         }
     } 
 }

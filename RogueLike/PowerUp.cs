@@ -7,7 +7,7 @@ namespace RogueLike
     {
         internal Position     Position  { get; private set; }
         internal int          Heal      { get; private set; }
-        internal bool         Picked    { get; set; }
+        internal bool         Picked    { get; private set; }
 
         /// <summary>
         /// Creates a PowerUp
@@ -19,6 +19,14 @@ namespace RogueLike
             Position            = position;
             Heal                = heal;
             Picked              = false;
+        }
+
+        /// <summary>
+        /// Sets picked to true
+        /// </summary>
+        public void PickUp()
+        {
+            Picked = true;
         }
     }
 }

@@ -21,15 +21,25 @@ namespace RogueLike
             Enemy[] enemies     = new Enemy[1];
             PowerUp[] powerUps  = new PowerUp[1];
 
+            ////////////////////////////////////////////////////////////////////
             // Prints Initial Menu
             render.PrintMenu();
+            // Runs Menu Loop
+            do
+            {
+                // Gets user Input
+                playerInput = input.MenuOptions();
+                if(playerInput == "1") break;
+                if(playerInput == "5") break;
 
-            // Gets user Input
-            playerInput = input.MenuOptions();
+                /// ESPALHAR MAGIA AQUI E METER AS OPCOES, A 1 E a 5 JA TAO FEITAS
+                
 
-
-            // Runs Gameloop
-            //Starts the game loop after choosing option 1.
+            } while (playerInput != "5" || playerInput != "1");
+            ////////////////////////////////////////////////////////////////////
+            
+            ////////////////////////////////////////////////////////////////////
+            // Run Game
             if (playerInput == "1")
             {
                 CreateMap(rows, columns);
@@ -76,13 +86,8 @@ namespace RogueLike
                     Console.WriteLine("\nHP --------- " + player.HP); /////////////// TEMPORARIO PARA TESTAR
                 }
             }
-
-            // If players choses option 5 on the menu Quits the game
-            else if (playerInput == "5")
-            {
-            }
         }
-
+        ////////////////////////////////////////////////////////////////////////
 
         /// <summary>
         /// Compares character position with map position

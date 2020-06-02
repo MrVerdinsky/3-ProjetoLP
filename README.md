@@ -14,9 +14,9 @@
 
 |Gonçalo Verde|Luiz Santos|Pedro Marques|
 |:-:|:-:|:-:|
-|Add Classes - Input/Renderer/Add Initial Game Input||Add Classes - Character/Enemy/PowerUp|
-|Add - Main Menu / Menu Input|Improve Input, Add Movement Input|Add - Map Creation/Map Render/Player Creation|
-|||Add - Enemy Collision, PickUp Collision|
+|Add Classes - Input/Renderer/Add Initial Game Input|Improve Input, Add Movement Input|Add Classes - Character/Enemy/PowerUp|
+|Add - Main Menu / Menu Input|Add - procedural generation|Add - Map Creation/Map Render/Player Creation|
+|Add - Enemy/PowerUp creation & rendering|Improve - Procedural generation |Add - Enemy Collision, PickUp Collision|
 
 ## Repositório git
 

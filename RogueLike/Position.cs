@@ -23,33 +23,52 @@ namespace RogueLike
             Column  = column;
         }
 
-
+        /// <summary>
+        /// Removes the player position and declares it empty and walkable
+        /// </summary>
         public void PlayerFree(){
             HasPlayer    = false;
             Empty     = true;
             Walkable     = true;
         }
+
+        /// <summary>
+        /// Removes the Enemy position and declares it empty and walkable
+        /// </summary>
         public void EnemyFree(){
             HasEnemy    = false;
             Empty    = true;
             Walkable    = true;
         }
+        /// <summary>
+        /// Removes the Power-Up position and declares it empty and walkable
+        /// </summary>
         public void PowerUpFree(){
             HasPowerUp  = false;
             Empty    = true;
             Walkable    = true;
         }
 
+        /// <summary>
+        /// Adds the Player position and declares it occupied and not walkable.
+        /// </summary>
         public void PlayerOccupy(){
             HasPlayer   = true;
             Empty    = false;
             Walkable    = false;
         }
+
+        /// <summary>
+        /// Adds the Enemy position and declares it occupied and not walkable.
+        /// </summary>
         public void EnemyOccupy(){
             HasEnemy    = true;
             Empty    = false;
             Walkable    = false;
         }
+        /// <summary>
+        /// Adds the Power-Up position and declares it occupied and walkable.
+        /// </summary>
         public void PowerUpOccupy(){
             HasPowerUp  = true;
             Empty    = false;

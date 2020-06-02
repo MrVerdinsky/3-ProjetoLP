@@ -28,7 +28,7 @@ namespace RogueLike
         /// </summary>
         public void PlayerFree(){
             HasPlayer    = false;
-            Empty     = true;
+            Empty       = true;
             Walkable     = true;
         }
 
@@ -37,7 +37,7 @@ namespace RogueLike
         /// </summary>
         public void EnemyFree(){
             HasEnemy    = false;
-            Empty    = true;
+            Empty       = true;
             Walkable    = true;
         }
         /// <summary>
@@ -45,7 +45,7 @@ namespace RogueLike
         /// </summary>
         public void PowerUpFree(){
             HasPowerUp  = false;
-            Empty    = true;
+            Empty       = true;
             Walkable    = true;
         }
 
@@ -54,7 +54,7 @@ namespace RogueLike
         /// </summary>
         public void PlayerOccupy(){
             HasPlayer   = true;
-            Empty    = false;
+            Empty       = false;
             Walkable    = false;
         }
 
@@ -63,7 +63,7 @@ namespace RogueLike
         /// </summary>
         public void EnemyOccupy(){
             HasEnemy    = true;
-            Empty    = false;
+            Empty       = false;
             Walkable    = false;
         }
         /// <summary>
@@ -71,8 +71,16 @@ namespace RogueLike
         /// </summary>
         public void PowerUpOccupy(){
             HasPowerUp  = true;
-            Empty    = false;
+            Empty       = false;
             Walkable    = true;
+        }
+        /// <summary>
+        /// Adds the wall position and declares it occupied and walkable.
+        /// </summary>
+        public void WallOccupy(){
+            HasWall     = true;
+            Empty       = false;
+            Walkable    = false;
         }
     }
 }

@@ -13,6 +13,8 @@ namespace RogueLike
         /// <param name="args">Receives user choices</param>
         static void Main(string[] args)
         {
+            Renderer print = new Renderer();
+
             if (args[0] == "-c" && args[2] == "-r")
             {
                 Game game = new Game(
@@ -25,6 +27,9 @@ namespace RogueLike
                     Convert.ToInt16(args[1]),
                     Convert.ToInt16(args[3]));
             }
+            else
+                print.IntroErrorMessage();
+
         }
     }
 }

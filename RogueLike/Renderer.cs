@@ -8,7 +8,8 @@ namespace RogueLike
         /// </summary>
         /// <param name="numberOfRows">Number of rows</param>
         /// <param name="numberOfColumns">Number of columns</param>
-        public void Map(Map[,] map, int rows, int columns)
+        public void Map(Map[,] map, int rows, int columns, 
+                            PowerUp[] powerUps,Enemy[] enemies)
         {
             Console.WriteLine();
             Console.Write("| P - Player | M - Minion |  B - Boss |\n");
@@ -36,8 +37,25 @@ namespace RogueLike
                     // If the square has a player
                     if (map[i,j].Position.HasPlayer)
                         Console.Write("|P1|");
-
-
+                    
+                    foreach (Enemy enemy in enemies)
+                    {
+                        if (map[i,j].Position.HasEnemy)
+                                Console.Write("|M1|");
+                    }
+                    foreach (PowerUp powerUp in powerUps)
+                    {
+                       if (map[i,j].Position.HasPowerUp)
+                        {
+                            if (powerUp.Heal == 4)
+                                Console.Write("|SP|");
+                            else if (powerUp.Heal == 8)
+                                Console.Write("|MP|");
+                            else
+                                Console.Write("|BP|");
+                        } 
+                    }
+                    
                 }
                 Console.WriteLine();
             }

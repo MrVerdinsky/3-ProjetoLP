@@ -12,7 +12,7 @@ namespace RogueLike
                             PowerUp[] powerUps,Enemy[] enemies)
         {
             Console.WriteLine();
-            Console.Write("| P - Player | M - Minion |  B - Boss |\n");
+            Console.Write("| -P - Player | -M - Minion |  -B - Boss |\n");
             Console.Write("| SP - Small Power-Up | SM - Medium Power-Up |" + 
                                 " BP - Big Power-Up |\n");
             Console.Write("| O - Obstacle | E - Exit |\n");
@@ -31,29 +31,27 @@ namespace RogueLike
                 for (int j = 0; j < columns; j++)
                 {
                     // If the square is empty
-                    if (map[i,j].Position.Playable)
+                    if (map[i,j].Position.Empty)
                         Console.Write("|__|");
 
                     // If the square has a player
                     if (map[i,j].Position.HasPlayer)
-                        Console.Write("|P1|");
+                        Console.Write("|-P|");
                     
                     foreach (Enemy enemy in enemies)
+                    if (map[i,j].Position.HasEnemy)
                     {
-                        if (map[i,j].Position.HasEnemy)
-                                Console.Write("|M1|");
+                        if (enemy.damage == 5) Console.Write("|-M|");
+                        if (enemy.damage == 10) Console.Write("|-B|");
                     }
+                    
+
                     foreach (PowerUp powerUp in powerUps)
+                    if (map[i,j].Position.HasPowerUp && powerUp.Picked == false)
                     {
-                       if (map[i,j].Position.HasPowerUp)
-                        {
-                            if (powerUp.Heal == 4)
-                                Console.Write("|SP|");
-                            else if (powerUp.Heal == 8)
-                                Console.Write("|MP|");
-                            else
-                                Console.Write("|BP|");
-                        } 
+                        if (powerUp.Heal == 4) Console.Write("|SP|");
+                        if (powerUp.Heal == 8) Console.Write("|MP|");
+                        if (powerUp.Heal == 16) Console.Write("|BP|"); 
                     }
                     
                 }

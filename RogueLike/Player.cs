@@ -44,6 +44,7 @@ namespace RogueLike
             if (powerUp.Picked == false)
             {
                 HP += powerUp.Heal;
+                powerUp.Position.PowerUpFree();
                 powerUp.PickUp();
             }
         }

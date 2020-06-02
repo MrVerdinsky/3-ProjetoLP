@@ -1,6 +1,7 @@
 using System; //tESTING
 namespace RogueLike
 {
+    
     /// <summary>
     /// Player class, created from Character class
     /// </summary>
@@ -9,6 +10,8 @@ namespace RogueLike
         internal int    HP              { get; private set; }
         public int      Movement        { get; private set; }
         internal bool   IsAlive         { get; private set; }
+        Renderer print = new Renderer();
+        
 
         /// <summary>
         /// Creates the player
@@ -57,46 +60,71 @@ namespace RogueLike
         /// otherwise false</returns>
         public bool Move(Map[,] map, char input)
         {
-            Movement -= 1;
-            HP -= 1;
+            
+            bool canMove = false;
             if (HP < 1) IsAlive = false;
 
             //Conditions used to check if 
             //chosen Input goes into an occupied position
-            switch(input)
+            try
             {
-                case 'a':
-                    if (map[this.Position.Row,this.Position.Column-1].
+                switch(input)
+                {
+                    case 'a':
+                        if (map[this.Position.Row,this.Position.Column-1].
+                            Position.Walkable == false)
+                                canMove = false;
+                        else
+                        {
+                            this.Position.Column -= 1;
+                            canMove = true;
+                            
+                        }
+                        break;   
+                    case 'd':
+                        if (map[this.Position.Row, this.Position.Column+1].
+                            Position.Walkable == false)
+                                canMove = false;
+                        else
+                        {
+                            this.Position.Column += 1;
+                            canMove = true;
+                        }                     
+                        break;
+                    case 'w':
+                        if (map[this.Position.Row-1, this.Position.Column].
+                            Position.Walkable == false)
+                                canMove = false;     
+                        else
+                        {
+                            this.Position.Row -= 1;
+                            canMove = true; 
+                        }   
+                        break;
+                    case 's':
+                        if (map[this.Position.Row+1, this.Position.Column].
                         Position.Walkable == false)
-                            return false;
-                    else
-                        this.Position.Column -= 1;
-                    return true;
-                case 'd':
-                    if (map[this.Position.Row, this.Position.Column+1].
-                        Position.Walkable == false)
-                            return false;
-                    else
-                        this.Position.Column += 1;
-                    return true;
-                case 'w':
-                    if (map[this.Position.Row-1, this.Position.Column].
-                        Position.Walkable == false)
-                            return false;
-                    else
-                        this.Position.Row -= 1;
-                    return true;
-                case 's':
-                    if (map[this.Position.Row+1, this.Position.Column].
-                    Position.Walkable == false)
-                            return false;
-                    else
-                        this.Position.Row += 1;
-                    return true;
-                default:
-                    break;// PEDIR AO RENDER PARA IMRPIMIR QUE N ACEITA COMANDO
+                                canMove = false;
+                        else
+                        {
+                            this.Position.Row += 1;
+                            canMove = true;
+                        }
+                        break;
+                    default:
+                        print.PrintInputError();
+                        break;
+                }
+                
             }
-            return false;
+            catch(IndexOutOfRangeException)
+            {}
+            if (canMove)
+            {
+                Movement -= 1;
+                HP -= 1;
+            }
+            return canMove;
         }
 
         /// <summary>

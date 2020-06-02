@@ -81,13 +81,8 @@ namespace RogueLike
                 // Gets player input
                 playerInput = Console.ReadLine()[0];
 
-                // Moves player to new free position
-                if(player.Move(map, playerInput) == false)
-                {
-                   Console.WriteLine("An enemy blocks the way!");
-                }
-                    
-                else
+                // Moves player to new free position    
+                if(player.Move(map, playerInput) == true)
                     map[player.Position.Row, player.Position.Column].Position.
                     PlayerFree();
                     // Occupies inserted position with player

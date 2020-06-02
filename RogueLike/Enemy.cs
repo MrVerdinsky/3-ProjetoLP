@@ -7,7 +7,6 @@ namespace RogueLike
     public class Enemy : Character
     {
         internal int damage { get; private set; }
-        int Movements = 1;
 
         /// <summary>
         /// Creates an Enemy
@@ -31,46 +30,690 @@ namespace RogueLike
             int distanceX = (p1C - eC);
             int distanceY = (p1R - eR);
 
-            if (Movements > 0)
-            {   
-                Movements -= 1;
-                for (int i = 0; i < rows; i ++)
-                {
-                    for (int j = 0; j < columns; j++)
-                    {
-                        if (random == 1)
-                        {
-                            if (distanceX < 0 && j > 0 && i > 0)
-                            {
-                                if(map[i,j-1].Position.Walkable) 
-                                    this.Position.Column -= 1;
-                                else
-                                {
-                                    if(map[i+1,j].Position.Walkable) 
-                                        this.Position.Row += 1;
+            try
+            {
+                // ONE SQUARE DISTANCE
+                if (this.Position.Row == player.Position.Row -1 &&
+                    this.Position.Column == player.Position.Column ||
+                    this.Position.Row == player.Position.Row +1 &&
+                    this.Position.Column == player.Position.Column ||
+                    this.Position.Column == player.Position.Column -1 &&
+                    this.Position.Row == player.Position.Row ||
+                    this.Position.Column == player.Position.Column +1 &&
+                    this.Position.Row == player.Position.Row)
+                    { 
+                    }
+
+                // TOP LEFT ////////////////////////////////////////////////////
+                else if (distanceX < 0 && distanceY < 0) 
+                {   // IF X < Y
+                    if (distanceX < distanceY)  
+                    {   // WALKS LEFT
+                        if(map[Position.Row,Position.Column-1]. 
+                            Position.Walkable) 
+                            Position.Column -= 1;
+                        else
+                        {   // WALKS TOP
+                            if(map[Position.Row-1,Position.Column].
+                                Position.Walkable) 
+                                Position.Row -= 1;
+                            else
+                            {   // IF RANDOM 1
+                                if (random == 0)
+                                {   // WALKS BOTTOM
+                                    if(map[Position.Row+1,Position.Column].
+                                        Position.Walkable) 
+                                        Position.Row += 1;
                                     else
-                                    {
-                                        if(map[i-1,j].Position.Walkable) 
-                                            this.Position.Row += 1;
-                                        else
+                                    {   // WALKS RIGHT
+                                        if(map[Position.Row,Position.Column+1].
+                                            Position.Walkable) 
+                                            Position.Column += 1; 
+                                        else 
                                         {
-                                            if(map[i,j+1].Position.Walkable) 
-                                                this.Position.Column += 1;
-                                            else 
-                                            {
-                                                this.Position.Row = 
-                                                    this.Position.Row;
-                                                this.Position.Column = 
-                                                    this.Position.Column;
-                                            }
+                                            Position.Row = Position.Row;
+                                            Position.Column = Position.Column;
+                                        }
+                                    }
+                                }   
+                                // IF RANDOM 2
+                                if (random == 1)
+                                {   // WALKS BOTTOM
+                                        if(map[Position.Row,Position.Column+1].
+                                            Position.Walkable) 
+                                            Position.Column += 1; 
+                                    else
+                                    {   // WALKS RIGHT
+                                        if(map[Position.Row+1,Position.Column].
+                                            Position.Walkable) 
+                                            Position.Row += 1;
+                                        else 
+                                        {
+                                            Position.Row = Position.Row;
+                                            Position.Column = Position.Column;
                                         }
                                     }
                                 }
-                            }
-                                                
+                            }         
+                        }
+                    }
+                    else
+                    {   // WALKS TOP
+                        if(map[Position.Row-1,Position.Column].
+                            Position.Walkable) 
+                            Position.Row -= 1;
+                        else
+                        {   // WALKS LEFT
+                            if(map[Position.Row,Position.Column-1]. 
+                                Position.Walkable) 
+                                Position.Column -= 1;
+                            else
+                            {   // IF RANDOM 1
+                                if (random == 0)
+                                {   // WALKS BOTTOM
+                                    if(map[Position.Row+1,Position.Column].
+                                        Position.Walkable) 
+                                        Position.Row += 1;
+                                    else
+                                    {   // WALKS RIGHT
+                                        if(map[Position.Row,Position.Column+1].
+                                            Position.Walkable) 
+                                            Position.Column += 1; 
+                                        else 
+                                        {
+                                            Position.Row = Position.Row;
+                                            Position.Column = Position.Column;
+                                        }
+                                    }
+                                }   
+                                // IF RANDOM 2
+                                if (random == 1)
+                                {   // WALKS RIGHT
+                                        if(map[Position.Row,Position.Column+1].
+                                            Position.Walkable) 
+                                            Position.Column += 1; 
+                                    else
+                                    {   // WALKS BOTTOM
+                                        if(map[Position.Row+1,Position.Column].
+                                            Position.Walkable) 
+                                            Position.Row += 1;
+                                        else 
+                                        {
+                                            Position.Row = Position.Row;
+                                            Position.Column = Position.Column;
+                                        }
+                                    }
+                                }
+                            }         
                         }
                     }
                 }
+                ////////////////////////////////////////////////////////////////
+                    
+                // TOP RIGHT ///////////////////////////////////////////////////
+                else if (distanceX > 0 && distanceY < 0) 
+                {   // IF X > Y
+                    if (distanceX > distanceY)  
+                    {   // WALKS RIGHT
+                        if(map[Position.Row,Position.Column+1]. 
+                            Position.Walkable) 
+                            Position.Column += 1;
+                        else
+                        {   // WALKS TOP
+                            if(map[Position.Row-1,Position.Column].
+                                Position.Walkable) 
+                                Position.Row -= 1;
+                            else
+                            {   // IF RANDOM 1
+                                if (random == 0)
+                                {   // WALKS BOTTOM
+                                    if(map[Position.Row+1,Position.Column].
+                                        Position.Walkable) 
+                                        Position.Row += 1;
+                                    else
+                                    {   // WALKS Left
+                                        if(map[Position.Row,Position.Column-1].
+                                            Position.Walkable) 
+                                            Position.Column -= 1; 
+                                        else 
+                                        {
+                                            Position.Row = Position.Row;
+                                            Position.Column = Position.Column;
+                                        }
+                                    }
+                                }   
+                                // IF RANDOM 2
+                                if (random == 1)
+                                {   // WALKS Left
+                                        if(map[Position.Row,Position.Column-1].
+                                            Position.Walkable) 
+                                            Position.Column -= 1; 
+                                    else
+                                    {   // WALKS BOTTOM
+                                        if(map[Position.Row+1,Position.Column].
+                                            Position.Walkable) 
+                                            Position.Row += 1;
+                                        else 
+                                        {
+                                            Position.Row = Position.Row;
+                                            Position.Column = Position.Column;
+                                        }
+                                    }
+                                }
+                            }         
+                        }
+                    }
+                    else
+                    {    
+                        // WALKS TOP
+                        if(map[Position.Row-1,Position.Column].
+                            Position.Walkable) 
+                            Position.Row -= 1;
+                        else
+                        {   // WALKS RIGHT
+                            if(map[Position.Row,Position.Column+1]. 
+                                Position.Walkable) 
+                                Position.Column += 1;
+                            else
+                            {   // IF RANDOM 1
+                                if (random == 0)
+                                {   // WALKS BOTTOM
+                                    if(map[Position.Row+1,Position.Column].
+                                        Position.Walkable) 
+                                        Position.Row += 1;
+                                    else
+                                    {   // WALKS Left
+                                        if(map[Position.Row,Position.Column-1].
+                                            Position.Walkable) 
+                                            Position.Column -= 1; 
+                                        else 
+                                        {
+                                            Position.Row = Position.Row;
+                                            Position.Column = Position.Column;
+                                        }
+                                    }
+                                }   
+                                // IF RANDOM 2
+                                if (random == 1)
+                                {   // WALKS Left
+                                    if(map[Position.Row,Position.Column-1].
+                                        Position.Walkable) 
+                                        Position.Column -= 1; 
+                                    else
+                                    {   // WALKS BOTTOM
+                                        if(map[Position.Row+1,Position.Column].
+                                            Position.Walkable) 
+                                            Position.Row += 1;
+                                        else 
+                                        {
+                                            Position.Row = Position.Row;
+                                            Position.Column = Position.Column;
+                                        }
+                                    }
+                                }
+                            }         
+                        }
+                    }
+                }
+                    ////////////////////////////////////////////////////////////
+
+                // BOTTOM RIGHT ////////////////////////////////////////////////
+                else if (distanceX > 0 && distanceY > 0) 
+                {   // IF X > Y
+                    if (distanceX > distanceY)  
+                    {   // WALKS RIGHT
+                        if(map[Position.Row,Position.Column+1]. 
+                            Position.Walkable) 
+                            Position.Column += 1;
+                        else
+                        {   // WALKS BOTTOM
+                            if(map[Position.Row+1,Position.Column].
+                                Position.Walkable) 
+                                Position.Row += 1;
+                            else
+                            {   // IF RANDOM 1
+                                if (random == 0)
+                                {   // WALKS TOP
+                                    if(map[Position.Row-1,Position.Column].
+                                        Position.Walkable) 
+                                        Position.Row -= 1;
+                                    else
+                                    {   // WALKS LEFT
+                                        if(map[Position.Row,Position.Column-1].
+                                            Position.Walkable) 
+                                            Position.Column -= 1; 
+                                        else 
+                                        {
+                                            Position.Row = Position.Row;
+                                            Position.Column = Position.Column;
+                                        }
+                                    }
+                                }   
+                                // IF RANDOM 2
+                                if (random == 1)
+                                {   // WALKS LEFT
+                                    if(map[Position.Row,Position.Column-1].
+                                        Position.Walkable) 
+                                        Position.Column -= 1; 
+                                    else
+                                    {   // WALKS TOP
+                                        if(map[Position.Row-1,Position.Column].
+                                            Position.Walkable) 
+                                            Position.Row -= 1;
+                                        else 
+                                        {
+                                            Position.Row = Position.Row;
+                                            Position.Column = Position.Column;
+                                        }
+                                    }
+                                }
+                            }         
+                        }
+                    }
+                    else
+                    {   // WALKS BOTTOM
+                        if(map[Position.Row+1,Position.Column].
+                            Position.Walkable) 
+                            Position.Row += 1;
+                        else
+                        {   // WALKS RIGHT
+                            if(map[Position.Row,Position.Column+1]. 
+                                Position.Walkable) 
+                                Position.Column += 1;
+                            else
+                            {   // IF RANDOM 1
+                                if (random == 0)
+                                {   // WALKS TOP
+                                    if(map[Position.Row-1,Position.Column].
+                                        Position.Walkable) 
+                                        Position.Row -= 1;
+                                    else
+                                    {   // WALKS LEFT
+                                        if(map[Position.Row,Position.Column-1].
+                                            Position.Walkable) 
+                                            Position.Column -= 1; 
+                                        else 
+                                        {
+                                            Position.Row = Position.Row;
+                                            Position.Column = Position.Column;
+                                        }
+                                    }
+                                }   
+                                // IF RANDOM 2
+                                if (random == 1)
+                                {   // WALKS LEFT
+                                    if(map[Position.Row,Position.Column-1].
+                                        Position.Walkable) 
+                                        Position.Column -= 1; 
+                                    else
+                                    {   // WALKS TOP
+                                        if(map[Position.Row-1,Position.Column].
+                                            Position.Walkable) 
+                                            Position.Row -= 1;
+                                        else 
+                                        {
+                                            Position.Row = Position.Row;
+                                            Position.Column = Position.Column;
+                                        }
+                                    }
+                                }
+                            }         
+                        }
+                    }
+                } 
+                ////////////////////////////////////////////////////////////////
+                
+                // BOTTOM LEFT /////////////////////////////////////////////////
+                else if (distanceX < 0 && distanceY > 0) 
+                {   // IF X < Y
+                    if (distanceX < distanceY)  
+                    {   // WALKS LEFT
+                        if(map[Position.Row,Position.Column-1]. 
+                            Position.Walkable) 
+                            Position.Column -= 1;
+                        else
+                        {   // WALKS BOTTOM
+                            if(map[Position.Row+1,Position.Column].
+                                Position.Walkable) 
+                                Position.Row += 1;
+                            else
+                            {   // IF RANDOM 1
+                                if (random == 0)
+                                {   // WALKS TOP
+                                    if(map[Position.Row-1,Position.Column].
+                                        Position.Walkable) 
+                                        Position.Row -= 1;
+                                    else
+                                    {   // WALKS RIGHT
+                                        if(map[Position.Row,Position.Column+1].
+                                            Position.Walkable) 
+                                            Position.Column += 1; 
+                                        else 
+                                        {
+                                            Position.Row = Position.Row;
+                                            Position.Column = Position.Column;
+                                        }
+                                    }
+                                }   
+                                // IF RANDOM 2
+                                if (random == 1)
+                                {   // WALKS RIGHT
+                                    if(map[Position.Row,Position.Column+1].
+                                        Position.Walkable) 
+                                        Position.Column += 1; 
+                                    else
+                                    {   // WALKS TOP
+                                        if(map[Position.Row-1,Position.Column].
+                                            Position.Walkable) 
+                                            Position.Row -= 1;
+                                        else 
+                                        {
+                                            Position.Row = Position.Row;
+                                            Position.Column = Position.Column;
+                                        }
+                                    }
+                                }
+                            }         
+                        }
+                    }  
+                    else
+                    {   // WALKS BOTTOM
+                        if(map[Position.Row+1,Position.Column].
+                            Position.Walkable) 
+                            Position.Row += 1;
+                        else
+                        {   // WALKS LEFT
+                            if(map[Position.Row,Position.Column-1]. 
+                                Position.Walkable) 
+                                Position.Column -= 1;
+                            else
+                            {   // IF RANDOM 1
+                                if (random == 0)
+                                {   // WALKS TOP
+                                    if(map[Position.Row-1,Position.Column].
+                                        Position.Walkable) 
+                                        Position.Row -= 1;
+                                    else
+                                    {   // WALKS RIGHT
+                                        if(map[Position.Row,Position.Column+1].
+                                            Position.Walkable) 
+                                            Position.Column += 1; 
+                                        else 
+                                        {
+                                            Position.Row = Position.Row;
+                                            Position.Column = Position.Column;
+                                        }
+                                    }
+                                }   
+                                // IF RANDOM 2
+                                if (random == 1)
+                                {   // WALKS RIGHT
+                                    if(map[Position.Row,Position.Column+1].
+                                        Position.Walkable) 
+                                        Position.Column += 1; 
+                                    else
+                                    {   // WALKS TOP
+                                        if(map[Position.Row-1,Position.Column].
+                                            Position.Walkable) 
+                                            Position.Row -= 1;
+                                        else 
+                                        {
+                                            Position.Row = Position.Row;
+                                            Position.Column = Position.Column;
+                                        }
+                                    }
+                                }
+                            }         
+                        }
+                    }     
+                } 
+                ////////////////////////////////////////////////////////////////
+                
+                // SAME COLUMN TOP /////////////////////////////////////////////
+                else if (distanceX == 0 && distanceY < 0) 
+                {   // WALKS TOP
+                    if(map[Position.Row-1,Position.Column].
+                        Position.Walkable) 
+                        Position.Row -= 1;
+                    else
+                    {   // IF RANDOM 1
+                        if (random == 0)
+                        {   // WALKS LEFT
+                            if(map[Position.Row,Position.Column-1].
+                                Position.Walkable) 
+                                Position.Column -= 1; 
+                            else
+                            {   // WALKS RIGHT
+                                if(map[Position.Row,Position.Column+1].
+                                    Position.Walkable) 
+                                    Position.Column += 1; 
+                                else 
+                                {
+                                    // WALKS BOTTOM
+                                    if(map[Position.Row+1,Position.Column].
+                                        Position.Walkable) 
+                                        Position.Row += 1;
+                                    else 
+                                    {
+                                        Position.Row = Position.Row;
+                                        Position.Column = Position.Column;
+                                    }
+                                }
+                            }
+                        }   
+                        // IF RANDOM 2
+                        if (random == 1)
+                        {   // WALKS RIGHT
+                            if(map[Position.Row,Position.Column+1].
+                                Position.Walkable) 
+                                Position.Column += 1; 
+                            else
+                            {   // WALKS LEFT
+                                if(map[Position.Row,Position.Column-1].
+                                    Position.Walkable) 
+                                    Position.Column -= 1; 
+                                else 
+                                {
+                                    // WALKS BOTTOM
+                                    if(map[Position.Row+1,Position.Column].
+                                        Position.Walkable) 
+                                        Position.Row += 1;
+                                    else 
+                                    {
+                                        Position.Row = Position.Row;
+                                        Position.Column = Position.Column;
+                                    }
+                                }
+                            }
+                        }          
+                    }
+                }  
+
+                // SAME COLUMN BOTTOM //////////////////////////////////////////
+                else if (distanceX == 0 && distanceY > 0) 
+                {   // WALKS BOTTOM
+                    if(map[Position.Row+1,Position.Column].
+                        Position.Walkable) 
+                        Position.Row += 1;
+                    else
+                    {   // IF RANDOM 1
+                        if (random == 0)
+                        {   // WALKS LEFT
+                            if(map[Position.Row,Position.Column-1].
+                                Position.Walkable) 
+                                Position.Column -= 1; 
+                            else
+                            {   // WALKS RIGHT
+                                if(map[Position.Row,Position.Column+1].
+                                    Position.Walkable) 
+                                    Position.Column += 1; 
+                                else 
+                                {
+                                    // WALKS TOP
+                                    if(map[Position.Row-1,Position.Column].
+                                        Position.Walkable) 
+                                        Position.Row -= 1;
+                                    else 
+                                    {
+                                        Position.Row = Position.Row;
+                                        Position.Column = Position.Column;
+                                    }
+                                }
+                            }
+                        }   
+                        // IF RANDOM 2
+                        if (random == 1)
+                        {   // WALKS RIGHT
+                            if(map[Position.Row,Position.Column+1].
+                                Position.Walkable) 
+                                Position.Column += 1; 
+                            else
+                            {   // WALKS LEFT
+                                if(map[Position.Row,Position.Column-1].
+                                    Position.Walkable) 
+                                    Position.Column -= 1; 
+                                else 
+                                {
+                                    // WALKS TOP
+                                    if(map[Position.Row-1,Position.Column].
+                                        Position.Walkable) 
+                                        Position.Row -= 1;
+                                    else 
+                                    {
+                                        Position.Row = Position.Row;
+                                        Position.Column = Position.Column;
+                                    }
+                                }
+                            }
+                        }          
+                    }
+                } 
+                ////////////////////////////////////////////////////////////////
+
+                // SAME ROW RIGHT //////////////////////////////////////////////
+                else if (distanceX > 0 && distanceY == 0) 
+                {   // WALKS RIGHT
+                    if(map[Position.Row,Position.Column+1].
+                        Position.Walkable) 
+                        Position.Column += 1; 
+                    else
+                    {   // IF RANDOM 1
+                        if (random == 0)
+                        {   // WALKS TOP
+                            if(map[Position.Row-1,Position.Column].
+                                Position.Walkable) 
+                                Position.Row -= 1;
+                            else
+                            {   // WALKS BOTTOM
+                                if(map[Position.Row+1,Position.Column].
+                                    Position.Walkable) 
+                                    Position.Row += 1;
+                                else 
+                                {
+                                    // WALKS LEFT
+                                    if(map[Position.Row,Position.Column-1].
+                                        Position.Walkable) 
+                                        Position.Column -= 1; 
+                                    else 
+                                    {
+                                        Position.Row = Position.Row;
+                                        Position.Column = Position.Column;
+                                    }
+                                }
+                            }
+                        }   
+                        // IF RANDOM 2
+                        if (random == 1)
+                        {   // WALKS BOTTOM
+                            if(map[Position.Row+1,Position.Column].
+                                Position.Walkable) 
+                                Position.Row += 1;
+                            else
+                            {   // WALKS TOP
+                                if(map[Position.Row-1,Position.Column].
+                                    Position.Walkable) 
+                                    Position.Row -= 1;
+                                else 
+                                {
+                                    // WALKS LEFT
+                                    if(map[Position.Row,Position.Column-1].
+                                        Position.Walkable) 
+                                        Position.Column -= 1; 
+                                    else 
+                                    {
+                                        Position.Row = Position.Row;
+                                        Position.Column = Position.Column;
+                                    }
+                                }
+                            }
+                        }           
+                    }
+                }  
+                ////////////////////////////////////////////////////////////////
+
+                // SAME ROW RIGHT //////////////////////////////////////////////
+                else if (distanceX < 0 && distanceY == 0) 
+                {   // WALKS LEFT
+                    if(map[Position.Row,Position.Column-1].
+                        Position.Walkable) 
+                        Position.Column -= 1; 
+                    else
+                    {   // IF RANDOM 1
+                        if (random == 0)
+                        {   // WALKS TOP
+                            if(map[Position.Row-1,Position.Column].
+                                Position.Walkable) 
+                                Position.Row -= 1;
+                            else
+                            {   // WALKS BOTTOM
+                                if(map[Position.Row+1,Position.Column].
+                                    Position.Walkable) 
+                                    Position.Row += 1;
+                                else 
+                                {
+                                    // WALKS RIGHT
+                                    if(map[Position.Row,Position.Column+1].
+                                        Position.Walkable) 
+                                        Position.Column += 1; 
+                                    else 
+                                    {
+                                        Position.Row = Position.Row;
+                                        Position.Column = Position.Column;
+                                    }
+                                }
+                            }
+                        }   
+                        // IF RANDOM 2
+                        if (random == 1)
+                        {   // WALKS BOTTOM
+                            if(map[Position.Row+1,Position.Column].
+                                Position.Walkable) 
+                                Position.Row += 1;
+                            else
+                            {   // WALKS TOP
+                                if(map[Position.Row-1,Position.Column].
+                                    Position.Walkable) 
+                                    Position.Row -= 1;
+                                else 
+                                {
+                                    // WALKS RIGHT
+                                    if(map[Position.Row,Position.Column+1].
+                                        Position.Walkable) 
+                                        Position.Column += 1; 
+                                    else 
+                                    {
+                                        Position.Row = Position.Row;
+                                        Position.Column = Position.Column;
+                                    }
+                                }
+                            }
+                        }           
+                    }
+                }
+                ////////////////////////////////////////////////////////////////
+            }
+            catch (IndexOutOfRangeException)
+            {
             }
         }
     }

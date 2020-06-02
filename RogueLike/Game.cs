@@ -79,7 +79,7 @@ namespace RogueLike
                     {
                         map[enemy.Position.Row, enemy.Position.Column].Position.
                             EnemyFree();
-                        //enemy.Move(player, 1, map, rows, columns);
+                        enemy.Move(player, 1, map, rows, columns);
                         map[enemy.Position.Row, enemy.Position.Column].Position.
                             EnemyOccupy();
                         print.Map(map, rows, columns, powerUps, enemies);
@@ -167,7 +167,12 @@ namespace RogueLike
         {
             for (int i = 0; i < rows; i++) 
                 for (int j = 0; j < columns; j++)
+                {
                     map[i,j] = new Map (new Position(i,j));
+                    //if (i == 2 && j == 3) map[i,j].Position.WallOccupy(); TESTE
+                    //if (i == 3 && j == 2) map[i,j].Position.WallOccupy(); TESTE
+                }
+                    
         }
 
         

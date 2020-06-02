@@ -169,8 +169,7 @@ namespace RogueLike
                 for (int j = 0; j < columns; j++)
                 {
                     map[i,j] = new Map (new Position(i,j));
-                    //if (i == 2 && j == 3) map[i,j].Position.WallOccupy(); TESTE
-                    //if (i == 3 && j == 2) map[i,j].Position.WallOccupy(); TESTE
+                    if (i == 2 && j == 3) map[i,j].Position.WallOccupy();
                 }
                     
         }
@@ -213,7 +212,7 @@ namespace RogueLike
         {
             enemies = new Enemy[i];
 
-            enemies[0] = new Enemy(new Position(3,3), 5);   // TESTEEEE
+            enemies[0] = new Enemy(new Position(4,4), 5);   // TESTEEEE
             
             foreach (Enemy enemy in enemies)
             {

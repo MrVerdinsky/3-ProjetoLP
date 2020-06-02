@@ -41,7 +41,7 @@ namespace RogueLike
 
                     // If the square has a wall   
                     if (map[i,j].Position.HasWall)
-                        Console.Write($"|xx|");
+                        Console.Write($"|\u2716 |");
 
                     // If the square has a player
                     if (map[i,j].Position.HasPlayer)

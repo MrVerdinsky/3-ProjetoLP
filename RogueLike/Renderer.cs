@@ -4,24 +4,23 @@ namespace RogueLike
     sealed public class Renderer
     {
         /// <summary>
-        /// Prints the game map
+        /// Prints the map
         /// </summary>
-        /// <param name="numberOfRows">Number of rows</param>
-        /// <param name="numberOfColumns">Number of columns</param>
+        /// <param name="map">Map Positions</param>
+        /// <param name="rows">Number of Rows</param>
+        /// <param name="columns">Number of Columns</param>
+        /// <param name="powerUps">List of PowerUps</param>
+        /// <param name="enemies">List of enemies</param>
         public void Map(Map[,] map, int rows, int columns, 
                             PowerUp[] powerUps,Enemy[] enemies)
         {
+            // Prints the meaning of each symbol in the map
             Console.WriteLine();
             Console.Write("| -P - Player | -M - Minion |  -B - Boss |\n");
             Console.Write("| SP - Small Power-Up | SM - Medium Power-Up |" + 
                                 " BP - Big Power-Up |\n");
             Console.Write("| O - Obstacle | E - Exit |\n");
-            // foreach(Map square in map)
-            // {
-            //     Console.WriteLine($"\nEmpty     [{square.Position.Row}, {square.Position.Column}]: {square.Position.Empty}");
-            //     Console.WriteLine($"HasPlayer [{square.Position.Row}, {square.Position.Column}]: {square.Position.HasPlayer}");
-            // }
-            
+
             for (int i = 0; i < rows; i++)
             {   
                 // For FIRST row
@@ -41,6 +40,7 @@ namespace RogueLike
                     if (map[i,j].Position.HasPlayer)
                         Console.Write("|-P|");
                     
+                    //Prints all enemies in the list
                     foreach (Enemy enemy in enemies)
                     {
                         if (map[i,j].Position.HasEnemy)
@@ -50,7 +50,7 @@ namespace RogueLike
                         }
                     }
                     
-
+                    //Prints all power Ups in the list
                     foreach (PowerUp powerUp in powerUps)
                     if (map[i,j].Position.HasPowerUp && powerUp.Picked == false)
                     {
@@ -64,6 +64,9 @@ namespace RogueLike
             }
         }
 
+        /// <summary>
+        /// Prints the Main Menu Options
+        /// </summary>
         public void PrintMenu()
         {
             Console.WriteLine("1. New game");
@@ -72,6 +75,10 @@ namespace RogueLike
             Console.WriteLine("4. Credits");
             Console.WriteLine("5. Quit");
         }
+        
+        /// <summary>
+        /// Prints Game Developers
+        /// </summary>
         public void PrintCredits()
         {
             Console.WriteLine("Developed by:");
@@ -80,16 +87,23 @@ namespace RogueLike
             Console.WriteLine("Gonçalo Vila Verde");
         }
 
+        /// <summary>
+        /// Prints Menu Options Input Error
+        /// </summary>
         public void PrintInputError()
         {
             Console.WriteLine("Option Unkown");
         }
         
+        //Prints a message before exiting the game
         public void PrintExitMsg()
         {
             Console.WriteLine("Thanks for playing.");
         }
 
+        /// <summary>
+        /// Prints an error message when theres an error starting the game
+        /// </summary>
         public void IntroErrorMessage()
         {
             Console.WriteLine("\nIn order to start the game, please enter" +

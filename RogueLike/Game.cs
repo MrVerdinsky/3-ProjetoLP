@@ -10,6 +10,11 @@ namespace RogueLike
         PowerUp[] powerUps;
         Map[,] map;
     
+        /// <summary>
+        /// Controls main game loop
+        /// </summary>
+        /// <param name="rows">Number of Rows</param>
+        /// <param name="columns">Number of Columns</param>
         public Game(int rows, int columns)
         {
             // Instances / Variables
@@ -90,10 +95,10 @@ namespace RogueLike
         /// Compares character position with map position
         /// </summary>
         /// <param name="p1">Character position</param>
-        /// <param name="map">Map</param>
+        /// <param name="map">All map positions</param>
         /// <param name="r">Number of Rows</param>
         /// <param name="c">Number of Columns</param>
-        /// <returns>True if the position is the same</returns>
+        /// <returns>True if the position is the same otherwise false</returns>
         private bool ComparePosition(Character p1, Map[,] map, int r, int c)
         {
             bool occupied = false;
@@ -111,7 +116,8 @@ namespace RogueLike
         /// </summary>
         /// <param name="p1">Character1 Position</param>
         /// <param name="en">Character2 Position</param>
-        /// <returns>True if the distance is 1 square around</returns>
+        /// <returns>True if the distance is 1 square around
+        ///  otherwise false</returns>
         private bool DamagePosition(Character p1, Character en)
         {
             bool occupied = false;
@@ -132,7 +138,8 @@ namespace RogueLike
         /// </summary>
         /// <param name="p1">Character position</param>
         /// <param name="powerUp">PowerUp position</param>
-        /// <returns>True if both positions are the same</returns>
+        /// <returns>True if both positions are the same 
+        /// otherwise false</returns>
         private bool PowerUpPosition(Character p1, PowerUp powerUp)
         {
             bool occupied = false;
@@ -167,6 +174,10 @@ namespace RogueLike
             map[x, 0].Position.PlayerOccupy();
         }
 
+        /// <summary>
+        /// Creates Power-Ups based on a random number
+        /// </summary>
+        /// <param name="i">Random Generated Number</param>
         private void CreatePowerUp(int i)
         {
             powerUps = new PowerUp[i];
@@ -180,7 +191,10 @@ namespace RogueLike
             }
         }
         
-
+        /// <summary>
+        /// Creates Enemies based on a random number
+        /// </summary>
+        /// <param name="i">Random Generated Number</param>
         private void CreateEnemy(int i)
         {
             enemies = new Enemy[i];
@@ -194,6 +208,9 @@ namespace RogueLike
             }
         }
 
+        /// <summary>
+        /// Stops the game loop and exits game
+        /// </summary>
         private void Quit() => gameOver = true;
     }
 }

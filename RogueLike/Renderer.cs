@@ -36,28 +36,28 @@ namespace RogueLike
                 {
                     // If the square is empty   
                     if (map[i,j].Position.Empty)
-                        Console.Write($"|{i}{j}|");
+                        Console.Write($"|__|");
+
                     // If the square has a player
                     if (map[i,j].Position.HasPlayer)
                         Console.Write("|-P|");
                     
-                    foreach (Enemy enemy in enemies)
-                    {
-                        if (map[i,j].Position.HasEnemy)
-                        {
-                            if (enemy.damage == 5) Console.Write($"|M{j}|");
-                            if (enemy.damage == 10) Console.Write("|-B|");
-                        }
-                    }
                     
-
+                    if (map[i,j].Position.HasEnemy)
+                        foreach (Enemy enemy in enemies)
+                        {
+                            if (enemy.damage == 5) Console.Write($"|-M|");
+                            else Console.Write("|-B|");
+                        }
+                    
+                    
                     foreach (PowerUp powerUp in powerUps)
-                    if (map[i,j].Position.HasPowerUp && powerUp.Picked == false)
-                    {
-                        if (powerUp.Heal == 4) Console.Write("|SP|");
-                        if (powerUp.Heal == 8) Console.Write("|MP|");
-                        if (powerUp.Heal == 16) Console.Write("|BP|"); 
-                    }
+                        if (map[i,j].Position.HasPowerUp && !(powerUp.Picked))
+                        {
+                            if (powerUp.Heal == 4) Console.Write("|SP|");
+                            else if (powerUp.Heal == 8) Console.Write("|MP|");
+                            else Console.Write("|BP|"); 
+                        }
                     
                 }
                 Console.WriteLine();
@@ -97,5 +97,19 @@ namespace RogueLike
                 "dotnet run -p RogueLike -- -r [NUMBER] -c [NUMBER]");
         }
 
+        public void PlayerHP(Player p1)
+        {
+            Console.WriteLine("\nHP --------- " + p1.HP);
+        }
+
+        public void EnemyTurn()
+        {
+            Console.WriteLine("\nEnemy Turn");
+        }
+
+        public void PlayerTurn()
+        {
+            Console.WriteLine("\nPlayer Turn");
+        }
     }
 }

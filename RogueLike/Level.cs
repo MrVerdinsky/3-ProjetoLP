@@ -53,12 +53,7 @@ namespace RogueLike
         /// </summary>
         /// <param name="map">Map variable</param>
         private void GetEnemyPos(Map[,] map)
-        {
-            // foreach (Map point in map)
-            // {
-            //     Console.WriteLine($"Empty  [{point.Position.Row}, {point.Position.Column}]: {point.Position.Empty}");   
-            // }
-            
+        {            
             enemies = new Enemy[EnemyNum];
             
             // Gives a temporary position to each enemy
@@ -81,7 +76,6 @@ namespace RogueLike
                         
                     for (int j = 0; j < i; j++)
                     {
-                        // Console.WriteLine($"pos({i}): [{enemies[i].Position.Row}, {enemies[i].Position.Column}] - {map[enemies[i].Position.Row, enemies[i].Position.Column].Position.Empty}");
                         // Checks if the randomized position if free and it is 
                         // different from another enemies positions
                         if ((enemies[i].Position.Row == enemies[j].
@@ -115,8 +109,16 @@ namespace RogueLike
                 //     Console.WriteLine($"enemy pos: {enemy.Position.Row}, {enemy.Position.Column}");
                 // }     
             }
-        }
 
+            foreach (Enemy enemy in enemies)
+            {
+                map[enemy.Position.Row, enemy.Position.Column].Position.EnemyOccupy();
+            }
+        }
+        private void GetPowerUpNum()
+        {
+
+        }
         private void GetPowerUp()
         {
             PowerUpNum = 2;
@@ -126,6 +128,14 @@ namespace RogueLike
             int a;
             a = random.Next((RowNum * ColumnNum)/2);
             return (int)( a * Math.Log(1.2 * (x + 1)) + 1);
+        }
+
+        private int SquareRoot(int x)
+        {
+            int a = 20;
+            int b = 1;
+
+            return (int)(-(Math.Sqrt(x) + a) * b); 
         }
     }
 }

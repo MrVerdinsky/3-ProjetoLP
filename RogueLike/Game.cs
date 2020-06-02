@@ -48,12 +48,10 @@ namespace RogueLike
                 CreateMap(rows, columns);
                 CreatePlayer(0, rows, columns); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
                 CreatePowerUp(1); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
-                                 ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
-                
-                
+                                
                 gameOver = false;
                 level.CreateLevel(map);
-                CreateEnemy(level);                
+                // CreateEnemy(level);                
                 while (gameOver == false)
                 {
                     // Resets Movement
@@ -202,19 +200,15 @@ namespace RogueLike
                     powerUp.Position.Column].Position.PowerUpOccupy();
             }
         }
-        private void CreateEnemy(Level level)
-        {            
-            // foreach (Map aux in map)
-            // {
-            //     aux.Position.EnemyFree();
-            // }
-            foreach (Enemy enemy in level.enemies)
-            {
-                // Console.WriteLine($"enemy pos: {enemy.Position.Row}, {enemy.Position.Column}");
-                map[enemy.Position.Row, 
-                    enemy.Position.Column].Position.EnemyOccupy();
-            }
-        }
+        // private void CreateEnemy(Level level)
+        // {            
+        //     foreach (Enemy enemy in level.enemies)
+        //     {
+        //         // Console.WriteLine($"enemy pos: {enemy.Position.Row}, {enemy.Position.Column}");
+        //         map[enemy.Position.Row, 
+        //             enemy.Position.Column].Position.EnemyOccupy();
+        //     }
+        // }
 
         /// <summary>
         /// Stops the game loop and exits game

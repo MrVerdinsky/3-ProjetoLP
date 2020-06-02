@@ -9,10 +9,10 @@ namespace RogueLike
         Enemy[] enemies;
         PowerUp[] powerUps;
         Map[,] map;
+    
         public Game(int rows, int columns)
         {
             // Instances / Variables
-            Level level     = new Level(rows, columns);
             Renderer render = new Renderer();
             Input input     = new Input(); 
             map             = new Map[rows, columns];
@@ -42,53 +42,45 @@ namespace RogueLike
                 CreateMap(rows, columns);
                 CreatePlayer(0, rows, columns); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
                 CreatePowerUp(1); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
-                // CreateEnemy(level); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
+                CreateEnemy(1); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
                 
                 
-                // enemies[0] = new Enemy(new Position(1,1), 1); ////////////////// < INIMIGO PARA TESTAR
-
                 gameOver = false;
-                level.CreateLevel(map);
                 while (gameOver == false)
                 {
-                    // Creates enemies
-                    CreateEnemy(level);
                     // Resets Movement
-                    // player.MovementReset();                 
+                    player.MovementReset(); 
+
+                    ///////////////////////////////////////////////////////////
                     // Player Movement and Map render -> MOVEMENT 1 ////////////
-                    render.Map(map, rows, columns, powerUps, level.enemies);
+                    render.Map(map, rows, columns, powerUps, enemies);
                     map = input.GetPosition(player, map);
                     // Checks if the player got any powerUp
                     foreach (PowerUp powerUp in powerUps)
                         if (PowerUpPosition(player, powerUp))
                             player.PickPowerUp(powerUp);
-                            
                     ////////////////////////////////////////////////////////////
                     Console.WriteLine("\nHP --------- " + player.HP); /////////////// TEMPORARIO PARA TESTAR
                     
                     // Player Movement and Map render -> MOVEMENT 2 ////////////
-                    render.Map(map, rows, columns, powerUps, level.enemies);
+                    render.Map(map, rows, columns, powerUps, enemies);
                     map = input.GetPosition(player, map);
-
                     // Checks if the player got any powerUp
                     foreach (PowerUp powerUp in powerUps)
                         if (PowerUpPosition(player, powerUp))
                             player.PickPowerUp(powerUp);
-                    // foreach (Map map in map)
-                    // {
-                    //     Console.WriteLine($"Has enemy: {map.Position.HasEnemy}");
-                    // }
                     ////////////////////////////////////////////////////////////
   
 
                     // Player gets damage if the he's 1 square distance
-                    foreach (Enemy enemy in level.enemies)
+                    foreach (Enemy enemy in enemies)
                         if (DamagePosition(player, enemy))
                             player.TakeDamage(enemy);
                     
+                    Console.WriteLine("\n" + powerUps[0].Picked);
+
 
                     Console.WriteLine("\nHP --------- " + player.HP); /////////////// TEMPORARIO PARA TESTAR
-                    // level.LevelNum ++;
                 }
             }
         }
@@ -161,7 +153,8 @@ namespace RogueLike
                 for (int j = 0; j < columns; j++)
                     map[i,j] = new Map (new Position(i,j));
         }
-    
+
+        
         /// <summary>
         /// Creates player
         /// </summary>
@@ -186,15 +179,16 @@ namespace RogueLike
                     powerUp.Position.Column].Position.PowerUpOccupy();
             }
         }
-        private void CreateEnemy(Level level)
-        {            
-            foreach (Map aux in map)
+        
+
+        private void CreateEnemy(int i)
+        {
+            enemies = new Enemy[i];
+
+            enemies[0] = new Enemy(new Position(1,1), 5);   // TESTEEEE
+            
+            foreach (Enemy enemy in enemies)
             {
-                aux.Position.EnemyFree();
-            }
-            foreach (Enemy enemy in level.enemies)
-            {
-                Console.WriteLine($"enemy pos: {enemy.Position.Row}, {enemy.Position.Column}");
                 map[enemy.Position.Row, 
                     enemy.Position.Column].Position.EnemyOccupy();
             }

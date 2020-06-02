@@ -20,8 +20,8 @@ namespace RogueLike
             // Prints the meaning of each symbol in the map
             Console.WriteLine();
             Console.Write("|\u2654 - Player|\u265F - Minion|\u265A - Boss|\n");
-            Console.Write("|\u2749 - Small Power-Up |\u2740 - Medium Power-Up|\n");
-            Console.Write("|\u2740 - Medium Power-Up |\u2716 - Obstacle|\n");
+            Console.Write("|\u2749 - Small Power-Up|\u273E - Medium Power-Up|\n");
+            Console.Write("|\u2740 - Big Power-Up|\u2716 - Obstacle|\n");
 
             for (int i = 0; i < rows; i++)
             {   
@@ -127,6 +127,47 @@ namespace RogueLike
         public void PlayerTurn()
         {
             Console.WriteLine("\nPlayer Turn");
+        }
+
+        public void PrintInstructions()
+        {
+            Console.WriteLine(" ______________________________________________"+
+            "___________________________");
+            Console.WriteLine("|\t\t\t\t\t\t\t\t\t  |");
+            Console.WriteLine("|\t\t\t      Rules and Controls\t\t\t  |");
+            Console.WriteLine("|_____________________________________________"+
+            "____________________________|");
+            Console.WriteLine("|\t\t\t\t\t\t\t\t\t  |");
+            Console.WriteLine("|\u2b9a You will always start in the closest" + 
+            " side of the room, in a random     |\n|   position.\t\t\t\t\t\t\t\t  |");
+            Console.WriteLine("|\u2b9a Your objective, if you choose to accept" +
+             " it, is to reach the exit gate, |\n|  positioned in the far" +
+             " end of the room.\t\t\t\t  |");
+            Console.WriteLine("|\u2b9a You can and will have to, move up to 2 " +
+            "Squares per turn in 4 directions|\n|  (⭠ ⭢ ⭡ ⭣), but beware moving" + 
+            " will deplete your HP by 1 point each time |\n|   you move." + 
+            " \t\t\t\t\t\t\t\t  |");
+            Console.WriteLine("|\u2b9a To move you can use the keys WASD," + 
+            " representing ⭡, ⭠, ⭣, ⭢ .\t\t  |");
+            Console.WriteLine("|\u2b9a As you move through the room, you will" + 
+            " find enemies, either big or     |\n|  small. You can't fight them so you" + 
+            " better use your noggin and figure   |\n|  out a way  to go around" + 
+            " them.\t\t\t\t\t  |");
+            Console.WriteLine("|\u2b9a They aren't blind either, as you move," + 
+            " they will try to get you, moving|\n|  1 square per turn, chasing"+ 
+            " after you.\t\t\t\t  |");
+            Console.WriteLine("|\u2b9a If you fail to evade them, it will cost" +
+            " ya, losing 5 HP to the little  |\n|  fellas and 10 Hp to big" +  
+            " ones.\t\t\t\t\t  |");
+            Console.WriteLine("|\u2b9a But don't worry there's a few Power-Ups" + 
+            " laying around, with 4, 8 or if |\n|  you're lucky, 16 HP points for" + 
+            " you to grab.\t\t\t\t  |");
+            Console.WriteLine("|\u2b9a There might be some rubbles in the way" + 
+            " so you have to go around them   |\n|  aswell, but I think you're smart" + 
+            " enough to do that.\t\t\t  |");
+            Console.WriteLine("|\u2b9a Goodluck and Have fun, if you live....\t\t\t\t  |");
+            Console.WriteLine("|_____________________________________________"+
+            "____________________________|");
         }
     }
 }

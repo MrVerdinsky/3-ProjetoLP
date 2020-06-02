@@ -7,9 +7,7 @@ namespace RogueLike
         bool gameOver;
         Player player;
         Map[,] map;
-        
-
-
+    
         public Game(int rows, int columns)
         {
             // Instances / Variables
@@ -17,9 +15,8 @@ namespace RogueLike
             Input input     = new Input(); 
             map             = new Map[rows, columns];
             string playerInput;
-
-            Enemy[] enemies     = new Enemy[1];
-            PowerUp[] powerUps  = new PowerUp[1];
+            Enemy[] enemies = new Enemy[1];
+            PowerUp[] powerUps = new PowerUp[1];
 
             ////////////////////////////////////////////////////////////////////
             // Prints Initial Menu
@@ -44,21 +41,19 @@ namespace RogueLike
             {
                 CreateMap(rows, columns);
                 CreatePlayer(0, rows, columns); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
+                CreatePowerUp(powerUps);
+                CreateEnemy(enemies);
                 
-                enemies[0] = new Enemy(new Position(1,1), 1); ////////////////// < INIMIGO PARA TESTAR
-                powerUps[0]  = new PowerUp(new Position(0,1), 4); ////////////////// < POWERUP PARA TESTAR
                 
-
                 gameOver = false;
                 while (gameOver == false)
                 {
                     // Resets Movement
                     player.MovementReset(); 
 
-
-                    ////////////////////////////////////////////////////////////
+                    ///////////////////////////////////////////////////////////
                     // Player Movement and Map render -> MOVEMENT 1 ////////////
-                    render.Map(map, rows, columns);
+                    render.Map(map, rows, columns,powerUps, enemies);
                     map = input.GetPosition(player, map);
                     // Checks if the player got any powerUp
                     foreach (PowerUp powerUp in powerUps)
@@ -68,7 +63,7 @@ namespace RogueLike
                     Console.WriteLine("\nHP --------- " + player.HP); /////////////// TEMPORARIO PARA TESTAR
                     
                     // Player Movement and Map render -> MOVEMENT 2 ////////////
-                    render.Map(map, rows, columns);
+                    render.Map(map, rows, columns,powerUps, enemies);
                     map = input.GetPosition(player, map);
                     // Checks if the player got any powerUp
                     foreach (PowerUp powerUp in powerUps)
@@ -169,7 +164,32 @@ namespace RogueLike
             player = new Player(new Position(x, 0), rows, columns);
             map[x, 0].Position.PlayerOccupy();
         }
+
+        private void CreatePowerUp(PowerUp[] powerUps)
+        {
+            powerUps[0]  = new PowerUp(new Position(0,1), 4);
+            foreach (PowerUp powerUp in powerUps)
+                    {   
+                        map[powerUp.Position.Row, 
+                            powerUp.Position.Column].Position.PowerUpFree();
+                        map[powerUp.Position.Row, 
+                            powerUp.Position.Column].Position.PowerUpOccupy();
+                    }
+        }
         
+
+        private void CreateEnemy(Enemy[] enemies)
+        {
+            enemies[0] = new Enemy(new Position(1,1), 1);
+            
+            foreach (Enemy enemy in enemies)
+                {
+                    map[enemy.Position.Row, 
+                        enemy.Position.Column].Position.EnemyFree();
+                    map[enemy.Position.Row, 
+                        enemy.Position.Column].Position.EnemyOccupy();
+                }
+        }
 
         private void Quit() => gameOver = true;
     }

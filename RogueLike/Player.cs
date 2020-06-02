@@ -19,7 +19,7 @@ namespace RogueLike
         public Player (Position position, int gameRows, int gameColumns)
         {
             base.Position           = position;
-            HP                      = 1000;//(gameRows * gameColumns) / 4;
+            HP                      = (gameRows * gameColumns) / 4;
             IsAlive                 = true;
         }
 
@@ -29,9 +29,9 @@ namespace RogueLike
         /// <param name="enemy">To get damage value from enemy</param>
         public void TakeDamage(Enemy enemy)
         {
-            HP -= enemy.damage;
             if (HP - enemy.damage < 1)
                 IsAlive = false;
+            HP -= enemy.damage;  
         }
 
         /// <summary>

@@ -6,8 +6,9 @@ namespace RogueLike
     {
         bool gameOver;
         Player player;
+        Enemy[] enemies;
+        PowerUp[] powerUps;
         Map[,] map;
-
         public Game(int rows, int columns)
         {
             // Instances / Variables
@@ -16,56 +17,82 @@ namespace RogueLike
             Input input     = new Input(); 
             map             = new Map[rows, columns];
             string playerInput;
-            Enemy[] enemies = new Enemy[100];
+
+            ////////////////////////////////////////////////////////////////////
             // Prints Initial Menu
             render.PrintMenu();
+            // Runs Menu Loop
+            do
+            {
+                // Gets user Input
+                playerInput = input.MenuOptions();
+                if(playerInput == "1") break;
+                if(playerInput == "5") break;
 
-            // Gets user Input
-            playerInput = input.MenuOptions();
+                /// ESPALHAR MAGIA AQUI E METER AS OPCOES, A 1 E a 5 JA TAO FEITAS
+                
 
-
-            // Runs Gameloop
-            //Starts the game loop after choosing option 1.
+            } while (playerInput != "5" || playerInput != "1");
+            ////////////////////////////////////////////////////////////////////
+            
+            ////////////////////////////////////////////////////////////////////
+            // Run Game
             if (playerInput == "1")
             {
                 CreateMap(rows, columns);
                 CreatePlayer(0, rows, columns); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
+                CreatePowerUp(1); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
+                // CreateEnemy(level); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
+                
                 
                 // enemies[0] = new Enemy(new Position(1,1), 1); ////////////////// < INIMIGO PARA TESTAR
 
                 gameOver = false;
+                level.CreateLevel(map);
                 while (gameOver == false)
                 {
-
-                    level.CreateLevel(map);
-
+                    // Creates enemies
+                    CreateEnemy(level);
                     // Resets Movement
-                    player.MovementReset(); 
-
-                    // Player Movement and Map render -> 2 Movements
-                    render.Map(map, rows, columns);
+                    // player.MovementReset();                 
+                    // Player Movement and Map render -> MOVEMENT 1 ////////////
+                    render.Map(map, rows, columns, powerUps, level.enemies);
                     map = input.GetPosition(player, map);
-                    render.Map(map, rows, columns);
+                    // Checks if the player got any powerUp
+                    foreach (PowerUp powerUp in powerUps)
+                        if (PowerUpPosition(player, powerUp))
+                            player.PickPowerUp(powerUp);
+                            
+                    ////////////////////////////////////////////////////////////
+                    Console.WriteLine("\nHP --------- " + player.HP); /////////////// TEMPORARIO PARA TESTAR
+                    
+                    // Player Movement and Map render -> MOVEMENT 2 ////////////
+                    render.Map(map, rows, columns, powerUps, level.enemies);
                     map = input.GetPosition(player, map);
 
+                    // Checks if the player got any powerUp
+                    foreach (PowerUp powerUp in powerUps)
+                        if (PowerUpPosition(player, powerUp))
+                            player.PickPowerUp(powerUp);
+                    // foreach (Map map in map)
+                    // {
+                    //     Console.WriteLine($"Has enemy: {map.Position.HasEnemy}");
+                    // }
+                    ////////////////////////////////////////////////////////////
+  
 
                     // Player gets damage if the he's 1 square distance
-                    // foreach (Enemy enemy in enemies)
-                    //     if (DamagePosition(player, enemy))
-                    //         player.TakeDamage(enemy);
+                    foreach (Enemy enemy in level.enemies)
+                        if (DamagePosition(player, enemy))
+                            player.TakeDamage(enemy);
                     
 
                     Console.WriteLine("\nHP --------- " + player.HP); /////////////// TEMPORARIO PARA TESTAR
-                    level.LevelNum ++;
+                    // level.LevelNum ++;
                 }
             }
-
-            // If players choses option 5 on the menu Quits the game
-            else if (playerInput == "5")
-            {
-            }
         }
-
+        ////////////////////////////////////////////////////////////////////////
 
         /// <summary>
         /// Compares character position with map position
@@ -109,6 +136,21 @@ namespace RogueLike
         }
 
         /// <summary>
+        /// Compares character position with powerUp position
+        /// </summary>
+        /// <param name="p1">Character position</param>
+        /// <param name="powerUp">PowerUp position</param>
+        /// <returns>True if both positions are the same</returns>
+        private bool PowerUpPosition(Character p1, PowerUp powerUp)
+        {
+            bool occupied = false;
+                if (p1.Position.Row == powerUp.Position.Row &&
+                    p1.Position.Column == powerUp.Position.Column)
+                    occupied = true;
+            return occupied;
+        }
+
+        /// <summary>
         /// Creates the game map
         /// </summary>
         /// <param name="rows">Number of rows in the game</param>
@@ -119,8 +161,7 @@ namespace RogueLike
                 for (int j = 0; j < columns; j++)
                     map[i,j] = new Map (new Position(i,j));
         }
-
-        
+    
         /// <summary>
         /// Creates player
         /// </summary>
@@ -132,7 +173,32 @@ namespace RogueLike
             player = new Player(new Position(x, 0), rows, columns);
             map[x, 0].Position.PlayerOccupy();
         }
-        
+
+        private void CreatePowerUp(int i)
+        {
+            powerUps = new PowerUp[i];
+
+            powerUps[0] = new PowerUp(new Position(0,1), 4);    // TESTEEEE
+
+            foreach (PowerUp powerUp in powerUps)
+            {   
+                map[powerUp.Position.Row, 
+                    powerUp.Position.Column].Position.PowerUpOccupy();
+            }
+        }
+        private void CreateEnemy(Level level)
+        {            
+            foreach (Map aux in map)
+            {
+                aux.Position.EnemyFree();
+            }
+            foreach (Enemy enemy in level.enemies)
+            {
+                Console.WriteLine($"enemy pos: {enemy.Position.Row}, {enemy.Position.Column}");
+                map[enemy.Position.Row, 
+                    enemy.Position.Column].Position.EnemyOccupy();
+            }
+        }
 
         private void Quit() => gameOver = true;
     }

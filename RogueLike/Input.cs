@@ -21,19 +21,14 @@ namespace RogueLike
                 switch(playerInput)
                     {
                 case "1":
-                    Console.WriteLine("New Game");
                     break;
                 case "2":
-                    Console.WriteLine("HighScores");
                     break;
                 case "3":
-                    Console.WriteLine("Instructions");
                     break;
                 case "4":
-                    print.PrintCredits();
                     break;
                 case "5":
-                    print.PrintExitMsg();
                     return playerInput;
                 
                 //Returns the input here so the players goes back to main menu
@@ -62,13 +57,15 @@ namespace RogueLike
             // players input
             char playerInput; 
             // Frees the player position
-            map[player.Position.Row, player.Position.Column].Position.PlayerFree();
+            map[player.Position.Row, player.Position.Column].Position.
+                PlayerFree();
             // Gets player input
             playerInput = Console.ReadLine()[0];
             // Moves player to new position
             player.Move(playerInput);
             // Occupies inserted position with player
-            map[player.Position.Row,player.Position.Column].Position.PlayerOccupy();
+            map[player.Position.Row,player.Position.Column].Position.
+                PlayerOccupy();
 
             return map;
         }

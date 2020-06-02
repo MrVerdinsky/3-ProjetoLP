@@ -36,12 +36,17 @@ namespace RogueLike
         }
 
         /// <summary>
-        /// Player recovers HP equal to powerUp.heal
+        /// Player recovers HP equal to powerUp.heal and destroys the powerup
         /// </summary>
         /// <param name="powerUp">To get heal value from powerUp</param>
-        public void HealHP(PowerUp powerUp)
+        public void PickPowerUp(PowerUp powerUp)
         {
-            HP += powerUp.Heal;
+            if (powerUp.Picked == false)
+            {
+                HP += powerUp.Heal;
+                powerUp.Position.PowerUpFree();
+                powerUp.PickUp();
+            }
         }
 
         /// <summary>

@@ -4,7 +4,8 @@ namespace RogueLike
     {
         internal int Row        { get; set; }
         internal int Column     { get; set; }
-        internal bool Playable      { get; set; } = true;
+        internal bool Empty         { get; set; } = true;
+        internal bool Walkable      { get; set; } = true;
         internal bool HasPlayer     { get; set; } = false;
         internal bool HasEnemy      { get; set; } = false;
         internal bool HasPowerUp    { get; set; } = false;
@@ -12,7 +13,7 @@ namespace RogueLike
         
 
         /// <summary>
-        /// Playable position
+        /// Creates a position
         /// </summary>
         /// <param name="row">Number of row</param>
         /// <param name="column">Number of column</param>
@@ -25,26 +26,34 @@ namespace RogueLike
 
         public void PlayerFree(){
             HasPlayer    = false;
-            Playable     = true;
+            Empty     = true;
+            Walkable     = true;
         }
         public void EnemyFree(){
             HasEnemy    = false;
-            Playable    = true;
+            Empty    = true;
+            Walkable    = true;
         }
         public void PowerUpFree(){
             HasPowerUp  = false;
+            Empty    = true;
+            Walkable    = true;
         }
 
         public void PlayerOccupy(){
             HasPlayer   = true;
-            Playable    = false;
+            Empty    = false;
+            Walkable    = false;
         }
         public void EnemyOccupy(){
             HasEnemy    = true;
-            Playable    = false;
+            Empty    = false;
+            Walkable    = false;
         }
         public void PowerUpOccupy(){
             HasPowerUp  = true;
+            Empty    = false;
+            Walkable    = true;
         }
     }
 }

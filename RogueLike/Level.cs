@@ -21,6 +21,10 @@ namespace RogueLike
         }
         // public Level(){}
 
+        /// <summary>
+        /// Gets all level paramaters
+        /// </summary>
+        /// <param name="map"></param>
         public void CreateLevel(Map[,] map)
         {
             Map[,] auxMap;
@@ -42,7 +46,7 @@ namespace RogueLike
                 auxNum = Log(LevelNum);
 
             }
-            EnemyNum = auxNum;
+            EnemyNum = 1;
         }
         /// <summary>
         /// Gets enemies random positions
@@ -50,17 +54,13 @@ namespace RogueLike
         /// <param name="map">Map variable</param>
         private void GetEnemyPos(Map[,] map)
         {
-            // if (enemies != null)
-            // {
-            //     Array.Clear(enemies, 0, enemies.Length);
-            // }
-
+            
             enemies = new Enemy[EnemyNum];
             
             // Gives a temporary position to each enemy
             for (int i = 0; i < EnemyNum; i++)
             {
-                enemies[i] = new Enemy(new Position(1,1), 1);
+                enemies[i] = new Enemy(new Position(1,1), 5);
             }
 
             // Randomize all enemies positions
@@ -76,14 +76,16 @@ namespace RogueLike
                         
                     for (int j = 0; j < i; j++)
                     {
-                        if (enemies[i].Position.Row == enemies[j].Position.Row &&enemies[i].Position.Column == enemies[j].Position.Column)
+                        if ((enemies[i].Position.Row == enemies[j].Position.Row && 
+                            enemies[i].Position.Column == enemies[j].Position.Column) ||
+                            map[enemies[i].Position.Row, enemies[i].Position.Column].Position.Empty)
                         {
                             reroll = true;
                             i --;
                             break;
                         }
                     }
-                    
+                
                     if (reroll)
                         continue;
                   
@@ -91,9 +93,7 @@ namespace RogueLike
                 // foreach (Enemy enemy in enemies)
                 // {
                 //     Console.WriteLine($"enemy pos: {enemy.Position.Row}, {enemy.Position.Column}");
-                // }
-
-                
+                // }     
             }
         }
 

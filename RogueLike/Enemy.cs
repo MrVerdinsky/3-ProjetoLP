@@ -350,7 +350,7 @@ namespace RogueLike
             ////////////////////////////////////////////////////////////////////
             
             // BOTTOM LEFT /////////////////////////////////////////////////////
-            if (distanceX > 0 && distanceY > 0) 
+            if (distanceX < 0 && distanceY > 0) 
             {   // IF X < Y
                 if (distanceX < distanceY)  
                 {   // WALKS LEFT

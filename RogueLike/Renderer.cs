@@ -1,8 +1,10 @@
 using System;
+using System.Text;
 namespace RogueLike
 {
     sealed public class Renderer
     {
+        
         /// <summary>
         /// Prints the map
         /// </summary>
@@ -14,12 +16,12 @@ namespace RogueLike
         public void Map(Map[,] map, int rows, int columns, 
                             PowerUp[] powerUps,Enemy[] enemies)
         {
+            Console.OutputEncoding = Encoding.UTF8;
             // Prints the meaning of each symbol in the map
             Console.WriteLine();
-            Console.Write("| -P - Player | -M - Minion |  -B - Boss |\n");
-            Console.Write("| SP - Small Power-Up | SM - Medium Power-Up |" + 
-                                " BP - Big Power-Up |\n");
-            Console.Write("| O - Obstacle | E - Exit |\n");
+            Console.Write("|\u2654 - Player|\u265F - Minion|\u265A - Boss|\n");
+            Console.Write("|\u2749 - Small Power-Up |\u2740 - Medium Power-Up|\n");
+            Console.Write("|\u2740 - Medium Power-Up |\u2716 - Obstacle|\n");
 
             for (int i = 0; i < rows; i++)
             {   
@@ -39,14 +41,14 @@ namespace RogueLike
 
                     // If the square has a player
                     if (map[i,j].Position.HasPlayer)
-                        Console.Write("|-P|");
+                        Console.Write("|\u2654 |");
                     
                     // Prints all enemies in the list
                     if (map[i,j].Position.HasEnemy)
                         foreach (Enemy enemy in enemies)
                         {
-                            if (enemy.damage == 5) Console.Write($"|-M|");
-                            else Console.Write("|-B|");
+                            if (enemy.damage == 5) Console.Write($"|\u265F |");
+                            else Console.Write("|\u265A |");
                         }
                     
                     //Prints all power Ups in the list
@@ -54,10 +56,10 @@ namespace RogueLike
                         foreach (PowerUp powerUp in powerUps)
                             if (powerUp.Picked == false)
                             {
-                                if (powerUp.Heal == 4) Console.Write("|SP|");
+                                if (powerUp.Heal == 4) Console.Write("|\u2749 |");
                                 else if (powerUp.Heal == 8) 
-                                            Console.Write("|MP|");
-                                else Console.Write("|BP|"); 
+                                            Console.Write("|\u273E |");
+                                else Console.Write("|\u2740 |"); 
                             }
                     
                 }

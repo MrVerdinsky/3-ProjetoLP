@@ -14,14 +14,20 @@ namespace RogueLike
         /// <param name="powerUps">List of PowerUps</param>
         /// <param name="enemies">List of enemies</param>
         public void Map(Map[,] map, int rows, int columns, 
-                            PowerUp[] powerUps,Enemy[] enemies)
-        {
+                            PowerUp[] powerUps,Enemy[] enemies,
+                            Player player, string turn)
+        {            
             Console.OutputEncoding = Encoding.UTF8;
             // Prints the meaning of each symbol in the map
             Console.WriteLine();
-            Console.Write("|\u2654 - Player|\u265F - Minion|\u265A - Boss|\n");
-            Console.Write("|\u2749 - Small Power-Up |\u2740 - Medium Power-Up|\n");
-            Console.Write("|\u2740 - Medium Power-Up |\u2716 - Obstacle|\n");
+            Console.Write(" _________________________________________________________\n");
+            Console.Write("|\u2654 - Player||\u2749 - Small Power-Up | \u2716 - Obstacle            |\n");
+            Console.Write("|\u265F - Minion||\u273E - Medium Power-Up|                         |\n");
+            Console.Write("|\u265A - Boss  ||\u2740 - Large Power-Up |                         |\n");
+            Console.Write("|                                                         |\n");
+            Console.Write($"|Moves Left: {player.Movement}                       Arrow Keys - to move |\n");
+            Console.Write($"|Player HP : {player.HP,-5}  - {turn} Turn -      Escape - to leave|\n");
+            Console.Write("|_________________________________________________________|\n");
 
             for (int i = 0; i < rows; i++)
             {   

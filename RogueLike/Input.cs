@@ -6,6 +6,9 @@ namespace RogueLike
 
         string playerInput;
         private static Renderer print;
+        /// <summary>
+        /// Class Constructor
+        /// </summary>
         public Input()
         {
             print = new Renderer();
@@ -49,23 +52,33 @@ namespace RogueLike
         /// <summary>
         /// Gets a map with all positions updated
         /// </summary>
-        /// <param name="player"></param>
-        /// <param name="map"></param>
-        /// <returns></returns>
+        /// <param name="player">Player's position</param>
+        /// <param name="map">All map Positions</param>
+        /// <returns>Returns a map position for the player</returns>
         public Map[,] GetPosition(Player player, Map[,] map)
         {
             // players input
-            char playerInput; 
-            // Frees the player position
-            map[player.Position.Row, player.Position.Column].Position.
-                PlayerFree();
-            // Gets player input
-            playerInput = Console.ReadLine()[0];
-            // Moves player to new position
-            player.Move(playerInput);
-            // Occupies inserted position with player
-            map[player.Position.Row,player.Position.Column].Position.
-                PlayerOccupy();
+            char playerInput;
+                // Frees the player position
+                map[player.Position.Row, player.Position.Column].Position.
+                    PlayerFree();
+
+                // Gets player input
+                playerInput = Console.ReadLine()[0];
+
+                // Moves player to new free position
+                if(player.Move(map, playerInput) == false)
+                {
+                   Console.WriteLine("An enemy blocks the way!");
+                }
+                    
+                else
+                    map[player.Position.Row, player.Position.Column].Position.
+                    PlayerFree();
+                    // Occupies inserted position with player
+                    map[player.Position.Row,player.Position.Column].Position.
+                        PlayerOccupy();
+               
 
             return map;
         }

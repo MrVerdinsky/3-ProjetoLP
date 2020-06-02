@@ -1,3 +1,4 @@
+using System; //tESTING
 namespace RogueLike
 {
     /// <summary>
@@ -48,35 +49,59 @@ namespace RogueLike
         }
 
         /// <summary>
-        /// Moves the player
+        /// Moves the Player
         /// </summary>
+        /// <param name="map">All map Positions</param>
         /// <param name="input">Gets which character the user pressed</param>
-        public void Move(char input)
+        /// <returns>Returns true if the movement is possible 
+        /// otherwise false</returns>
+        public bool Move(Map[,] map, char input)
         {
             Movement -= 1;
             HP -= 1;
             if (HP < 1) IsAlive = false;
 
+            //Conditions used to check if 
+            //chosen Input goes into an occupied position
             switch(input)
             {
                 case 'a':
-                    this.Position.Column -= 1;
-                    break;
+                    if (map[this.Position.Row,this.Position.Column-1].
+                        Position.Walkable == false)
+                            return false;
+                    else
+                        this.Position.Column -= 1;
+                    return true;
                 case 'd':
-                    this.Position.Column += 1;
-                    break;
+                    if (map[this.Position.Row, this.Position.Column+1].
+                        Position.Walkable == false)
+                            return false;
+                    else
+                        this.Position.Column += 1;
+                    return true;
                 case 'w':
-                    this.Position.Row -= 1;
-                    break;
+                    if (map[this.Position.Row-1, this.Position.Column].
+                        Position.Walkable == false)
+                            return false;
+                    else
+                        this.Position.Row -= 1;
+                    return true;
                 case 's':
-                    this.Position.Row += 1;
-                    break;
+                    if (map[this.Position.Row+1, this.Position.Column].
+                    Position.Walkable == false)
+                            return false;
+                    else
+                        this.Position.Row += 1;
+                    return true;
                 default:
-                    // PEDIR AO RENDER PARA IMRPIMIR QUE N ACEITA COMANDO
-                    break;
-            } 
+                    break;// PEDIR AO RENDER PARA IMRPIMIR QUE N ACEITA COMANDO
+            }
+            return false;
         }
 
+        /// <summary>
+        /// Resets the number of times the player can move in a turn
+        /// </summary>
         public void MovementReset()
         {
             Movement = 2;

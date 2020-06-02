@@ -7,18 +7,16 @@ namespace RogueLike
         bool gameOver;
         Player player;
         Map[,] map;
-        
-
 
         public Game(int rows, int columns)
         {
             // Instances / Variables
+            Level level     = new Level(rows, columns);
             Renderer render = new Renderer();
             Input input     = new Input(); 
             map             = new Map[rows, columns];
             string playerInput;
-            Enemy[] enemies = new Enemy[1];
-
+            Enemy[] enemies = new Enemy[100];
             // Prints Initial Menu
             render.PrintMenu();
 
@@ -33,15 +31,16 @@ namespace RogueLike
                 CreateMap(rows, columns);
                 CreatePlayer(0, rows, columns); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
                 
-                enemies[0] = new Enemy(new Position(1,1), 1); ////////////////// < INIMIGO PARA TESTAR
+                // enemies[0] = new Enemy(new Position(1,1), 1); ////////////////// < INIMIGO PARA TESTAR
 
                 gameOver = false;
                 while (gameOver == false)
                 {
+
+                    level.CreateLevel(map);
+
                     // Resets Movement
                     player.MovementReset(); 
-
-
 
                     // Player Movement and Map render -> 2 Movements
                     render.Map(map, rows, columns);
@@ -51,14 +50,13 @@ namespace RogueLike
 
 
                     // Player gets damage if the he's 1 square distance
-                    foreach (Enemy enemy in enemies)
-                        if (DamagePosition(player, enemy))
-                            player.TakeDamage(enemy);
+                    // foreach (Enemy enemy in enemies)
+                    //     if (DamagePosition(player, enemy))
+                    //         player.TakeDamage(enemy);
                     
 
-
-
                     Console.WriteLine("\nHP --------- " + player.HP); /////////////// TEMPORARIO PARA TESTAR
+                    level.LevelNum ++;
                 }
             }
 

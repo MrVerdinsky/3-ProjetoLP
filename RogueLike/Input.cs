@@ -64,7 +64,7 @@ namespace RogueLike
             // Frees the player position
             map[player.Position.Row, player.Position.Column].Position.PlayerFree();
             // Gets player input
-            playerInput = Console.ReadKey().KeyChar;
+            playerInput = Console.ReadLine()[0];
             // Moves player to new position
             player.Move(playerInput);
             // Occupies inserted position with player

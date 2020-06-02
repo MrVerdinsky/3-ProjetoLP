@@ -16,33 +16,48 @@ namespace RogueLike
         //Controls all Menu Options until players chooses new game
         public string MenuOptions()
         {
+            bool inMenu = false;
             //Keeps running until players starts new game
             do
             {
                 playerInput = Console.ReadLine();
-                
-                switch(playerInput)
+                if (!inMenu)
+                {
+                    switch(playerInput)
                     {
-                case "1":
-                    break;
-                case "2":
-                    break;
-                case "3":
-                    break;
-                case "4":
-                    break;
-                case "5":
-                    return playerInput;
-                
-                //Returns the input here so the players goes back to main menu
-                case "":
-                    print.PrintMenu();
-                    MenuOptions();
-                    return playerInput;
-                default:
-                    print.PrintInputError();
-                    break;
+                        case "1":
+                            break;
+                        case "2":
+                            inMenu = true;
+                            break;
+                        case "3":
+                            print.PrintInstructions();
+                            inMenu = true;
+                            break;
+                        case "4":
+                            print.PrintCredits();
+                            inMenu = true;
+                            break;
+                        case "5":
+                            print.PrintExitMsg();
+                            return playerInput;
+                        //Returns the input here so the players goes back to main menu
+                            
+                        default:
+                            print.PrintInputError();
+                            break;
                     }
+                }
+                else
+                {
+                    if (playerInput == "" || playerInput != "1" ||
+                        playerInput != "2" || playerInput != "3" || 
+                        playerInput != "4" || playerInput != "5")
+                    {
+                        print.PrintMenu();
+                        MenuOptions();
+                    }
+                }
 
             }while(playerInput != "1");
 
@@ -66,8 +81,8 @@ namespace RogueLike
                 // Gets player input
                 playerInput = Console.ReadLine()[0];
 
-                // Moves player to new free position
-                if(player.Move(map, playerInput))
+                // Moves player to new free position    
+                if(player.Move(map, playerInput) == true)
                     map[player.Position.Row, player.Position.Column].Position.
                     PlayerFree();
                     // Occupies inserted position with player

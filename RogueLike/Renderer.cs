@@ -1,9 +1,16 @@
 using System;
 using System.Text;
+using System.Collections.Generic;
 namespace RogueLike
 {
     sealed public class Renderer
     {
+        List<string> actions;
+
+        public Renderer()
+        {
+            actions = new List<string>();
+        }
         
         /// <summary>
         /// Prints the map
@@ -20,14 +27,22 @@ namespace RogueLike
             Console.OutputEncoding = Encoding.UTF8;
             // Prints the meaning of each symbol in the map
             Console.WriteLine();
-            Console.Write(" _________________________________________________________\n");
-            Console.Write("|\u2654 - Player||\u2749 - Small Power-Up | \u2716 - Obstacle            |\n");
-            Console.Write("|\u265F - Minion||\u273E - Medium Power-Up|                         |\n");
-            Console.Write("|\u265A - Boss  ||\u2740 - Large Power-Up |                         |\n");
-            Console.Write("|                                                         |\n");
-            Console.Write($"|Moves Left: {player.Movement}                       Arrow Keys - to move |\n");
-            Console.Write($"|Player HP : {player.HP,-5}  - {turn} Turn -      Escape - to leave|\n");
-            Console.Write("|_________________________________________________________|\n");
+            Console.Write(" _________________________________________________" +
+                            "________\n");
+            Console.Write("|\u2654 - Player||\u2749 - Small Power-Up | \u2716" +
+                            " - Obstacle            |\n");
+            Console.Write("|\u265F - Minion||\u273E - Medium Power-Up|       " +
+                            "                  |\n");
+            Console.Write("|\u265A - Boss  ||\u2740 - Large Power-Up |   ____" +
+                            "__________________|\n");
+            Console.Write("|                                   |A/W/S/D or   " +
+                            "  *KEYS*|\n");
+            Console.Write($"|Moves Left: {player.Movement}     >>METER LVL<< " +
+                            "   |Arrow Keys - to move |\n");
+            Console.Write($"|Player HP : {player.HP,-5} - {turn} Turn -  |   " +
+                            " Escape - to leave|\n");
+            Console.Write("|___________________________________|_____________" +
+                            "________|\n");
 
             for (int i = 0; i < rows; i++)
             {   
@@ -66,9 +81,10 @@ namespace RogueLike
                         foreach (PowerUp powerUp in powerUps)
                             if (powerUp.Picked == false)
                             {
-                                if (powerUp.Heal == 4) Console.Write("|\u2749 |");
+                                if (powerUp.Heal == 4) 
+                                    Console.Write("|\u2749 |");
                                 else if (powerUp.Heal == 8) 
-                                            Console.Write("|\u273E |");
+                                    Console.Write("|\u273E |");
                                 else Console.Write("|\u2740 |"); 
                             }
                     
@@ -137,6 +153,48 @@ namespace RogueLike
         public void PlayerTurn()
         {
             Console.WriteLine("\nPlayer Turn");
+        }
+
+
+        public void GameActions(Player p1)
+        {
+   
+            foreach (String action in actions)
+            {
+                Console.WriteLine(action);
+            }
+        }
+
+        public void GameActions(PowerUp pu)
+        {
+            if (pu.Heal == 4)
+            {
+                actions.Add($"\nHurray, you ate a piece of cheese and healed " +
+                    $"yourself for {pu.Heal} HP!!");
+            }
+            else if (pu.Heal == 8)
+            {
+                actions.Add($"\nYou found a Broiled coyote heart with basil " +
+                    $"and healed yourself for {pu.Heal} HP!! ");
+            }
+            else
+                actions.Add($"\nYou killed a snake with your bare hands and " +
+                    $"ate it. You heal yourself for {pu.Heal} HP!! ");
+
+            foreach (String action in actions)
+            {
+                Console.WriteLine(action);
+            }
+        }
+
+        public void GameActions(Enemy enemy)
+        {
+            
+
+            foreach (String action in actions)
+            {
+                Console.WriteLine(action);
+            }
         }
     }
 }

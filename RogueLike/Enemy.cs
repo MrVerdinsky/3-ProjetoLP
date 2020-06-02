@@ -19,13 +19,22 @@ namespace RogueLike
             this.damage             = damage;
         }
 
-        public void Move(Player player, int random, Map[,] map, 
-                        int rows, int columns)
+        /// <summary>
+        /// Compares the enemy's position with the player position.
+        /// Checks the closest path beetween both of them.
+        /// Moves the enemy to the nearest walkable position
+        /// </summary>
+        /// <param name="player">Gets player position</param>
+        /// <param name="random">Random number to generate movement</param>
+        /// <param name="map">Gets main map</param>
+        /// <param name="rows">Gets game rows</param>
+        /// <param name="columns">Gets game columns</param>
+        public void Move(Player player, int random, Map[,] map)
         {
             int p1R = player.Position.Row;
             int p1C = player.Position.Column;
-            int eR = this.Position.Row;
-            int eC = this.Position.Column;
+            int eR  = this.Position.Row;
+            int eC  = this.Position.Column;
 
             int distanceX = (p1C - eC);
             int distanceY = (p1R - eR);

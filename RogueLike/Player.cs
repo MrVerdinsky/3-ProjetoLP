@@ -6,8 +6,9 @@ namespace RogueLike
     /// </summary>
     sealed public class Player : Character
     {
-        internal int    HP          { get; private set; }
-        internal bool   IsAlive     { get; private set; }
+        internal int    HP              { get; private set; }
+        public int      Movement        { get; private set; }
+        internal bool   IsAlive         { get; private set; }
 
         /// <summary>
         /// Creates the player
@@ -18,7 +19,6 @@ namespace RogueLike
         public Player (Position position, int gameRows, int gameColumns)
         {
             base.Position           = position;
-            base.Movement           = 2;
             HP                      = (gameRows * gameColumns) / 4;
             IsAlive                 = true;
         }
@@ -31,9 +31,7 @@ namespace RogueLike
         {
             HP -= enemy.damage;
             if (HP - enemy.damage < 1)
-            {
                 IsAlive = false;
-            }
         }
 
         /// <summary>
@@ -59,54 +57,44 @@ namespace RogueLike
         /// otherwise false</returns>
         public bool Move(Map[,] map, char input)
         {
-            
-            // If movement is > 0, removes 1 movement and moves the player
-            if (base.Movement > 0)
-            {
-                base.Movement -= 1;
+            Movement -= 1;
+            HP -= 1;
+            if (HP < 1) IsAlive = false;
 
-                //Conditions used to check if 
-                //chosen Input goes into an occupied position
-                switch(input)
-                {
-                    case 'a':
-                        if (map[this.Position.Row, 
-                            this.Position.Column-1].Position.Walkable == false)
-                                return false;
-                        else
-                            this.Position.Column -= 1;
-                        return true;
-                    case 'd':
-                        if (map[this.Position.Row, 
-                            this.Position.Column+1].Position.Walkable == false)
-                                return false;
-                        else
-                            this.Position.Column += 1;
-                        return true;
-                    case 'w':
-                        if (map[this.Position.Row-1, 
-                            this.Position.Column].Position.Walkable == false)
-                                return false;
-                        else
-                            this.Position.Row -= 1;
-                        return true;
-                    case 's':
-                        if (map[this.Position.Row+1, 
-                            this.Position.Column].Position.Walkable == false)
-                                return false;
-                        else
-                            this.Position.Row += 1;
-                        return true;
-                    default:
-                        break;// PEDIR AO RENDER PARA IMRPIMIR QUE N ACEITA COMANDO
-                        
-                }
-            
-            }
-            // If the player has no movements left
-            else
+            //Conditions used to check if 
+            //chosen Input goes into an occupied position
+            switch(input)
             {
-                // PEDIR AO RENDER PARA IMPRIMIR QUE NAO DA PARA ANDAR MAIS
+                case 'a':
+                    if (map[this.Position.Row,this.Position.Column-1].
+                        Position.Walkable == false)
+                            return false;
+                    else
+                        this.Position.Column -= 1;
+                    return true;
+                case 'd':
+                    if (map[this.Position.Row, this.Position.Column+1].
+                        Position.Walkable == false)
+                            return false;
+                    else
+                        this.Position.Column += 1;
+                    return true;
+                case 'w':
+                    if (map[this.Position.Row-1, this.Position.Column].
+                        Position.Walkable == false)
+                            return false;
+                    else
+                        this.Position.Row -= 1;
+                    return true;
+                case 's':
+                    if (map[this.Position.Row+1, this.Position.Column].
+                    Position.Walkable == false)
+                            return false;
+                    else
+                        this.Position.Row += 1;
+                    return true;
+                default:
+                    break;// PEDIR AO RENDER PARA IMRPIMIR QUE N ACEITA COMANDO
             }
             return false;
         }
@@ -116,7 +104,7 @@ namespace RogueLike
         /// </summary>
         public void MovementReset()
         {
-            base.Movement = 2;
+            Movement = 2;
         }
     } 
 }

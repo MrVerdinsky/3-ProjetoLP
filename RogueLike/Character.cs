@@ -6,6 +6,5 @@ namespace RogueLike
     public class Character
     {
         internal Position   Position { get; set; }
-        public int          Movement { get; protected set; }
     }
 }

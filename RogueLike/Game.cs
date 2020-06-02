@@ -18,14 +18,14 @@ namespace RogueLike
         public Game(int rows, int columns)
         {
             // Instances / Variables
-            Renderer render = new Renderer();
+            Renderer print = new Renderer();
             Input input     = new Input(); 
             map             = new Map[rows, columns];
             string playerInput;
 
             ////////////////////////////////////////////////////////////////////
             // Prints Initial Menu
-            render.PrintMenu();
+            print.PrintMenu();
             // Runs Menu Loop
             do
             {
@@ -56,36 +56,45 @@ namespace RogueLike
                     // Resets Movement
                     player.MovementReset(); 
 
-                    ///////////////////////////////////////////////////////////
-                    // Player Movement and Map render -> MOVEMENT 1 ////////////
-                    render.Map(map, rows, columns, powerUps, enemies);
-                    map = input.GetPosition(player, map);
-                    // Checks if the player got any powerUp
-                    foreach (PowerUp powerUp in powerUps)
-                        if (PowerUpPosition(player, powerUp))
-                            player.PickPowerUp(powerUp);
                     ////////////////////////////////////////////////////////////
-                    Console.WriteLine("\nHP --------- " + player.HP); /////////////// TEMPORARIO PARA TESTAR
-                    
-                    // Player Movement and Map render -> MOVEMENT 2 ////////////
-                    render.Map(map, rows, columns, powerUps, enemies);
-                    map = input.GetPosition(player, map);
-                    // Checks if the player got any powerUp
-                    foreach (PowerUp powerUp in powerUps)
-                        if (PowerUpPosition(player, powerUp))
-                            player.PickPowerUp(powerUp);
+                    // Player Movement and Map print ///////////////////////////
+                    print.PlayerTurn();
+                    while (player.Movement > 0 &&    // Player has 2 Movements
+                            player.IsAlive)          // Player is alive
+                    {
+                        print.Map(map, rows, columns, powerUps, enemies);
+                        map = input.GetPosition(player, map);
+                        // Checks if the player got any powerUp
+                        foreach (PowerUp powerUp in powerUps)
+                            if (PowerUpPosition(player, powerUp))
+                                player.PickPowerUp(powerUp);
+                        // Prints player HP
+                        print.PlayerHP(player);
+                    }
                     ////////////////////////////////////////////////////////////
-  
 
+                    // Enemy Turn //////////////////////////////////////////////
+                    print.EnemyTurn();
+                    foreach (Enemy enemy in enemies)
+                    {
+                        map[enemy.Position.Row, enemy.Position.Column].Position.
+                            EnemyFree();
+                        //enemy.Move(player, 1, map, rows, columns);
+                        map[enemy.Position.Row, enemy.Position.Column].Position.
+                            EnemyOccupy();
+                        print.Map(map, rows, columns, powerUps, enemies);
+                    }
                     // Player gets damage if the he's 1 square distance
                     foreach (Enemy enemy in enemies)
                         if (DamagePosition(player, enemy))
                             player.TakeDamage(enemy);
-                    
-                    Console.WriteLine("\n" + powerUps[0].Picked);
+                    ////////////////////////////////////////////////////////////
 
 
-                    Console.WriteLine("\nHP --------- " + player.HP); /////////////// TEMPORARIO PARA TESTAR
+
+                    // Prints player HP or ends the game
+                    if (player.IsAlive) print.PlayerHP(player);
+                    else Quit();
                 }
             }
         }
@@ -199,7 +208,7 @@ namespace RogueLike
         {
             enemies = new Enemy[i];
 
-            enemies[0] = new Enemy(new Position(1,1), 5);   // TESTEEEE
+            enemies[0] = new Enemy(new Position(3,3), 5);   // TESTEEEE
             
             foreach (Enemy enemy in enemies)
             {

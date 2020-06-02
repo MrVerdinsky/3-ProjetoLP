@@ -10,7 +10,7 @@ namespace RogueLike
         public int PowerUpNum{get; set;}
         public int LevelNum{get; set;}
         public Enemy[] enemies{get; set;}
-        private Random random = new Random();
+        public static Random random = new Random();
 
         public Level(int firstRowNum, int firstColumnNum)
         {

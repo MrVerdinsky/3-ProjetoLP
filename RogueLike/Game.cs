@@ -49,12 +49,13 @@ namespace RogueLike
 
                 gameOver = false;
                 level.CreateLevel(map);
+                CreateEnemy(level);
                 while (gameOver == false)
                 {
                     // Creates enemies
-                    CreateEnemy(level);
+                    
                     // Resets Movement
-                    // player.MovementReset();                 
+                    player.MovementReset();                 
                     // Player Movement and Map render -> MOVEMENT 1 ////////////
                     render.Map(map, rows, columns, powerUps, level.enemies);
                     map = input.GetPosition(player, map);
@@ -73,7 +74,7 @@ namespace RogueLike
                     // Checks if the player got any powerUp
                     foreach (PowerUp powerUp in powerUps)
                         if (PowerUpPosition(player, powerUp))
-                            player.PickPowerUp(powerUp);
+                            player.PickPowerUp(powerUp);    
                     // foreach (Map map in map)
                     // {
                     //     Console.WriteLine($"Has enemy: {map.Position.HasEnemy}");
@@ -188,13 +189,13 @@ namespace RogueLike
         }
         private void CreateEnemy(Level level)
         {            
-            foreach (Map aux in map)
-            {
-                aux.Position.EnemyFree();
-            }
+            // foreach (Map aux in map)
+            // {
+            //     aux.Position.EnemyFree();
+            // }
             foreach (Enemy enemy in level.enemies)
             {
-                Console.WriteLine($"enemy pos: {enemy.Position.Row}, {enemy.Position.Column}");
+                // Console.WriteLine($"enemy pos: {enemy.Position.Row}, {enemy.Position.Column}");
                 map[enemy.Position.Row, 
                     enemy.Position.Column].Position.EnemyOccupy();
             }

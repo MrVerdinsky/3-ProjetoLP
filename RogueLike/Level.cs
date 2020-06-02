@@ -46,7 +46,7 @@ namespace RogueLike
                 auxNum = Log(LevelNum);
 
             }
-            EnemyNum = 1;
+            EnemyNum = auxNum;
         }
         /// <summary>
         /// Gets enemies random positions
@@ -54,6 +54,10 @@ namespace RogueLike
         /// <param name="map">Map variable</param>
         private void GetEnemyPos(Map[,] map)
         {
+            // foreach (Map point in map)
+            // {
+            //     Console.WriteLine($"Empty  [{point.Position.Row}, {point.Position.Column}]: {point.Position.Empty}");   
+            // }
             
             enemies = new Enemy[EnemyNum];
             
@@ -73,17 +77,33 @@ namespace RogueLike
                     int randColumn  = random.Next(ColumnNum);
 
                     enemies[i].Position = new Position(randRow, randColumn); 
+
                         
                     for (int j = 0; j < i; j++)
                     {
-                        if ((enemies[i].Position.Row == enemies[j].Position.Row && 
-                            enemies[i].Position.Column == enemies[j].Position.Column) ||
-                            map[enemies[i].Position.Row, enemies[i].Position.Column].Position.Empty)
+                        // Console.WriteLine($"pos({i}): [{enemies[i].Position.Row}, {enemies[i].Position.Column}] - {map[enemies[i].Position.Row, enemies[i].Position.Column].Position.Empty}");
+                        // Checks if the randomized position if free and it is 
+                        // different from another enemies positions
+                        if ((enemies[i].Position.Row == enemies[j].
+                            Position.Row && 
+                            enemies[i].Position.Column == enemies[j].
+                            Position.Column) ||
+                            (!(map[enemies[i].Position.Row, enemies[i].
+                            Position.Column].Position.Empty)))
                         {
                             reroll = true;
                             i --;
                             break;
                         }
+                    }
+
+                    if (!(map[
+                        enemies[i].Position.Row, 
+                        enemies[i].Position.Column].
+                        Position.Empty))
+                    {
+                        reroll = true;
+                        i --;
                     }
                 
                     if (reroll)
@@ -105,7 +125,7 @@ namespace RogueLike
         {
             int a;
             a = random.Next((RowNum * ColumnNum)/2);
-            return (int)(a * Math.Log(1.2 * (x + 1)));
+            return (int)( a * Math.Log(1.2 * (x + 1)) + 1);
         }
     }
 }

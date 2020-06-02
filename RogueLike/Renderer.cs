@@ -36,7 +36,7 @@ namespace RogueLike
                 {
                     // If the square is empty   
                     if (map[i,j].Position.Empty)
-                        Console.Write($"|{i}{j}|");
+                        Console.Write($"|  |");
                     // If the square has a player
                     if (map[i,j].Position.HasPlayer)
                         Console.Write("|-P|");
@@ -45,12 +45,12 @@ namespace RogueLike
                     {
                         if (map[i,j].Position.HasEnemy)
                         {
-                            if (enemy.damage == 5) Console.Write($"|M{j}|");
+                            if (enemy.damage == 5) Console.Write($"|-M|");
                             if (enemy.damage == 10) Console.Write("|-B|");
+                            else break;
                         }
                     }
-                    
-
+    
                     foreach (PowerUp powerUp in powerUps)
                     if (map[i,j].Position.HasPowerUp && powerUp.Picked == false)
                     {

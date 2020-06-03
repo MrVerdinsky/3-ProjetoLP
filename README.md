@@ -27,8 +27,6 @@
 
 ### Resumo de lógica implementada (algoritmos não triviais)
 
-
-
 ### Diagrama UML
 
 ### Trocas de ideias/referências

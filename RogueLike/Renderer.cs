@@ -276,5 +276,10 @@ namespace RogueLike
             Console.WriteLine("|_____________________________________________"+
             "____________________________|");
         }
+
+        public void BlankLine()
+        {
+            Console.WriteLine();
+        }
     }
 }

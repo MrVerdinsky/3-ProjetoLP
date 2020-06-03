@@ -26,19 +26,16 @@ namespace RogueLike
             string turn;
 
             ////////////////////////////////////////////////////////////////////
-            // Prints Initial Menu
-            print.PrintMenu();
             // Runs Menu Loop
             do
             {
+                print.BlankLine();
+                // Prints Initial Menu
+                print.PrintMenu();
                 // Gets user Input
                 playerInput = input.MenuOptions();
                 if(playerInput == "1") break;
                 if(playerInput == "5") break;
-
-                /// ESPALHAR MAGIA AQUI E METER AS OPCOES, A 1 E a 5 JA TAO FEITAS
-                
-
             } while (playerInput != "5" || playerInput != "1");
             ////////////////////////////////////////////////////////////////////
             

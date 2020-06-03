@@ -16,54 +16,31 @@ namespace RogueLike
         //Controls all Menu Options until players chooses new game
         public string MenuOptions()
         {
-            bool inMenu = false;
             //Keeps running until players starts new game
-            do
+            playerInput = Console.ReadLine();
+            switch(playerInput)
             {
-                playerInput = Console.ReadLine();
-                if (!inMenu)
-                {
-                    switch(playerInput)
-                    {
-                        case "1":
-                            break;
-                        case "2":
-                            inMenu = true;
-                            break;
-                        case "3":
-                            print.PrintInstructions();
-                            inMenu = true;
-                            break;
-                        case "4":
-                            print.PrintCredits();
-                            inMenu = true;
-                            break;
-                        case "5":
-                            print.PrintExitMsg();
-                            return playerInput;
-                        //Returns the input here so the players goes back to main menu
-                            
-                        default:
-                            print.PrintInputError();
-                            break;
-                    }
-                }
-                else
-                {
-                    if (playerInput == "" || playerInput != "1" ||
-                        playerInput != "2" || playerInput != "3" || 
-                        playerInput != "4" || playerInput != "5")
-                    {
-                        print.PrintMenu();
-                        MenuOptions();
-                    }
-                }
-
-            }while(playerInput != "1");
-
-            //returns player's input here if he chooses new game or quits.
+                case "1":
+                    break;
+                case "2":
+                    break;
+                case "3":
+                    print.PrintInstructions();
+                    break;
+                case "4":
+                    print.PrintCredits();
+                    break;
+                case "5":
+                    print.PrintExitMsg();
+                    return playerInput;
+                //Returns the input here so the players goes back to main menu
+                default:
+                    print.PrintInputError();
+                    break;
+            }
             return playerInput;
         }
+        
         /// <summary>
         /// Gets a map with all positions updated
         /// </summary>

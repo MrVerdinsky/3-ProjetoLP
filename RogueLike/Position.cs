@@ -35,9 +35,14 @@ namespace RogueLike
         /// <summary>
         /// Removes the Enemy position and declares it empty and walkable
         /// </summary>
-        public void EnemyFree(){
+        // public void EnemyFree(){
+        //     HasEnemy    = false;
+        //     Empty       = true;
+        //     Walkable    = true;
+        // }
+        public void EnemyFree(bool makeEmpty = true){
             HasEnemy    = false;
-            Empty       = true;
+            Empty       = makeEmpty;
             Walkable    = true;
         }
         /// <summary>

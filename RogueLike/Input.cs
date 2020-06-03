@@ -17,45 +17,38 @@ namespace RogueLike
         public string MenuOptions()
         {
             //Keeps running until players starts new game
-            do
+            playerInput = Console.ReadLine();
+            switch(playerInput)
             {
-                playerInput = Console.ReadLine();
-                
-                switch(playerInput)
-                    {
                 case "1":
-                    break;
+                    return playerInput;
                 case "2":
                     break;
                 case "3":
+                    print.PrintInstructions();
                     break;
                 case "4":
+                    print.PrintCredits();
                     break;
                 case "5":
+                    print.PrintExitMsg();
                     return playerInput;
-                
                 //Returns the input here so the players goes back to main menu
-                case "":
-                    print.PrintMenu();
-                    MenuOptions();
-                    return playerInput;
                 default:
                     print.PrintInputError();
                     break;
-                    }
-
-            }while(playerInput != "1");
-
-            //returns player's input here if he chooses new game or quits.
+            }
+            Console.ReadLine();
             return playerInput;
         }
+        
         /// <summary>
         /// Gets a map with all positions updated
         /// </summary>
         /// <param name="player">Player's position</param>
         /// <param name="map">All map Positions</param>
         /// <returns>Returns a map position for the player</returns>
-        public Map[,] GetPosition(Player player, Map[,] map)
+        public Map[,] GetPosition(Player player, Map[,] map, Renderer print)
         {
             // players input
             char playerInput;
@@ -66,19 +59,14 @@ namespace RogueLike
                 // Gets player input
                 playerInput = Console.ReadLine()[0];
 
-                // Moves player to new free position
-                if(player.Move(map, playerInput) == false)
-                {
-                   Console.WriteLine("An enemy blocks the way!");
-                }
-                    
-                else
+                // Moves player to new free position    
+                if(player.Move(map, playerInput, print) == true)
                     map[player.Position.Row, player.Position.Column].Position.
                     PlayerFree();
                     // Occupies inserted position with player
                     map[player.Position.Row,player.Position.Column].Position.
                         PlayerOccupy();
-               
+                    print.GetGameActions(player, playerInput);
 
             return map;
         }

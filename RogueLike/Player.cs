@@ -1,6 +1,7 @@
 using System; //tESTING
 namespace RogueLike
 {
+    
     /// <summary>
     /// Player class, created from Character class
     /// </summary>
@@ -9,6 +10,7 @@ namespace RogueLike
         internal int    HP              { get; private set; }
         public int      Movement        { get; private set; }
         internal bool   IsAlive         { get; private set; }
+        
 
         /// <summary>
         /// Creates the player
@@ -19,7 +21,8 @@ namespace RogueLike
         public Player (Position position, int gameRows, int gameColumns)
         {
             base.Position           = position;
-            HP                      = (gameRows * gameColumns) / 4;
+            // HP                      = (gameRows * gameColumns) / 4;
+            HP                      = 100;
             IsAlive                 = true;
         }
 
@@ -29,9 +32,9 @@ namespace RogueLike
         /// <param name="enemy">To get damage value from enemy</param>
         public void TakeDamage(Enemy enemy)
         {
-            HP -= enemy.damage;
             if (HP - enemy.damage < 1)
                 IsAlive = false;
+            HP -= enemy.damage;  
         }
 
         /// <summary>
@@ -40,14 +43,11 @@ namespace RogueLike
         /// <param name="powerUp">To get heal value from powerUp</param>
         public void PickPowerUp(Map[,] map, PowerUp powerUp)
         {
-            if (powerUp.Picked == false)
-            {
                 HP += powerUp.Heal;
                 map[powerUp.Position.Row, powerUp.Position.Column].Position.PowerUpFree();
                 map[powerUp.Position.Row, powerUp.Position.Column].Position.PlayerOccupy();
                 // powerUp.Position.PowerUpFree();
                 powerUp.PickUp();
-            }
         }
 
         /// <summary>
@@ -57,48 +57,73 @@ namespace RogueLike
         /// <param name="input">Gets which character the user pressed</param>
         /// <returns>Returns true if the movement is possible 
         /// otherwise false</returns>
-        public bool Move(Map[,] map, char input)
+        public bool Move(Map[,] map, char input, Renderer print)
         {
-            Movement -= 1;
-            HP -= 1;
-            if (HP < 1) IsAlive = false;
+            bool canMove = false;
 
             //Conditions used to check if 
             //chosen Input goes into an occupied position
-            switch(input)
+            try
             {
-                case 'a':
-                    if (map[this.Position.Row,this.Position.Column-1].
+                switch(input)
+                {
+                    case 'a':
+                        if (map[this.Position.Row,this.Position.Column-1].
+                            Position.Walkable == false)
+                                canMove = false;
+                        else
+                        {
+                            this.Position.Column -= 1;
+                            canMove = true;
+                            
+                        }
+                        break;   
+                    case 'd':
+                        if (map[this.Position.Row, this.Position.Column+1].
+                            Position.Walkable == false)
+                                canMove = false;
+                        else
+                        {
+                            this.Position.Column += 1;
+                            canMove = true;
+                        }                     
+                        break;
+                    case 'w':
+                        if (map[this.Position.Row-1, this.Position.Column].
+                            Position.Walkable == false)
+                                canMove = false;     
+                        else
+                        {
+                            this.Position.Row -= 1;
+                            canMove = true; 
+                        }   
+                        break;
+                    case 's':
+                        if (map[this.Position.Row+1, this.Position.Column].
                         Position.Walkable == false)
-                            return false;
-                    else
-                        this.Position.Column -= 1;
-                    return true;
-                case 'd':
-                    if (map[this.Position.Row, this.Position.Column+1].
-                        Position.Walkable == false)
-                            return false;
-                    else
-                        this.Position.Column += 1;
-                    return true;
-                case 'w':
-                    if (map[this.Position.Row-1, this.Position.Column].
-                        Position.Walkable == false)
-                            return false;
-                    else
-                        this.Position.Row -= 1;
-                    return true;
-                case 's':
-                    if (map[this.Position.Row+1, this.Position.Column].
-                    Position.Walkable == false)
-                            return false;
-                    else
-                        this.Position.Row += 1;
-                    return true;
-                default:
-                    break;// PEDIR AO RENDER PARA IMRPIMIR QUE N ACEITA COMANDO
+                                canMove = false;
+                        else
+                        {
+                            this.Position.Row += 1;
+                            canMove = true;
+                        }
+                        break;
+                    default:
+                        print.PrintInputError();
+                        break;
+                }
+                
             }
-            return false;
+            catch(IndexOutOfRangeException)
+            {}
+            if (canMove)
+            {
+                Movement -= 1;
+                HP -= 1;
+            }
+            if (HP < 1) IsAlive = false;
+            
+            return canMove;
         }
 
         /// <summary>

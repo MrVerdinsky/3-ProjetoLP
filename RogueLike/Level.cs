@@ -40,29 +40,27 @@ namespace RogueLike
             GetObstacleNum();
             // Sets obstacles to their position
             GetObsPos(map);
+            // Gets random number of power-ups
             GetPowerUpNum();
+            // Sets obstacles to their power-ups
             GetPowerUpPos(map);
-            // Console.WriteLine($"\npower up: {PowerUpNum}");
-            // Console.WriteLine($"enemy:    {EnemyNum}");
-            // Console.WriteLine($"obstacle: {ObstacleNum}");
-            
             
         }
 
         /// <summary>
-        /// ERA SUPOSTO TER O RAIO DO NÚMERO ALEATORIO DOS POWER UPS NEH
+        /// Gets a random number of power-ups
         /// </summary>
         private void GetPowerUpNum()
         {
-            int tempNum = 0;
+            int tempPowerUpNum = 0;
             int maxPUNum = AvailableArea/2;
-            while (tempNum >= maxPUNum || tempNum <= 0)
+            while (tempPowerUpNum >= maxPUNum || tempPowerUpNum <= 0)
             {
-                tempNum = 0;
-                tempNum = Logistic(LevelNum, maxPUNum);
+                tempPowerUpNum = 0;
+                tempPowerUpNum = Logistic(LevelNum, maxPUNum);
 
             }
-            PowerUpNum = tempNum;
+            PowerUpNum = tempPowerUpNum;
         }
 
         /// <summary>

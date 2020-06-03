@@ -1,4 +1,5 @@
 using System; // SO PARA TESTES, APAGAR <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+using System.Threading;
 
 namespace RogueLike
 {
@@ -6,8 +7,8 @@ namespace RogueLike
     {
         bool gameOver;
         Player player;
-        Enemy[] enemies;
-        PowerUp[] powerUps;
+        // Enemy[] enemies;
+        // PowerUp[] powerUps;
         Map[,] map;
     
         /// <summary>
@@ -23,21 +24,19 @@ namespace RogueLike
             Input input     = new Input(); 
             map             = new Map[rows, columns];
             string playerInput;
+            string turn;
 
             ////////////////////////////////////////////////////////////////////
-            // Prints Initial Menu
-            print.PrintMenu();
             // Runs Menu Loop
             do
             {
+                print.BlankLine();
+                // Prints Initial Menu
+                print.PrintMenu();
                 // Gets user Input
                 playerInput = input.MenuOptions();
                 if(playerInput == "1") break;
                 if(playerInput == "5") break;
-
-                /// ESPALHAR MAGIA AQUI E METER AS OPCOES, A 1 E a 5 JA TAO FEITAS
-                
-
             } while (playerInput != "5" || playerInput != "1");
             ////////////////////////////////////////////////////////////////////
             
@@ -50,7 +49,9 @@ namespace RogueLike
                 // CreatePowerUp(1); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
                 // CreateEnemy(1); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
                 
-                
+
+                print.PrintGameActions(); // Prints First Action
+
                 gameOver = false;
                 level.CreateLevel(map);
                 // CreateEnemy(level);                
@@ -61,72 +62,75 @@ namespace RogueLike
 
                     ////////////////////////////////////////////////////////////
                     // Player Movement and Map print ///////////////////////////
-                    print.PlayerTurn();
                     while (player.Movement > 0 &&    // Player has 2 Movements
                             player.IsAlive)          // Player is alive
                     {
-                        print.Map(map, rows, columns, level.PowerUps, level.enemies);
-                        map = input.GetPosition(player, map);
+                        turn = "Player";
+                        print.Map(map, rows, columns, level.PowerUps, level.enemies, 
+                                player, turn);
+                        map = input.GetPosition(player, map, print);
                         // Checks if the player got any powerUp
                         foreach (PowerUp powerUp in level.PowerUps)
-                        {
                             if (PowerUpPosition(player, powerUp))
-                            {
-                                Console.WriteLine("\npick up\n");
-                                player.PickPowerUp(map, powerUp);
-                            }
-                        }
-                        // Prints player HP
-                        print.PlayerHP(player);
+                                if (!powerUp.Picked)
+                                {
+                                    player.PickPowerUp(map, powerUp);
+                                    print.GetGameActions(powerUp);
+                                }
+                        print.PrintGameActions();
                     }
                     ////////////////////////////////////////////////////////////
 
                     // Enemy Turn //////////////////////////////////////////////
-                    print.EnemyTurn();
-                    foreach (Enemy enemy in level.enemies)
-                    {
-                        map[enemy.Position.Row, enemy.Position.Column].Position.
-                            EnemyFree();
-                        //enemy.Move(player, 1, map, rows, columns);
-                        map[enemy.Position.Row, enemy.Position.Column].Position.
-                            EnemyOccupy();
-                        print.Map(map, rows, columns, level.PowerUps, level.enemies);
+                    if (player.IsAlive)
+                    {   // Prints the map, moves enemy, prints the map
+                        foreach (Enemy enemy in level.enemies)
+                        {
+                            turn = "Enemy";
+                            print.Map(map, rows, columns, level.PowerUps, level.enemies, 
+                                    player, turn);
+                            if (map[enemy.Position.Row, enemy.Position.Column].Position.HasPowerUp)
+                            {
+                                map[enemy.Position.Row, enemy.Position.Column].
+                                    Position.EnemyFree(false);
+                            }
+                            else
+                            {
+                                map[enemy.Position.Row, enemy.Position.Column].
+                                    Position.EnemyFree(); 
+                            }
+                            Thread.Sleep(1000);
+                            enemy.Move(player, 1, map);
+                            map[enemy.Position.Row, enemy.Position.Column].
+                                Position.EnemyOccupy();
+                            print.Map(map, rows, columns, level.PowerUps, level.enemies, 
+                                    player, turn);
+                        }
+                        // Player gets damage if the he's 1 square distance
+                        foreach (Enemy enemy in level.enemies)
+                            if (DamagePosition(player, enemy))
+                            {
+                                player.TakeDamage(enemy);
+                                print.GetGameActions(enemy);
+                            }
+                        print.PrintGameActions();
                     }
-                    // Player gets damage if the he's 1 square distance
-                    foreach (Enemy enemy in level.enemies)
-                        if (DamagePosition(player, enemy))
-                            player.TakeDamage(enemy);
                     ////////////////////////////////////////////////////////////
 
 
-
                     // Prints player HP or ends the game
-                    if (player.IsAlive) print.PlayerHP(player);
-                    else Quit();
+                    if (!player.IsAlive)
+                    {
+                        print.Map(map, rows, columns, level.PowerUps, level.enemies, 
+                                player, "Enemy");
+                        print.GoodBye();
+                        Quit();
+                    }
                 }
             }
+        
         }
         ////////////////////////////////////////////////////////////////////////
-
-        /// <summary>
-        /// Compares character position with map position
-        /// </summary>
-        /// <param name="p1">Character position</param>
-        /// <param name="map">All map positions</param>
-        /// <param name="r">Number of Rows</param>
-        /// <param name="c">Number of Columns</param>
-        /// <returns>True if the position is the same otherwise false</returns>
-        private bool ComparePosition(Character p1, Map[,] map, int r, int c)
-        {
-            bool occupied = false;
-            for (int i = 0; i < r; i++) 
-                for (int j = 0; j < c; j++)
-                    if (p1.Position.Row == map[i,j].Position.Row &&
-                        p1.Position.Column == map[i,j].Position.Column)
-                        occupied = true;
-
-            return occupied;
-        }
 
         /// <summary>
         /// Compares character position with another character position
@@ -178,7 +182,6 @@ namespace RogueLike
                     map[i,j] = new Map (new Position(i,j));
         }
 
-        
         /// <summary>
         /// Creates player
         /// </summary>
@@ -199,7 +202,7 @@ namespace RogueLike
         // {
         //     powerUps = new PowerUp[i];
 
-        //     powerUps[0] = new PowerUp(new Position(0,1), 4);    // TESTEEEE
+        //     powerUps[0] = new PowerUp(new Position(0,1), 16);    // TESTEEEE
 
         //     foreach (PowerUp powerUp in powerUps)
         //     {   
@@ -207,15 +210,19 @@ namespace RogueLike
         //             powerUp.Position.Column].Position.PowerUpOccupy();
         //     }
         // }
-        // private void CreateEnemy(Level level)
-        // {            
-        //     // foreach (Map aux in map)
-        //     // {
-        //     //     aux.Position.EnemyFree();
-        //     // }
-        //     foreach (Enemy enemy in level.enemies)
+        
+        /// <summary>
+        /// Creates Enemies based on a random number
+        /// </summary>
+        /// <param name="i">Random Generated Number</param>
+        // private void CreateEnemy(int i)
+        // {
+        //     enemies = new Enemy[i];
+
+        //     enemies[0] = new Enemy(new Position(2,2), 5);   // TESTEEEE
+            
+        //     foreach (Enemy enemy in enemies)
         //     {
-        //         // Console.WriteLine($"enemy pos: {enemy.Position.Row}, {enemy.Position.Column}");
         //         map[enemy.Position.Row, 
         //             enemy.Position.Column].Position.EnemyOccupy();
         //     }

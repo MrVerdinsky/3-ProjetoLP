@@ -10,7 +10,6 @@ namespace RogueLike
         internal int    HP              { get; private set; }
         public int      Movement        { get; private set; }
         internal bool   IsAlive         { get; private set; }
-        Renderer print = new Renderer();
         
 
         /// <summary>
@@ -43,12 +42,9 @@ namespace RogueLike
         /// <param name="powerUp">To get heal value from powerUp</param>
         public void PickPowerUp(PowerUp powerUp)
         {
-            if (powerUp.Picked == false)
-            {
                 HP += powerUp.Heal;
                 powerUp.Position.PowerUpFree();
                 powerUp.PickUp();
-            }
         }
 
         /// <summary>
@@ -58,11 +54,9 @@ namespace RogueLike
         /// <param name="input">Gets which character the user pressed</param>
         /// <returns>Returns true if the movement is possible 
         /// otherwise false</returns>
-        public bool Move(Map[,] map, char input)
+        public bool Move(Map[,] map, char input, Renderer print)
         {
-            
             bool canMove = false;
-            if (HP < 1) IsAlive = false;
 
             //Conditions used to check if 
             //chosen Input goes into an occupied position
@@ -124,6 +118,8 @@ namespace RogueLike
                 Movement -= 1;
                 HP -= 1;
             }
+            if (HP < 1) IsAlive = false;
+            
             return canMove;
         }
 

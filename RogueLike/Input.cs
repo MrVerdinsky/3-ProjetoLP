@@ -70,7 +70,7 @@ namespace RogueLike
         /// <param name="player">Player's position</param>
         /// <param name="map">All map Positions</param>
         /// <returns>Returns a map position for the player</returns>
-        public Map[,] GetPosition(Player player, Map[,] map)
+        public Map[,] GetPosition(Player player, Map[,] map, Renderer print)
         {
             // players input
             char playerInput;
@@ -82,13 +82,13 @@ namespace RogueLike
                 playerInput = Console.ReadLine()[0];
 
                 // Moves player to new free position    
-                if(player.Move(map, playerInput) == true)
+                if(player.Move(map, playerInput, print) == true)
                     map[player.Position.Row, player.Position.Column].Position.
                     PlayerFree();
                     // Occupies inserted position with player
                     map[player.Position.Row,player.Position.Column].Position.
                         PlayerOccupy();
-               
+                    print.GetGameActions(player, playerInput);
 
             return map;
         }

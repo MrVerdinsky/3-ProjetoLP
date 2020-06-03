@@ -42,7 +42,7 @@ namespace RogueLike
             Console.Write($"|Player HP : {player.HP,-5} - {turn} Turn -  |   " +
                             " Escape - to leave|\n");
             Console.Write("|___________________________________|_____________" +
-                            "________|\n");
+                            "________|\n\n");
 
             for (int i = 0; i < rows; i++)
             {   
@@ -140,33 +140,34 @@ namespace RogueLike
                 "dotnet run -p RogueLike -- -r [NUMBER] -c [NUMBER]");
         }
 
-        public void PlayerHP(Player p1)
+
+        /// <summary>
+        /// Gets userInput action, adds to actions list as player movement
+        /// </summary>
+        /// <param name="p1">Player 1</param>
+        /// <param name="str">String to check which turn is it</param>
+        public void GetGameActions(Player p1, char input)
         {
-            Console.WriteLine("\nHP --------- " + p1.HP);
+            // Removes first element when the list is size 5
+            if (actions.Count > 5)
+                actions.RemoveAt(0);
+
+            if (input == 'w') actions.Add("\nYou walk North.");
+            else if (input == 's') actions.Add("\nYou walk South.");
+            else if (input == 'd') actions.Add("\nYou walk East.");
+            else if (input == 'a') actions.Add("\nYou walk West.");
         }
 
-        public void EnemyTurn()
+        /// <summary>
+        /// Gets power up and adds a message to actions list
+        /// </summary>
+        /// <param name="pu">Power up picked</param>
+        public void GetGameActions(PowerUp pu)
         {
-            Console.WriteLine("\nEnemy Turn");
-        }
+            // Removes first element when the list is size 5
+            if (actions.Count > 5)
+                actions.RemoveAt(0);
 
-        public void PlayerTurn()
-        {
-            Console.WriteLine("\nPlayer Turn");
-        }
-
-
-        public void GameActions(Player p1)
-        {
-   
-            foreach (String action in actions)
-            {
-                Console.WriteLine(action);
-            }
-        }
-
-        public void GameActions(PowerUp pu)
-        {
             if (pu.Heal == 4)
             {
                 actions.Add($"\nHurray, you ate a piece of cheese and healed " +
@@ -180,24 +181,60 @@ namespace RogueLike
             else
                 actions.Add($"\nYou killed a snake with your bare hands and " +
                     $"ate it. You heal yourself for {pu.Heal} HP!! ");
-
-            foreach (String action in actions)
-            {
-                Console.WriteLine(action);
-            }
         }
-
-        public void GameActions(Enemy enemy)
+        /// <summary>
+        /// Gets enemy damage and adds a message to actions list
+        /// </summary>
+        /// <param name="enemy">Gets damage from this enemy</param>
+        public void GetGameActions(Enemy enemy)
         {
-            
+            // Removes first element when the list is size 5
+            if (actions.Count > 5)
+                actions.RemoveAt(0);
 
+            if (enemy.damage == 5)
+            {
+                actions.Add("\nA small goblin attacked you and damaged you " +
+                    $"for {enemy.damage} hp !!");
+            }
+            else
+            {
+                actions.Add("\nA Giant Troll attacked you and damaged you " +
+                    $"for {enemy.damage} hp !!");
+            }
+            
+        }
+
+        /// <summary>
+        /// Prints actions list
+        /// </summary>
+        public void PrintGameActions()
+        {
+            if (actions.Count == 0)
+                actions.Add("\nAs you enter the Troll Lord cave, you start " +
+                    $"walking.");
+
+            // Removes first element when the list is size 5
+            if (actions.Count == 5)
+                actions.RemoveAt(0);
+
+            // Prints the list
+            Console.WriteLine("\nJournal");
+            Console.WriteLine("______________________________________________" +
+                "____________");
             foreach (String action in actions)
             {
                 Console.WriteLine(action);
             }
         }
 
-        
+        /// <summary>
+        /// Prints goodbye message
+        /// </summary>
+        public void GoodBye()
+        {
+            Console.WriteLine("\nBetter luck next time adventurer.");
+        }
 
         public void PrintInstructions()
         {

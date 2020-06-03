@@ -17,7 +17,7 @@
 |Add Classes - Input/Renderer/Add Initial Game Input|Improve Input, Add Movement Input|Add Classes - Character/Enemy/PowerUp|
 |Add - Main Menu / Menu Input|Add - procedural generation|Add - Map Creation/Map Render/Player Creation|
 |Add - Enemy/PowerUp creation & rendering|Improve - Procedural generation |Add - Enemy Damage Collision, PickUp Collision|
-|Add- Enemy Collision/ Sprites|Improve - Procedural generation|Add - Enemy movement
+|Add - Enemy Collision/ Sprites|Improve - Procedural generation|Add - Enemy movement / Game actions information|
 
 ## Repositório git
 

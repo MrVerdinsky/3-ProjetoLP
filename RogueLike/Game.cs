@@ -51,7 +51,9 @@ namespace RogueLike
                 CreatePowerUp(1); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
                 CreateEnemy(1); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
                 
-                
+
+                print.PrintGameActions(); // Prints First Action
+
                 gameOver = false;
                 while (gameOver == false)
                 {
@@ -66,15 +68,16 @@ namespace RogueLike
                         turn = "Player";
                         print.Map(map, rows, columns, powerUps, enemies, 
                                 player, turn);
-                        map = input.GetPosition(player, map);
-                        print.GameActions(player);
+                        map = input.GetPosition(player, map, print);
                         // Checks if the player got any powerUp
                         foreach (PowerUp powerUp in powerUps)
                             if (PowerUpPosition(player, powerUp))
-                            {
-                                player.PickPowerUp(powerUp);
-                                print.GameActions(powerUp);
-                            }
+                                if (!powerUp.Picked)
+                                {
+                                    player.PickPowerUp(powerUp);
+                                    print.GetGameActions(powerUp);
+                                }
+                        print.PrintGameActions();
                     }
                     ////////////////////////////////////////////////////////////
 
@@ -94,15 +97,15 @@ namespace RogueLike
                                 Position.EnemyOccupy();
                             print.Map(map, rows, columns, powerUps, enemies, 
                                     player, turn);
-                            print.GameActions(enemy);
                         }
                         // Player gets damage if the he's 1 square distance
                         foreach (Enemy enemy in enemies)
                             if (DamagePosition(player, enemy))
                             {
                                 player.TakeDamage(enemy);
-                                print.GameActions(enemy);
+                                print.GetGameActions(enemy);
                             }
+                        print.PrintGameActions();
                     }
                     ////////////////////////////////////////////////////////////
 
@@ -112,6 +115,7 @@ namespace RogueLike
                     {
                         print.Map(map, rows, columns, powerUps, enemies, 
                                 player, "Enemy");
+                        print.GoodBye();
                         Quit();
                     }
                 }
@@ -209,7 +213,7 @@ namespace RogueLike
         {
             enemies = new Enemy[i];
 
-            enemies[0] = new Enemy(new Position(3,3), 5);   // TESTEEEE
+            enemies[0] = new Enemy(new Position(2,2), 5);   // TESTEEEE
             
             foreach (Enemy enemy in enemies)
             {

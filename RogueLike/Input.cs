@@ -21,7 +21,7 @@ namespace RogueLike
             switch(playerInput)
             {
                 case "1":
-                    break;
+                    return playerInput;
                 case "2":
                     break;
                 case "3":
@@ -38,6 +38,7 @@ namespace RogueLike
                     print.PrintInputError();
                     break;
             }
+            Console.ReadLine();
             return playerInput;
         }
         

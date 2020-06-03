@@ -9,17 +9,20 @@ namespace RogueLike
         public int ColumnNum{get; set;}
         public int PowerUpNum{get; set;}
         public int LevelNum{get; set;}
+        private int AvailableArea{get; set;}
         public int ObstacleNum{get; set;}
         public Enemy[] enemies{get; set;}
         private Random random = new Random();
+        public PowerUp[] PowerUps{get; set;}
 
         public Level(int firstRowNum, int firstColumnNum)
         {
-            RowNum      = firstRowNum;
-            ColumnNum   = firstColumnNum;
-            LevelNum    = 0;
-            EnemyNum    = 0;
-            ObstacleNum = 0;
+            RowNum          = firstRowNum;
+            ColumnNum       = firstColumnNum;
+            LevelNum        = 0;
+            EnemyNum        = 0;
+            ObstacleNum     = 0;
+            AvailableArea   = RowNum * ColumnNum;
         }
         // public Level(){}
 
@@ -37,6 +40,13 @@ namespace RogueLike
             GetObstacleNum();
             // Sets obstacles to their position
             GetObsPos(map);
+            GetPowerUpNum();
+            GetPowerUpPos(map);
+            // Console.WriteLine($"\npower up: {PowerUpNum}");
+            // Console.WriteLine($"enemy:    {EnemyNum}");
+            // Console.WriteLine($"obstacle: {ObstacleNum}");
+            
+            
         }
 
         /// <summary>
@@ -45,7 +55,7 @@ namespace RogueLike
         private void GetPowerUpNum()
         {
             int tempNum = 0;
-            int maxPUNum = (RowNum * ColumnNum)/2;
+            int maxPUNum = AvailableArea/2;
             while (tempNum >= maxPUNum || tempNum <= 0)
             {
                 tempNum = 0;
@@ -53,7 +63,6 @@ namespace RogueLike
 
             }
             PowerUpNum = tempNum;
-            Console.WriteLine($"tempNum = {tempNum}");
         }
 
         /// <summary>
@@ -65,7 +74,7 @@ namespace RogueLike
             int tempEnemyNum = 0;
 
             // Max enemy number
-            int maxEnemyNum = (RowNum * ColumnNum)/2;
+            int maxEnemyNum =  AvailableArea/2;
             // Loop the runs while the random generated number of enemies
             // is grater then the maximum amount of enemies allowed
             // or if it is equal or smaller then 0
@@ -78,6 +87,7 @@ namespace RogueLike
 
             }
             EnemyNum = tempEnemyNum;
+            AvailableArea -= EnemyNum;
         }
 
         /// <summary>
@@ -89,7 +99,7 @@ namespace RogueLike
             int tempObsNum = 0;
 
             // Max obstacle number
-            int maxObsNum = (RowNum * ColumnNum)/2 - 1;
+            int maxObsNum = AvailableArea/2 - 1;
 
             // Loop the runs while the random generated number of obstacles
             // is grater then the maximum amount of obstacles allowed
@@ -105,6 +115,80 @@ namespace RogueLike
             ObstacleNum = tempObsNum;
 
         }
+        private void GetPowerUpPos(Map[,] map)
+        {            
+            PowerUps = new PowerUp[PowerUpNum];
+            // Gives a temporary position to each enemy
+            for (int i = 0; i < PowerUpNum; i++)
+            {
+                PowerUps[i] = new PowerUp(new Position(1,1), 4);
+            }
+            // Randomize all power ups positions
+            if (!(PowerUps == null) || !(PowerUps.Length == 0))
+            {
+                for (int i = 0; i < PowerUps.Length; i++)
+                {
+                    // Variable to check if it is suppose to "roll" the 
+                    // positions again
+                    bool reroll = false;
+
+                    // Random row
+                    int randRow     = random.Next(RowNum);
+
+                    // Random column
+                    int randColumn  = random.Next(ColumnNum);
+
+                    PowerUps[i]= new PowerUp(new Position(randRow, randColumn), 4); 
+
+                        
+                    for (int j = 0; j < i; j++)
+                    {
+                        // Checks if the randomized position is occupied and 
+                        //it is different from another power ups positions
+                        if ((PowerUps[i].Position.Row == PowerUps[j].
+                            Position.Row && 
+                            PowerUps[i].Position.Column == PowerUps[j].
+                            Position.Column) ||
+                            (!(map[PowerUps[i].Position.Row, PowerUps[i].
+                            Position.Column].Position.Empty)))
+                        {
+                            // "Reroll" of the positions is necessary
+                            reroll = true;
+                            // Decrements i to stay on the same i iteration
+                            i --;
+                            break;
+                        }
+                    }
+
+                    // This verification is for cases when the power up list has 
+                    // only one power up
+                    //Check is the randomized position is occupied
+                    if (!(map[
+                        PowerUps[i].Position.Row, 
+                        PowerUps[i].Position.Column].
+                        Position.Empty))
+                    {
+                        // "Reroll" of the positions is necessary
+                        reroll = true;
+                        // Decrements i to stay on the same i iteration
+                        i --;
+                    }
+
+                    // In case a "reroll" is necessary, it goes to the top
+                    // of the loop and repeats the randomizing process
+                    if (reroll)
+                        continue;
+                }    
+            }
+
+            // Goes throes the whole PowerUps list and occupies the map positions
+            // with them
+            foreach (PowerUp powerUp in PowerUps)
+            {
+                map[powerUp.Position.Row, powerUp.Position.Column].Position.PowerUpOccupy();
+            }
+        }
+
         /// <summary>
         /// Positions each obstacle on the map
         /// </summary>
@@ -230,10 +314,9 @@ namespace RogueLike
             x++;
             int x0  = 28;
             float k = 0.14f;
-            int min = 1;    
-            Console.WriteLine($"x = {x}");
-            Console.WriteLine($"return = {(int)(max / (1 + Math.Exp(-k * (x - x0))) + min)}");
-            return (int)(max / (1 + Math.Exp(-k * (x - x0))) + min);
+            float L = random.Next(max);
+            int min = 1;   
+            return (int)(((-L)/ (1 + Math.Pow(Math.E, (-k * (x - x0))))) + L + min);
         }
     }
 }

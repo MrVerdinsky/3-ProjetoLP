@@ -16,7 +16,21 @@ namespace RogueLike
         public void Map(Map[,] map, int rows, int columns, 
                             PowerUp[] powerUps,Enemy[] enemies)
         {
+
             Console.OutputEncoding = Encoding.UTF8;
+            
+            foreach (PowerUp powerUp in powerUps)
+                if (powerUp.Picked == false)
+                {
+                    Console.WriteLine($"not picked: [{powerUp.Position.Row}, {powerUp.Position.Column}]");
+                }
+            foreach (Map item in map)
+            {
+               if (item.Position.HasPlayer)
+               {
+                   Console.WriteLine($"player:       [{item.Position.Row}, {item.Position.Column}]");
+               } 
+            }
             // Prints the meaning of each symbol in the map
             Console.WriteLine();
             Console.Write("|\u2654 - Player|\u265F - Minion|\u265A - Boss|\n");
@@ -59,14 +73,18 @@ namespace RogueLike
                     
                     //Prints all power Ups in the list
                     if (map[i,j].Position.HasPowerUp)
+                    {
                         foreach (PowerUp powerUp in powerUps)
+                        {
                             if (powerUp.Picked == false)
                             {
                                 if (powerUp.Heal == 4) Console.Write("|\u2749 |");
-                                else if (powerUp.Heal == 8) 
-                                            Console.Write("|\u273E |");
-                                else Console.Write("|\u2740 |"); 
+                                if (powerUp.Heal == 8) Console.Write("|\u273E |");
+                                if (powerUp.Heal == 16) Console.Write("|\u2740 |"); 
+                                else break;
                             }
+                        }
+                    }
                     
                 }
                 Console.WriteLine();

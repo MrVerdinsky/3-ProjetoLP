@@ -44,9 +44,10 @@ namespace RogueLike
         public void PickPowerUp(Map[,] map, PowerUp powerUp)
         {
                 HP += powerUp.Heal;
-                map[powerUp.Position.Row, powerUp.Position.Column].Position.PowerUpFree();
-                map[powerUp.Position.Row, powerUp.Position.Column].Position.PlayerOccupy();
-                // powerUp.Position.PowerUpFree();
+                map[powerUp.Position.Row, powerUp.Position.Column].
+                    Position.PowerUpFree();
+                map[powerUp.Position.Row, powerUp.Position.Column].
+                    Position.PlayerOccupy();
                 powerUp.PickUp();
         }
 
@@ -100,8 +101,8 @@ namespace RogueLike
                         break;
                     case 's':
                         if (map[this.Position.Row+1, this.Position.Column].
-                        Position.Walkable == false)
-                                canMove = false;
+                            Position.Walkable == false)
+                            canMove = false;
                         else
                         {
                             this.Position.Row += 1;
@@ -120,6 +121,7 @@ namespace RogueLike
             {
                 Movement -= 1;
                 HP -= 1;
+                print.GetGameActions(input);
             }
             if (HP < 1) IsAlive = false;
             
@@ -132,6 +134,11 @@ namespace RogueLike
         public void MovementReset()
         {
             Movement = 2;
+        }
+
+        public void Die()
+        {
+            IsAlive = false;
         }
     } 
 }

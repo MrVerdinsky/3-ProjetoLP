@@ -29,7 +29,6 @@ namespace RogueLike
             AvailableArea   = RowNum * ColumnNum;
             Random          = new Random((int)(Seed));
         }
-        // public Level(){}
 
         /// <summary>
         /// Gets all level paramaters

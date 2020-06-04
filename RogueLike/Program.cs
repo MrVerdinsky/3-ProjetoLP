@@ -14,6 +14,9 @@ namespace RogueLike
         static void Main(string[] args)
         {
             Renderer print = new Renderer();
+            // Gets the seed for random, based on system current time
+            DateTime currentTime = DateTime.Now;
+            long seed = currentTime.Ticks;
 
             try
             {
@@ -21,13 +24,15 @@ namespace RogueLike
                 {
                     Game game = new Game(
                         Convert.ToInt16(args[3]),
-                        Convert.ToInt16(args[1]));
+                        Convert.ToInt16(args[1]),
+                        seed);
                 }
                 if (args[0] == "-r" && args[2] == "-c")
                 {
                     Game game = new Game(
                         Convert.ToInt16(args[1]),
-                        Convert.ToInt16(args[3]));
+                        Convert.ToInt16(args[3]),
+                        seed);
                 } 
             }
             catch (IndexOutOfRangeException)

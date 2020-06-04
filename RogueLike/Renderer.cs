@@ -22,7 +22,7 @@ namespace RogueLike
         /// <param name="enemies">List of enemies</param>
         public void Map(Map[,] map, int rows, int columns, 
                             PowerUp[] powerUps,Enemy[] enemies,
-                            Player player, string turn)
+                            Player player, string turn, int level)
         {            
             Console.OutputEncoding = Encoding.UTF8;
             
@@ -38,8 +38,9 @@ namespace RogueLike
                             "__________________|\n");
             Console.Write("|                                   |A/W/S/D or   " +
                             "  *KEYS*|\n");
-            Console.Write($"|Moves Left: {player.Movement}     >>METER LVL<< " +
-                            "   |Arrow Keys - to move |\n");
+            Console.Write($"|Moves Left: {player.Movement}"+
+                            $"       Level: {level}" +
+                            "       |Arrow Keys - to move |\n");
             Console.Write($"|Player HP : {player.HP,-5} - {turn} Turn -  |   " +
                             " Escape - to leave|\n");
             Console.Write("|___________________________________|_____________" +
@@ -88,8 +89,9 @@ namespace RogueLike
                             if (powerUp.Picked == false)
                             {
                                 if (powerUp.Heal == 4) Console.Write("|\u2749 |");
-                                if (powerUp.Heal == 8) Console.Write("|\u273E |");
-                                if (powerUp.Heal == 16) Console.Write("|\u2740 |"); 
+                                if (powerUp.Heal == 8) Console.Write("|\u273E |"); 
+                                if (powerUp.Heal == 16) Console.Write("|\u2740 |");
+                                if (powerUp.Heal == 20){}
                                 else break;
                             }
                         }  

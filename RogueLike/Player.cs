@@ -21,8 +21,8 @@ namespace RogueLike
         public Player (Position position, int gameRows, int gameColumns)
         {
             base.Position           = position;
-            // HP                      = (gameRows * gameColumns) / 4;
-            HP                      = 100;
+            HP                      = (gameRows * gameColumns) / 4;
+            // HP                      = 100;
             IsAlive                 = true;
         }
 

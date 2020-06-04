@@ -31,9 +31,9 @@ namespace RogueLike
                 } 
             }
             catch (IndexOutOfRangeException)
-           {
+            {
                 print.IntroErrorMessage();
-           }
+            }
                
 
         }

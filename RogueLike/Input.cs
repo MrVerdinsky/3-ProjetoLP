@@ -3,9 +3,9 @@ namespace RogueLike
 {
     sealed public class Input
     {
-
         string playerInput;
-        private static Renderer print;
+        private Renderer print;
+        
         /// <summary>
         /// Class Constructor
         /// </summary>
@@ -14,7 +14,7 @@ namespace RogueLike
             print = new Renderer();
         }
         //Controls all Menu Options until players chooses new game
-        public string MenuOptions()
+        public string MenuOptions(int rows, int columns)
         {
             //Keeps running until players starts new game
             playerInput = Console.ReadLine();
@@ -23,6 +23,7 @@ namespace RogueLike
                 case "1":
                     return playerInput;
                 case "2":
+                    print.PrintScore(rows, columns);
                     break;
                 case "3":
                     print.PrintInstructions();
@@ -68,6 +69,25 @@ namespace RogueLike
                     PlayerOccupy();
                 
             return map;
+        }
+
+        /// <summary>
+        /// Asks for user name for high score
+        /// </summary>
+        /// <returns>User name</returns>
+        public String InsertName()
+        {
+            string trim = "";
+            bool leave = false;
+            while (leave == false)
+            {
+                string name = Console.ReadLine();
+                trim = name.Trim();
+                trim = trim.Replace( " ", "_");
+                if (trim.Length < 12) leave = true;
+                else print.InsertShorterName();
+            }
+            return trim;
         }
     }
 }

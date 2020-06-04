@@ -1,15 +1,20 @@
 using System;
 using System.Text;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
 namespace RogueLike
 {
     sealed public class Renderer
     {
         List<string> actions;
+        List<HighScore> scores;
 
         public Renderer()
         {
             actions = new List<string>();
+            scores = new List<HighScore>();
         }
         
         /// <summary>
@@ -163,10 +168,20 @@ namespace RogueLike
             Console.WriteLine("Option Unkown");
         }
         
-        //Prints a message before exiting the game
+        /// <summary>
+        /// Prints a message before exiting the game
+        /// </summary>
         public void PrintExitMsg()
         {
             Console.WriteLine("Thanks for playing.");
+        }
+
+        /// <summary>
+        /// Prints a message to shorten the name
+        /// </summary>
+        public void InsertShorterName()
+        {
+            Console.WriteLine("\nPlease insert a shorter name.");
         }
 
         /// <summary>
@@ -178,6 +193,15 @@ namespace RogueLike
                 " your choices as it shows in the next example:\n" +
                 "dotnet run -p RogueLike -- -r [NUMBER] -c [NUMBER]");
         }
+
+        /// <summary>
+        /// Prints goodbye message
+        /// </summary>
+        public void GoodBye()
+        {
+            Console.WriteLine("\nBetter luck next time adventurer.");
+        }
+
 
 
         /// <summary>
@@ -252,7 +276,7 @@ namespace RogueLike
                     $"walking.");
 
             // Removes first element when the list is size 5
-            if (actions.Count == 5)
+            if (actions.Count > 5)
                 actions.RemoveAt(0);
 
             // Prints the list
@@ -263,14 +287,6 @@ namespace RogueLike
             {
                 Console.WriteLine(action);
             }
-        }
-
-        /// <summary>
-        /// Prints goodbye message
-        /// </summary>
-        public void GoodBye()
-        {
-            Console.WriteLine("\nBetter luck next time adventurer.");
         }
 
         public void PrintInstructions()
@@ -313,5 +329,153 @@ namespace RogueLike
             Console.WriteLine("|_____________________________________________"+
             "____________________________|");
         }
+
+        /// <summary>
+        /// Saves scores to a new file or a file that already exists
+        /// </summary>
+        /// <param name="level">Level Number</param>
+        /// <param name="rows">Rows of the game</param>
+        /// <param name="columns">Column of the game</param>
+        public void SaveScore(Level level, int rows, int columns)
+        {
+            int levelScore      = 5; // TEMPORARIO PARA SUBSTITUIR LEVEL ^
+            
+            if (File.Exists(
+                $@"RogueLike\Scores\{rows}_x_{columns}_HighScores.txt"))
+                SaveFile(levelScore, rows, columns);
+            else
+            {
+                CreateFile(rows, columns);
+                SaveFile(levelScore, rows, columns);
+            }
+        }
+
+        /// <summary>
+        /// Saves a file with level information
+        /// </summary>
+        /// <param name="levelScore">Number of level</param>
+        public void SaveFile(int levelScore, int rows, int columns)
+        {
+            Input input         = new Input();
+            int count           = 0;
+            const char space    = ' ';
+            string s;
+            ////////////////////////////////////////////////////////////////////
+            // Reader
+            StreamReader scoreR = new StreamReader(
+                $@"RogueLike\Scores\{rows}_x_{columns}_HighScores.txt");
+            
+            using (scoreR)
+            {   // While readline isn't null
+                while ((s = scoreR.ReadLine()) != null)
+                {
+                    // splits the characters
+                    string[] split  = s.Split(space);
+                    string name     = split[0];
+                    int score       = Convert.ToInt32(split[1]);
+                    // Adds a new high score to the list
+                    scores.Add(new HighScore(name, score));
+                } 
+            }
+            
+            ////////////////////////////////////////////////////////////////////
+            // Sorts List
+            scores.Sort();
+            // Adds high score to list if the high score is higher
+            // If player's score is higher than last value
+            if (levelScore > scores.Last().Score)
+            {   // Asks for player name and adds it to the list
+                Console.WriteLine(
+                    "\nCongratulations mighty warrior, you are now in the" +
+                    " high score table.\nPlease insert your name below.");
+                string name = input.InsertName();
+                scores.Add(new HighScore(name, levelScore));
+            }
+
+            
+            // Sorts List
+            scores.Sort();
+            ////////////////////////////////////////////////////////////////////
+            // Writer
+            StreamWriter scoreW = new StreamWriter(
+                    $@"RogueLike\Scores\{rows}_x_{columns}_HighScores.txt");
+            // Writes players to file
+            
+            using (scoreW)
+            {
+                foreach (HighScore score in scores)
+                {   // Keeps high score list to a limit of 10
+                    if (count < 10)
+                    {
+                        scoreW.WriteLine(score.Name + space + score.Score);
+                        count++;
+                    }
+                }
+            }
+
+            PrintScore(rows,columns);
+        }
+
+        /// <summary>
+        /// Creates a file with unknown names
+        /// </summary>
+        public void CreateFile(int rows, int columns)
+        {
+            int count = 0;
+            StreamWriter scoreW = new StreamWriter(
+                $@"RogueLike\Scores\{rows}_x_{columns}_HighScores.txt");
+                
+            using(scoreW) 
+            {
+                ////////////////////////////////////////////////////////////
+                // Fills the file with 10 unknown players
+                string[] names = new string[] {"Khalid", "Minsc", "Jaheira", 
+                        "Edwin", "Gorion", "Yoshimo", "Drizzt", "Sarevok",
+                        "Tazok", "Kivan"};
+                
+                foreach (string name in names)
+                {
+                    if(count < 10)
+                    {
+                        scores.Add(new HighScore(name, count));
+                        count++;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Prints high score
+        /// </summary>
+        public void PrintScore(int rows, int columns)
+        {
+            int count = 0;
+            string s;
+            const char space = ' ';
+            if (File.Exists(
+                $@"RogueLike\Scores\{rows}_x_{columns}_HighScores.txt"))
+            {
+                StreamReader scoreR = new StreamReader(
+                    $@"RogueLike\Scores\{rows}_x_{columns}_HighScores.txt");
+
+                Console.WriteLine("\n** HIGH SCORE **");
+                Console.WriteLine($"     {rows} x {columns}");
+                Console.WriteLine("_________________");
+                while ((s = scoreR.ReadLine()) != null)
+                {
+                    //Console.WriteLine(scoreR.ReadLine());
+                    string[] split  = s.Split(space);
+                    string name     = split[0];
+                    int score       = Convert.ToInt32(split[1]);
+                    Console.WriteLine($" {name,-12}{score,+3}");
+                    count ++;
+                }
+                Console.WriteLine("_________________");
+            }
+            else
+                Console.WriteLine(
+                    "\nThere are no high scores for this level yet :<");
+        }
+        
     }
 }

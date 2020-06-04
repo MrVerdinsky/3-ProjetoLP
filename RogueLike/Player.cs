@@ -1,14 +1,13 @@
 using System; //tESTING
 namespace RogueLike
-{
-    
+{ 
     /// <summary>
     /// Player class, created from Character class
     /// </summary>
     sealed public class Player : Character
     {
         internal int    HP              { get; private set; }
-        public int      Movement        { get; private set; }
+        internal int    Movement        { get; private set; }
         internal bool   IsAlive         { get; private set; }
         
 
@@ -21,8 +20,8 @@ namespace RogueLike
         public Player (Position position, int gameRows, int gameColumns)
         {
             base.Position           = position;
-            // HP                      = (gameRows * gameColumns) / 4;
-            HP                      = 100;
+            HP                      = (gameRows * gameColumns) / 4;
+            // HP                      = 100;
             IsAlive                 = true;
         }
 

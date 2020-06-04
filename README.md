@@ -33,3 +33,7 @@
 ### Diagrama UML
 
 ### Trocas de ideias/referências
+
+["C# documentation",_Microsoft_, Microsoft 2020](
+  https://docs.microsoft.com/en-us/dotnet/csharp)
+  

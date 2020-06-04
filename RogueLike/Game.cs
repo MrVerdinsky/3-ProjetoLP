@@ -25,7 +25,6 @@ namespace RogueLike
             map             = new Map[rows, columns];
             string playerInput;
             string turn;
-
             ////////////////////////////////////////////////////////////////////
             // Runs Menu Loop
             do
@@ -35,7 +34,7 @@ namespace RogueLike
                 // Prints Initial Menu
                 print.PrintMenu();
                 // Gets user Input
-                playerInput = input.MenuOptions();
+                playerInput = input.MenuOptions(rows, columns);
                 if(playerInput == "1") break;
                 if(playerInput == "5") break;
             } while (playerInput != "5" || playerInput != "1");
@@ -60,7 +59,6 @@ namespace RogueLike
                 {
                     // Resets Movement
                     player.MovementReset(); 
-
                     ////////////////////////////////////////////////////////////
                     // Player Movement and Map print ///////////////////////////
                     if (NoRemainingMoves()){
@@ -134,6 +132,8 @@ namespace RogueLike
                         print.Map(map, rows, columns, level.PowerUps, 
                                 level.enemies, player, "Enemy");
                         print.GoodBye();
+                        // Saves score
+                        print.SaveScore(level, rows, columns);
                         Quit();
                     }
                 }
@@ -275,6 +275,8 @@ namespace RogueLike
             if (count == 4) lose = true;
             return lose;
         }
+
+
 
         /// <summary>
         /// Quits the game loop

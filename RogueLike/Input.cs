@@ -20,17 +20,26 @@ namespace RogueLike
             playerInput = Console.ReadLine();
             switch(playerInput)
             {
+                //Starts new game
                 case "1":
                     return playerInput;
+                
+                //Prints the Highscore Screen
                 case "2":
                     print.PrintScore(rows, columns);
                     break;
+
+                //Prints the game's Instructions
                 case "3":
                     print.PrintInstructions();
                     break;
+
+                //Prints the game's developers
                 case "4":
                     print.PrintCredits();
                     break;
+                
+                //Prints Exit message and closes the game
                 case "5":
                     print.PrintExitMsg();
                     return playerInput;
@@ -39,6 +48,7 @@ namespace RogueLike
                     print.PrintInputError();
                     break;
             }
+            //Asks the user for an input to leave the option screen
             Console.ReadLine();
             return playerInput;
         }
@@ -49,23 +59,23 @@ namespace RogueLike
         /// <param name="player">Player's position</param>
         /// <param name="map">All map Positions</param>
         /// <returns>Returns a map position for the player</returns>
-        public Map[,] GetPosition(Player player, Map[,] map, Renderer print)
+        public Map[,] GetPosition(Level level , Map[,] map, Renderer print)
         {
             // players input
             char playerInput;
             // Frees the player position
-            map[player.Position.Row, player.Position.Column].Position.
+            map[level.player.Position.Row, level.player.Position.Column].Position.
                 PlayerFree();
 
             // Gets player input
             playerInput = Console.ReadLine()[0];
 
             // Moves player to new free position    
-            if(player.Move(map, playerInput, print))
-                map[player.Position.Row, player.Position.Column].Position.
+            if(level.player.Move(map, playerInput, print))
+                map[level.player.Position.Row, level.player.Position.Column].Position.
                 PlayerFree();
                 // Occupies inserted position with player
-                map[player.Position.Row,player.Position.Column].Position.
+                map[level.player.Position.Row,level.player.Position.Column].Position.
                     PlayerOccupy();
                 
             return map;

@@ -1,56 +1,75 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RogueLike
 {
-    public class Level
+    sealed public class Level
     {
-        public int EnemyNum{get; set;}
-        public int RowNum{get; set;}
-        public int ColumnNum{get; set;}
-        public int PowerUpNum{get; set;}
-        public int LevelNum{get; set;}
-        private int AvailableArea{get; set;}
-        public int ObstacleNum{get; set;}
-        public Enemy[] enemies{get; set;}
-        private Random random = new Random();
-        public PowerUp[] PowerUps{get; set;}
+        public int EnemyNum         {get; set;}
+        public int RowNum           {get; set;}
+        public int ColumnNum        {get; set;}
+        public int PowerUpNum       {get; set;}
+        public int LevelNum         {get; set;}
+        private int AvailableArea   {get; set;}
+        public int ObstacleNum      {get; set;}
+        public Enemy[] Enemies      {get; set;}
+        private Random Random;
+        public PowerUp[] PowerUps   {get; set;}
+        public Player player        {get; set;}
+        public Position exit        {get; set;}
+        public int Seed             {get; private set;}
 
-        public Level(int firstRowNum, int firstColumnNum)
+        /// <summary>
+        /// Creates Level
+        /// </summary>
+        /// <param name="firstRowNum">Total of rows</param>
+        /// <param name="firstColumnNum">totals of Columns</param>
+        /// <param name="seed">Current Game's seed</param>
+        public Level(int firstRowNum, int firstColumnNum, long seed)
         {
             RowNum          = firstRowNum;
             ColumnNum       = firstColumnNum;
+            Seed            = (int)seed;
             LevelNum        = 0;
             EnemyNum        = 0;
             ObstacleNum     = 0;
             AvailableArea   = RowNum * ColumnNum;
+            Random          = new Random((int)(Seed));
         }
 
         /// <summary>
         /// Gets all level paramaters
         /// </summary>
         /// <param name="map">Current level map</param>
-        public void CreateLevel(Map[,] map)
+        /// <param name="levelNum">Level's Number</param>
+        public void CreateLevel(Map[,] map, int levelNum)
         {
-            // Gets random number of enemies
-            GetEnemyNum();
-            // Sets enemies to their positions
+            // Sets Random Exit position
+            GetExitPos(map);
+            // Sets Random player position
+            GetPlayerPos(map);
+            // Gets Random number of Enemies
+            GetEnemyNum(levelNum);
+            // Sets Enemies to their positions
             GetEnemyPos(map);
-            // Gets random number of obstacles
-            GetObstacleNum();
+            // Gets Random number of obstacles
+            GetObstacleNum(levelNum);
             // Sets obstacles to their position
             GetObsPos(map);
-            // Gets random number of power-ups
-            GetPowerUpNum();
+            // Gets Random number of power-ups
+            GetPowerUpNum(levelNum);
             // Sets obstacles to their power-ups
-            GetPowerUpPos(map);
-            
+            GetPowerUpPos(map);            
         }
 
         /// <summary>
-        /// Gets a random number of power-ups
+        /// Gets a Random number of power-ups
         /// </summary>
-        private void GetPowerUpNum()
+        /// <param name="levelNum">Level's Number</param>
+        private void GetPowerUpNum(int levelNum)
         {
+            LevelNum = levelNum;
             int tempPowerUpNum = 0;
             int maxPUNum = AvailableArea/2;
             while (tempPowerUpNum >= maxPUNum || tempPowerUpNum <= 0)
@@ -63,20 +82,22 @@ namespace RogueLike
         }
 
         /// <summary>
-        /// Gets a random number of enemies
+        /// Gets a Random number of Enemies
         /// </summary>
-        private void GetEnemyNum()
+        /// <param name="levelNum">Level's Number</param>
+        private void GetEnemyNum(int levelNum)
         {
+            LevelNum = levelNum;
             // Temporary enemy number
             int tempEnemyNum = 0;
 
             // Max enemy number
             int maxEnemyNum =  AvailableArea/2;
-            // Loop the runs while the random generated number of enemies
-            // is grater then the maximum amount of enemies allowed
+            // Loop the runs while the Random generated number of Enemies
+            // is grater then the maximum amount of Enemies allowed
             // or if it is equal or smaller then 0
-            // In every loop iteration, it will aks for a random number of 
-            // enemies
+            // In every loop iteration, it will aks for a Random number of 
+            // Enemies
             while (tempEnemyNum >= maxEnemyNum || tempEnemyNum <= 0)
             {
                 tempEnemyNum = 0;
@@ -88,20 +109,23 @@ namespace RogueLike
         }
 
         /// <summary>
-        /// Get a random number os obstacles
+        /// Get a Random number os obstacles
         /// </summary>
-        private void GetObstacleNum()
+        /// <param name="levelNum">Level's Number</param>
+        private void GetObstacleNum(int levelNum)
         {
+
+            LevelNum = levelNum;
             // temporary obstacle number
             int tempObsNum = 0;
 
             // Max obstacle number
             int maxObsNum = AvailableArea/2 - 1;
 
-            // Loop the runs while the random generated number of obstacles
+            // Loop the runs while the Random generated number of obstacles
             // is grater then the maximum amount of obstacles allowed
             // or if it is equal or smaller then 0
-            // In every loop iteration, it will aks for a random number of 
+            // In every loop iteration, it will aks for a Random number of 
             // obstacles
             while (tempObsNum >= maxObsNum || tempObsNum <= 0)
             {
@@ -112,9 +136,15 @@ namespace RogueLike
             ObstacleNum = tempObsNum;
 
         }
+
+        /// <summary>
+        /// Positions each power up on the map
+        /// </summary>
+        /// <param name="map">Current level map</param>
         private void GetPowerUpPos(Map[,] map)
         {            
             PowerUps = new PowerUp[PowerUpNum];
+            int powerUpHeal;
             // Gives a temporary position to each enemy
             for (int i = 0; i < PowerUpNum; i++)
             {
@@ -125,15 +155,16 @@ namespace RogueLike
             {
                 for (int i = 0; i < PowerUps.Length; i++)
                 {
+                    powerUpHeal = GetPowerUpType(PowerUpNum);
                     // Variable to check if it is suppose to "roll" the 
                     // positions again
                     bool reroll = false;
 
                     // Random row
-                    int randRow     = random.Next(RowNum);
+                    int randRow     = Random.Next(RowNum);
 
                     // Random column
-                    int randColumn  = random.Next(ColumnNum);
+                    int randColumn  = Random.Next(ColumnNum);
 
                     PowerUps[i]= new PowerUp(new Position(randRow, randColumn), 4); 
 
@@ -195,9 +226,9 @@ namespace RogueLike
             for(int i = 0; i < ObstacleNum; i++)
             {
                 // Random row
-                int randRow     = random.Next(RowNum);
+                int randRow     = Random.Next(RowNum);
                 // Random column
-                int randColumn  = random.Next(ColumnNum);
+                int randColumn  = Random.Next(ColumnNum);
 
                 // Checks if the randomized map position is empty
                 if (map[randRow,randColumn].Position.Empty)
@@ -218,46 +249,46 @@ namespace RogueLike
         }
 
         /// <summary>
-        /// Gets enemies random positions
+        /// Gets Enemies Random positions
         /// </summary>
         /// <param name="map">Current level map</param>
         private void GetEnemyPos(Map[,] map)
         {            
-            enemies = new Enemy[EnemyNum];
+            Enemies = new Enemy[EnemyNum];
             
             // Gives a temporary position to each enemy
             for (int i = 0; i < EnemyNum; i++)
             {
-                enemies[i] = new Enemy(new Position(1,1), 5);
+                Enemies[i] = new Enemy(new Position(1,1), 5);
             }
 
-            // Randomize all enemies positions
-            if (!(enemies == null) || !(enemies.Length == 0))
+            // Randomize all Enemies positions
+            if (!(Enemies == null) || !(Enemies.Length == 0))
             {
-                for (int i = 0; i < enemies.Length; i++)
+                for (int i = 0; i < Enemies.Length; i++)
                 {
                     // Variable to check if it is suppose to "roll" the 
                     // positions again
                     bool reroll = false;
 
                     // Random row
-                    int randRow     = random.Next(RowNum);
+                    int randRow     = Random.Next(RowNum);
 
                     // Random column
-                    int randColumn  = random.Next(ColumnNum);
+                    int randColumn  = Random.Next(ColumnNum);
 
-                    enemies[i].Position = new Position(randRow, randColumn); 
+                    Enemies[i].Position = new Position(randRow, randColumn); 
 
                         
                     for (int j = 0; j < i; j++)
                     {
                         // Checks if the randomized position is occupied and 
-                        //it is different from another enemies positions
-                        if ((enemies[i].Position.Row == enemies[j].
+                        //it is different from another Enemies positions
+                        if ((Enemies[i].Position.Row == Enemies[j].
                             Position.Row && 
-                            enemies[i].Position.Column == enemies[j].
+                            Enemies[i].Position.Column == Enemies[j].
                             Position.Column) ||
-                            (!(map[enemies[i].Position.Row, enemies[i].
+                            (!(map[Enemies[i].Position.Row, Enemies[i].
                             Position.Column].Position.Empty)))
                         {
                             // "Reroll" of the positions is necessary
@@ -272,8 +303,8 @@ namespace RogueLike
                     // only one enemy
                     //Check is the randomized position is occupied
                     if (!(map[
-                        enemies[i].Position.Row, 
-                        enemies[i].Position.Column].
+                        Enemies[i].Position.Row, 
+                        Enemies[i].Position.Column].
                         Position.Empty))
                     {
                         // "Reroll" of the positions is necessary
@@ -289,31 +320,116 @@ namespace RogueLike
                 }    
             }
 
-            // Goes throes the whole enemies list and occupies the map positions
+            // Goes throes the whole Enemies list and occupies the map positions
             // with them
-            foreach (Enemy enemy in enemies)
+            foreach (Enemy enemy in Enemies)
             {
                 map[enemy.Position.Row, enemy.Position.Column].Position.EnemyOccupy();
             }
         }
 
-       
+        /// <summary>
+        /// Gets Random amount of power up types 
+        /// </summary>
+        /// <param name="powerUpNum">Number of power ups</param>
+        private int GetPowerUpType(int powerUpNum)
+        {
+            // Index of the power up
+            int index;
+            // Array with all power-up types
+            int[] types = new int[3]{4, 8, 16};
+            // Array with the weight of each type for randomizing
+            List <float> weights = new List<float>(){40, 10, 50}; 
+
+            // Asks for weightned Random index
+            index = RandomWeight(weights);
+
+            return types[index];
+
+        }
+
+        /// <summary>
+        /// Sets random exit position
+        /// </summary>
+        /// <param name="map">Current level map</param>
+        private void GetExitPos(Map[,] map)
+        {   
+            //Creates a random number based on the row's total
+            int randRow = Random.Next(RowNum);
+            
+            //Creates exit position based on random number
+            exit = new Position(randRow, ColumnNum-1);
+
+            //Continues Randomizing until an empty square is found
+            while (!(map[exit.Row, exit.Column].Position.Empty))
+            {
+                randRow = Random.Next(RowNum);
+                exit = new Position(randRow, ColumnNum-1);
+            }
+
+            //Sets position
+            map[exit.Row, exit.Column].Position.ExitOccupy();
+        }
+
+        /// <summary>
+        /// Sets random Player position
+        /// </summary>
+        /// <param name="map">Current level map</param>
+        private void GetPlayerPos(Map[,] map)
+        {
+            //Creates a random number based on the row's total
+            int randRow = Random.Next(RowNum);
+
+            //Creates player's position based on random number
+            player = new Player(new Position(randRow, 0), RowNum,ColumnNum);
+
+            //Continues Randomizing until an empty square is found
+            while(!(map[randRow,0].Position.Empty))
+            {
+                randRow = Random.Next(RowNum);
+                player = new Player(new Position(randRow, 0), RowNum,ColumnNum);
+            }
+
+            //Sets position
+            map[randRow,0].Position.PlayerOccupy();
+        }
         private int Log(int x)
         {
             int a;
-            a = random.Next((RowNum * ColumnNum)/2);
+            a = Random.Next((RowNum * ColumnNum)/2);
             return (int)( a * Math.Log(1.2 * (x + 1)) + 1);
         }
-
 
         private int Logistic(int x, int max)
         {
             x++;
-            int x0  = 28;
             float k = 0.14f;
-            float L = random.Next(max);
+            float L = Random.Next(max);
+            float x0  = L * 2;
             int min = 1;   
             return (int)(((-L)/ (1 + Math.Pow(Math.E, (-k * (x - x0))))) + L + min);
+        }
+        
+        /// <summary>
+        /// Gets weighted Random index from a weight list
+        /// </summary>
+        /// <param name="weights">List of weights</param>
+        /// <returns>Returns the probability value for a specific item on the 
+        /// list</returns>
+        private int RandomWeight(List <float> weights)
+        {
+            float rnd = (float)(Random.NextDouble() * weights.Sum());
+            int randomNum = 0;
+            foreach (float item in weights)
+            {
+                    rnd = rnd - item;
+                    if (rnd < 0)
+                    {
+                        randomNum = weights.IndexOf(item) ;
+                        break;
+                    }
+            }
+            return randomNum;
         }
     }
 }

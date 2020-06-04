@@ -27,7 +27,7 @@ namespace RogueLike
         /// <param name="enemies">List of enemies</param>
         public void Map(Map[,] map, int rows, int columns, 
                             PowerUp[] powerUps,Enemy[] enemies,
-                            Player player, string turn)
+                            Player player, string turn, int level)
         {            
             Console.OutputEncoding = Encoding.UTF8;
             
@@ -37,16 +37,17 @@ namespace RogueLike
                             "________\n");
             Console.Write("|\u2654 - Player||\u2749 - Small Power-Up | \u2716" +
                             " - Obstacle            |\n");
-            Console.Write("|\u265F - Minion||\u273E - Medium Power-Up|       " +
-                            "                  |\n");
+            Console.Write("|\u265F - Minion||\u273E - Medium Power-Up| \u2FA8" + 
+                            "- Exit                |\n");
             Console.Write("|\u265A - Boss  ||\u2740 - Large Power-Up |   ____" +
                             "__________________|\n");
             Console.Write("|                                   |A/W/S/D or   " +
                             "  *KEYS*|\n");
-            Console.Write($"|Moves Left: {player.Movement}     >>METER LVL<< " +
-                            "   |Arrow Keys - to move |\n");
-            Console.Write($"|Player HP : {player.HP,-5} - {turn} Turn -  |   " +
-                            " Escape - to leave|\n");
+            Console.Write($"|Moves Left: {player.Movement}"+
+                            $"       Level: {level}" +
+                            "       |Arrow Keys - to move |\n");
+            Console.Write($"|Player HP : {player.HP,-5} - {turn+1} Turn -  |   " 
+                           + " Escape - to leave|\n");
             Console.Write("|___________________________________|_____________" +
                             "________|\n\n");
 
@@ -93,15 +94,19 @@ namespace RogueLike
                             if (powerUp.Picked == false)
                             {
                                 if (powerUp.Heal == 4) Console.Write("|\u2749 |");
-                                if (powerUp.Heal == 8) Console.Write("|\u273E |");
-                                if (powerUp.Heal == 16) Console.Write("|\u2740 |"); 
+                                if (powerUp.Heal == 8) Console.Write("|\u273E |"); 
+                                if (powerUp.Heal == 16) Console.Write("|\u2740 |");
+                                if (powerUp.Heal == 20){}
                                 else break;
                             }
                         }  
                     }
+                    else if (map[i,j].Position.HasExit)
+                        Console.Write("|\u2FA8|");
                     
                 }
                 Console.WriteLine();
+                
             }
         }
 
@@ -130,6 +135,9 @@ namespace RogueLike
             Console.WriteLine("|__________________|");
         }
 
+        /// <summary>
+        /// Prints the Title Text
+        /// </summary>
         public void Introduction()
         {
             Console.WriteLine();
@@ -203,7 +211,6 @@ namespace RogueLike
         }
 
 
-
         /// <summary>
         /// Gets userInput action, adds to actions list as player movement
         /// </summary>
@@ -267,6 +274,19 @@ namespace RogueLike
         }
 
         /// <summary>
+        /// Prints Next level message 
+        /// </summary>
+        /// <param name="escaped"></param>
+        public void GetGameActions(bool escaped)
+        {
+            if (actions.Count > 5)
+                actions.RemoveAt(0);
+            
+            if (escaped)
+                actions.Add("\nYou fend off the dangers in the cave, and" + 
+                " venture forth below...");
+        }
+        /// <summary>
         /// Prints actions list
         /// </summary>
         public void PrintGameActions()
@@ -289,6 +309,9 @@ namespace RogueLike
             }
         }
 
+        /// <summary>
+        /// Prints the game's rules and controls
+        /// </summary>
         public void PrintInstructions()
         {
             Console.WriteLine(" ______________________________________________"+
@@ -299,33 +322,35 @@ namespace RogueLike
             "____________________________|");
             Console.WriteLine("|\t\t\t\t\t\t\t\t\t  |");
             Console.WriteLine("|\u2b9a You will always start in the closest" + 
-            " side of the room, in a random     |\n|   position.\t\t\t\t\t\t\t\t  |");
-            Console.WriteLine("|\u2b9a Your objective, if you choose to accept" +
-             " it, is to reach the exit gate, |\n|  positioned in the far" +
-             " end of the room.\t\t\t\t  |");
-            Console.WriteLine("|\u2b9a You can and will have to, move up to 2 " +
-            "Squares per turn in 4 directions|\n|  (⭠ ⭢ ⭡ ⭣), but beware moving" + 
-            " will deplete your HP by 1 point each time |\n|   you move." + 
-            " \t\t\t\t\t\t\t\t  |");
+            " side of the room, in a random     |\n|   position."+
+            "\t\t\t\t\t\t\t\t  |");
+            Console.WriteLine("|\u2b9a Your objective, if you choose to" + 
+            "accept it, is to reach the exit gate,  |\n|  positioned in the far"
+            +" end of the room.\t\t\t\t  |");
+            Console.WriteLine("|\u2b9a You can and will have to, move up to" + 
+            "2 Squares per turn in 4 directions |\n|  (⭠ ⭢ ⭡ ⭣), but beware" + 
+            "moving will deplete your HP by 1 point each time  |\n|   you move." 
+            + " \t\t\t\t\t\t\t\t  |");
             Console.WriteLine("|\u2b9a To move you can use the keys WASD," + 
             " representing ⭡, ⭠, ⭣, ⭢ .\t\t  |");
             Console.WriteLine("|\u2b9a As you move through the room, you will" + 
-            " find enemies, either big or     |\n|  small. You can't fight them so you" + 
-            " better use your noggin and figure   |\n|  out a way  to go around" + 
-            " them.\t\t\t\t\t  |");
+            " find enemies, either big or     |\n|  small. You can't fight" +
+            " them so you better use your noggin and figure   |\n|  out a way"+ 
+            "to go around them.\t\t\t\t\t\t  |");
             Console.WriteLine("|\u2b9a They aren't blind either, as you move," + 
             " they will try to get you, moving|\n|  1 square per turn, chasing"+ 
             " after you.\t\t\t\t  |");
-            Console.WriteLine("|\u2b9a If you fail to evade them, it will cost" +
+            Console.WriteLine("|\u2b9a If you fail to evade them, it will cost"+
             " ya, losing 5 HP to the little  |\n|  fellas and 10 Hp to big" +  
             " ones.\t\t\t\t\t  |");
-            Console.WriteLine("|\u2b9a But don't worry there's a few Power-Ups" + 
-            " laying around, with 4, 8 or if |\n|  you're lucky, 16 HP points for" + 
-            " you to grab.\t\t\t\t  |");
+            Console.WriteLine("|\u2b9a But don't worry there's a few Power-Ups"+ 
+            " laying around, with 4, 8 or if |\n|  you're lucky, 16 HP points"+ 
+            " for you to grab.\t\t\t\t  |");
             Console.WriteLine("|\u2b9a There might be some rubbles in the way" + 
-            " so you have to go around them   |\n|  aswell, but I think you're smart" + 
-            " enough to do that.\t\t\t  |");
-            Console.WriteLine("|\u2b9a Goodluck and Have fun, if you live....\t\t\t\t  |");
+            " so you have to go around them   |\n|  aswell, but I think you're"+
+            " smart enough to do that.\t\t\t  |");
+            Console.WriteLine("|\u2b9a Goodluck and Have fun," + 
+            " if you live....\t\t\t\t  |");
             Console.WriteLine("|_____________________________________________"+
             "____________________________|");
         }
@@ -336,10 +361,8 @@ namespace RogueLike
         /// <param name="level">Level Number</param>
         /// <param name="rows">Rows of the game</param>
         /// <param name="columns">Column of the game</param>
-        public void SaveScore(Level level, int rows, int columns)
+        public void SaveScore(int levelScore, int rows, int columns)
         {
-            int levelScore      = 5; // TEMPORARIO PARA SUBSTITUIR LEVEL ^
-            
             if (File.Exists(
                 $@"RogueLike\Scores\{rows}_x_{columns}_HighScores.txt"))
                 SaveFile(levelScore, rows, columns);

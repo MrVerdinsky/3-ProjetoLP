@@ -96,6 +96,8 @@ namespace RogueLike
                             }
                         }  
                     }
+                    else if (map[i,j].Position.HasExit)
+                        Console.WriteLine("\u2FA8");
                     
                 }
                 Console.WriteLine();

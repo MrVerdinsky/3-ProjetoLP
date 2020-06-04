@@ -16,6 +16,7 @@ namespace RogueLike
         public Enemy[] Enemies      {get; set;}
         private Random Random;
         public PowerUp[] PowerUps   {get; set;}
+        public Player player        {get; set;}
         public int Seed            {get; private set;}
 
         public Level(int firstRowNum, int firstColumnNum, long seed)
@@ -36,6 +37,10 @@ namespace RogueLike
         /// <param name="map">Current level map</param>
         public void CreateLevel(Map[,] map)
         {
+            // Sets Random Exit position
+            GetExitPos(map);
+            // Sets Random player position
+            GetPlayerPos(map);
             // Gets Random number of Enemies
             GetEnemyNum();
             // Sets Enemies to their positions
@@ -327,6 +332,38 @@ namespace RogueLike
             return types[index];
 
         }
+
+        /// <summary>
+        /// Sets random exit position
+        /// </summary>
+        /// <param name="map">Current level map</param>
+        private void GetExitPos(Map[,] map)
+        {   
+            int randRow = Random.Next(RowNum);
+            Position exit = new Position(randRow, ColumnNum);
+            while (!exit.Empty)
+            {
+                randRow = Random.Next(RowNum);
+                exit = new Position(randRow, ColumnNum);
+            }
+            exit.ExitOccupy();
+        }
+
+        /// <summary>
+        /// Sets random Player position
+        /// </summary>
+        /// <param name="map">Current level map</param>
+        private void GetPlayerPos(Map[,] map)
+        {
+            int randRow = Random.Next(RowNum);
+            player = new Player(new Position(randRow, 0), RowNum,ColumnNum);
+            while(player.Position.Empty == false)
+            {
+                randRow = Random.Next(RowNum);
+                player = new Player(new Position(randRow, 0), RowNum,ColumnNum);
+            }    
+            map[randRow, 0].Position.PlayerOccupy();
+        }
         private int Log(int x)
         {
             int a;
@@ -343,6 +380,7 @@ namespace RogueLike
             int min = 1;   
             return (int)(((-L)/ (1 + Math.Pow(Math.E, (-k * (x - x0))))) + L + min);
         }
+        
         /// <summary>
         /// Gets weighted Random index from a weight list
         /// </summary>

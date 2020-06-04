@@ -24,7 +24,6 @@ namespace RogueLike
             ObstacleNum     = 0;
             AvailableArea   = RowNum * ColumnNum;
         }
-        // public Level(){}
 
         /// <summary>
         /// Gets all level paramaters

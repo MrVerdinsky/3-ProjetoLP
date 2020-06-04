@@ -117,10 +117,42 @@ namespace RogueLike
         /// </summary>
         public void PrintCredits()
         {
-            Console.WriteLine("Developed by:");
-            Console.WriteLine("Pedro Marques");
-            Console.WriteLine("Luiz Santos");
-            Console.WriteLine("Gonçalo Vila Verde");
+            Console.WriteLine("\n __________________");
+            Console.WriteLine("|Developed by:     |");
+            Console.WriteLine("|Pedro Marques     |");
+            Console.WriteLine("|Luiz Santos       |");
+            Console.WriteLine("|Goncalo Vila Verde|");
+            Console.WriteLine("|__________________|");
+        }
+
+        public void Introduction()
+        {
+            Console.WriteLine();
+            Console.WriteLine(@"_____  ___   ___            ___  __         __"+
+                "_ ");
+            Console.WriteLine(@"  |   |___| |   | |   |    |    |__| \   / |_ "+
+                "  ");
+            Console.WriteLine(@"  |   |   \ |___| |__ |__  |___ |  |  \_/  |__"+
+                "_ \n");
+            Console.WriteLine(@"                       ...a roguelike adventur"+
+                "e");
+
+        }
+
+        /// <summary>
+        /// Prints a blank line
+        /// </summary>
+        public void BlankLine()
+        {
+            Console.WriteLine();
+        }
+
+        /// <summary>
+        /// Prints no moves message
+        /// </summary>
+        public void NoMoves()
+        {
+            Console.WriteLine("\nYou feel weak and powerless. You can't move.");
         }
 
         /// <summary>
@@ -151,9 +183,8 @@ namespace RogueLike
         /// <summary>
         /// Gets userInput action, adds to actions list as player movement
         /// </summary>
-        /// <param name="p1">Player 1</param>
         /// <param name="str">String to check which turn is it</param>
-        public void GetGameActions(Player p1, char input)
+        public void GetGameActions(char input)
         {
             // Removes first element when the list is size 5
             if (actions.Count > 5)
@@ -208,8 +239,7 @@ namespace RogueLike
             {
                 actions.Add("\nA Giant Troll attacked you and damaged you " +
                     $"for {enemy.damage} hp !!");
-            }
-            
+            }  
         }
 
         /// <summary>
@@ -282,11 +312,6 @@ namespace RogueLike
             Console.WriteLine("|\u2b9a Goodluck and Have fun, if you live....\t\t\t\t  |");
             Console.WriteLine("|_____________________________________________"+
             "____________________________|");
-        }
-
-        public void BlankLine()
-        {
-            Console.WriteLine();
         }
     }
 }

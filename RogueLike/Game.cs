@@ -20,7 +20,7 @@ namespace RogueLike
         {
             // Instances / Variable
             Level level     = new Level(rows, columns);
-            Renderer print = new Renderer();
+            Renderer print  = new Renderer();
             Input input     = new Input(); 
             map             = new Map[rows, columns];
             string playerInput;
@@ -30,6 +30,7 @@ namespace RogueLike
             // Runs Menu Loop
             do
             {
+                print.Introduction();
                 print.BlankLine();
                 // Prints Initial Menu
                 print.PrintMenu();
@@ -49,10 +50,10 @@ namespace RogueLike
                 // CreatePowerUp(1); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
                 // CreateEnemy(1); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
                 
-
                 print.PrintGameActions(); // Prints First Action
 
                 gameOver = false;
+                // Generates the map and its elements
                 level.CreateLevel(map);
                 // CreateEnemy(level);                
                 while (gameOver == false)
@@ -62,12 +63,16 @@ namespace RogueLike
 
                     ////////////////////////////////////////////////////////////
                     // Player Movement and Map print ///////////////////////////
+                    if (NoRemainingMoves()){
+                        print.NoMoves();
+                        player.Die();
+                    }
                     while (player.Movement > 0 &&    // Player has 2 Movements
                             player.IsAlive)          // Player is alive
                     {
                         turn = "Player";
-                        print.Map(map, rows, columns, level.PowerUps, level.enemies, 
-                                player, turn);
+                        print.Map(map, rows, columns, level.PowerUps, 
+                                level.enemies, player, turn);
                         map = input.GetPosition(player, map, print);
                         // Checks if the player got any powerUp
                         foreach (PowerUp powerUp in level.PowerUps)
@@ -77,6 +82,7 @@ namespace RogueLike
                                     player.PickPowerUp(map, powerUp);
                                     print.GetGameActions(powerUp);
                                 }
+                        // Prints actions list
                         print.PrintGameActions();
                     }
                     ////////////////////////////////////////////////////////////
@@ -87,24 +93,27 @@ namespace RogueLike
                         foreach (Enemy enemy in level.enemies)
                         {
                             turn = "Enemy";
-                            print.Map(map, rows, columns, level.PowerUps, level.enemies, 
-                                    player, turn);
-                            if (map[enemy.Position.Row, enemy.Position.Column].Position.HasPowerUp)
+                            print.Map(map, rows, columns, level.PowerUps, 
+                                    level.enemies, player, turn);
+                            // If the enemy moves to a powerUp position
+                            if (map[enemy.Position.Row, enemy.Position.Column].
+                                Position.HasPowerUp)
                             {
                                 map[enemy.Position.Row, enemy.Position.Column].
                                     Position.EnemyFree(false);
                             }
                             else
-                            {
+                            {   // If the enemy moves to an empty position
                                 map[enemy.Position.Row, enemy.Position.Column].
                                     Position.EnemyFree(); 
                             }
                             Thread.Sleep(1000);
+                            // Moves the enemy, occupies its space and prints it
                             enemy.Move(player, 1, map);
                             map[enemy.Position.Row, enemy.Position.Column].
                                 Position.EnemyOccupy();
-                            print.Map(map, rows, columns, level.PowerUps, level.enemies, 
-                                    player, turn);
+                            print.Map(map, rows, columns, level.PowerUps, 
+                                    level.enemies,player, turn);
                         }
                         // Player gets damage if the he's 1 square distance
                         foreach (Enemy enemy in level.enemies)
@@ -113,6 +122,7 @@ namespace RogueLike
                                 player.TakeDamage(enemy);
                                 print.GetGameActions(enemy);
                             }
+                        // Prints actions list
                         print.PrintGameActions();
                     }
                     ////////////////////////////////////////////////////////////
@@ -121,8 +131,8 @@ namespace RogueLike
                     // Prints player HP or ends the game
                     if (!player.IsAlive)
                     {
-                        print.Map(map, rows, columns, level.PowerUps, level.enemies, 
-                                player, "Enemy");
+                        print.Map(map, rows, columns, level.PowerUps, 
+                                level.enemies, player, "Enemy");
                         print.GoodBye();
                         Quit();
                     }
@@ -230,6 +240,44 @@ namespace RogueLike
 
         /// <summary>
         /// Stops the game loop and exits game
+        /// </summary>
+
+        /// <summary>
+        /// Checks if the player can move
+        /// </summary>
+        /// <returns>True if they player can't move</returns>
+        private bool NoRemainingMoves()
+        {
+            int  count = 0;
+            bool lose  = false;
+
+            try
+            {   // Checks north
+                if (map[player.Position.Row - 1, player.Position.Column].
+                    Position.Walkable == false) count++;               
+            } catch {count++;};
+            try
+            {   // Checks south
+                if (map[player.Position.Row + 1, player.Position.Column].
+                    Position.Walkable == false) count++;               
+            } catch {count++;};
+            try
+            {   // Checks east
+                if (map[player.Position.Row, player.Position.Column + 1].
+                    Position.Walkable == false) count++;               
+            } catch {count++;};
+            try
+            {   // Checks Column
+                if (map[player.Position.Row, player.Position.Column - 1].
+                    Position.Walkable == false) count++;               
+            } catch {count++;};
+            // If count == 4, it's gameover
+            if (count == 4) lose = true;
+            return lose;
+        }
+
+        /// <summary>
+        /// Quits the game loop
         /// </summary>
         private void Quit() => gameOver = true;
     }

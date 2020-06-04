@@ -340,13 +340,13 @@ namespace RogueLike
         private void GetExitPos(Map[,] map)
         {   
             int randRow = Random.Next(RowNum);
-            Position exit = new Position(randRow, ColumnNum);
-            while (!exit.Empty)
+            Position exit = new Position(randRow, ColumnNum-1);
+            while (!(map[exit.Row, exit.Column].Position.Empty))
             {
                 randRow = Random.Next(RowNum);
-                exit = new Position(randRow, ColumnNum);
+                exit = new Position(randRow, ColumnNum-1);
             }
-            exit.ExitOccupy();
+            map[exit.Row, exit.Column].Position.ExitOccupy();
         }
 
         /// <summary>
@@ -357,12 +357,12 @@ namespace RogueLike
         {
             int randRow = Random.Next(RowNum);
             player = new Player(new Position(randRow, 0), RowNum,ColumnNum);
-            while(player.Position.Empty == false)
+            while(!(map[randRow,0].Position.Empty))
             {
                 randRow = Random.Next(RowNum);
                 player = new Player(new Position(randRow, 0), RowNum,ColumnNum);
-            }    
-            map[randRow, 0].Position.PlayerOccupy();
+            }  
+            map[randRow,0].Position.PlayerOccupy();
         }
         private int Log(int x)
         {

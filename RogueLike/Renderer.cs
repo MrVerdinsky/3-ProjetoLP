@@ -32,8 +32,8 @@ namespace RogueLike
                             "________\n");
             Console.Write("|\u2654 - Player||\u2749 - Small Power-Up | \u2716" +
                             " - Obstacle            |\n");
-            Console.Write("|\u265F - Minion||\u273E - Medium Power-Up|       " +
-                            "                  |\n");
+            Console.Write("|\u265F - Minion||\u273E - Medium Power-Up| \u2FA8" + 
+                            "- Exit                |\n");
             Console.Write("|\u265A - Boss  ||\u2740 - Large Power-Up |   ____" +
                             "__________________|\n");
             Console.Write("|                                   |A/W/S/D or   " +
@@ -41,7 +41,7 @@ namespace RogueLike
             Console.Write($"|Moves Left: {player.Movement}"+
                             $"       Level: {level}" +
                             "       |Arrow Keys - to move |\n");
-            Console.Write($"|Player HP : {player.HP,-5} - {turn} Turn -  |   " +
+            Console.Write($"|Player HP : {player.HP,-5} - {turn} Turn -   |   " +
                             " Escape - to leave|\n");
             Console.Write("|___________________________________|_____________" +
                             "________|\n\n");
@@ -97,10 +97,11 @@ namespace RogueLike
                         }  
                     }
                     else if (map[i,j].Position.HasExit)
-                        Console.WriteLine("\u2FA8");
+                        Console.Write("|\u2FA8|");
                     
                 }
                 Console.WriteLine();
+                
             }
         }
 

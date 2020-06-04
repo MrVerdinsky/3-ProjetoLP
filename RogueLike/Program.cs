@@ -18,8 +18,8 @@ namespace RogueLike
             DateTime currentTime = DateTime.Now;
             long seed = currentTime.Ticks;
 
-            try
-            {
+             try
+            {   
                if (args[0] == "-c" && args[2] == "-r")
                 {
                     Game game = new Game(
@@ -34,11 +34,11 @@ namespace RogueLike
                         Convert.ToInt16(args[3]),
                         seed);
                 } 
-            }
+             }
             catch (IndexOutOfRangeException)
            {
                 print.IntroErrorMessage();
-           }
+           }    
                
 
         }

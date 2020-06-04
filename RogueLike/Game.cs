@@ -54,6 +54,7 @@ namespace RogueLike
                 gameOver = false;
                 // Generates the map and its elements
                 level.CreateLevel(map);
+                Console.WriteLine(map[level.player.Position.Row,level.player.Position.Column]);
                 // CreateEnemy(level);                
                 while (gameOver == false)
                 {
@@ -62,7 +63,7 @@ namespace RogueLike
 
                     ////////////////////////////////////////////////////////////
                     // Player Movement and Map print ///////////////////////////
-                    if (NoRemainingMoves(level)){
+                    if (NoRemainingMoves(level.player)){
                         print.NoMoves();
                         level.player.Die();
                     }
@@ -209,29 +210,29 @@ namespace RogueLike
         /// Checks if the level.player can move
         /// </summary>
         /// <returns>True if they level.player can't move</returns>
-        private bool NoRemainingMoves(Level level)
+        private bool NoRemainingMoves(Player player)
         {
             int  count = 0;
             bool lose  = false;
 
             try
             {   // Checks north
-                if (map[level.player.Position.Row - 1, level.player.Position.Column].
+                if (map[player.Position.Row - 1, player.Position.Column].
                     Position.Walkable == false) count++;               
             } catch {count++;};
             try
             {   // Checks south
-                if (map[level.player.Position.Row + 1, level.player.Position.Column].
+                if (map[player.Position.Row + 1, player.Position.Column].
                     Position.Walkable == false) count++;               
             } catch {count++;};
             try
             {   // Checks east
-                if (map[level.player.Position.Row, level.player.Position.Column + 1].
+                if (map[player.Position.Row, player.Position.Column + 1].
                     Position.Walkable == false) count++;               
             } catch {count++;};
             try
             {   // Checks Column
-                if (map[level.player.Position.Row, level.player.Position.Column - 1].
+                if (map[player.Position.Row, player.Position.Column - 1].
                     Position.Walkable == false) count++;               
             } catch {count++;};
             // If count == 4, it's gameover

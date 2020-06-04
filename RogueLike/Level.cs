@@ -20,6 +20,12 @@ namespace RogueLike
         public Position exit        {get; set;}
         public int Seed            {get; private set;}
 
+        /// <summary>
+        /// Creates Level
+        /// </summary>
+        /// <param name="firstRowNum">Total of rows</param>
+        /// <param name="firstColumnNum">totals of Columns</param>
+        /// <param name="seed">Current Game's seed</param>
         public Level(int firstRowNum, int firstColumnNum, long seed)
         {
             RowNum          = firstRowNum;
@@ -36,6 +42,7 @@ namespace RogueLike
         /// Gets all level paramaters
         /// </summary>
         /// <param name="map">Current level map</param>
+        /// <param name="levelNum">Level's Number</param>
         public void CreateLevel(Map[,] map, int levelNum)
         {
             // Sets Random Exit position
@@ -59,6 +66,7 @@ namespace RogueLike
         /// <summary>
         /// Gets a Random number of power-ups
         /// </summary>
+        /// <param name="levelNum">Level's Number</param>
         private void GetPowerUpNum(int levelNum)
         {
             LevelNum = levelNum;
@@ -76,6 +84,7 @@ namespace RogueLike
         /// <summary>
         /// Gets a Random number of Enemies
         /// </summary>
+        /// <param name="levelNum">Level's Number</param>
         private void GetEnemyNum(int levelNum)
         {
             LevelNum = levelNum;
@@ -102,6 +111,7 @@ namespace RogueLike
         /// <summary>
         /// Get a Random number os obstacles
         /// </summary>
+        /// <param name="levelNum">Level's Number</param>
         private void GetObstacleNum(int levelNum)
         {
 
@@ -126,6 +136,7 @@ namespace RogueLike
             ObstacleNum = tempObsNum;
 
         }
+
         /// <summary>
         /// Positions each power up on the map
         /// </summary>
@@ -344,13 +355,20 @@ namespace RogueLike
         /// <param name="map">Current level map</param>
         private void GetExitPos(Map[,] map)
         {   
+            //Creates a random number based on the row's total
             int randRow = Random.Next(RowNum);
+            
+            //Creates exit position based on random number
             exit = new Position(randRow, ColumnNum-1);
+
+            //Continues Randomizing until an empty square is found
             while (!(map[exit.Row, exit.Column].Position.Empty))
             {
                 randRow = Random.Next(RowNum);
                 exit = new Position(randRow, ColumnNum-1);
             }
+
+            //Sets position
             map[exit.Row, exit.Column].Position.ExitOccupy();
         }
 
@@ -360,13 +378,20 @@ namespace RogueLike
         /// <param name="map">Current level map</param>
         private void GetPlayerPos(Map[,] map)
         {
+            //Creates a random number based on the row's total
             int randRow = Random.Next(RowNum);
+
+            //Creates player's position based on random number
             player = new Player(new Position(randRow, 0), RowNum,ColumnNum);
+
+            //Continues Randomizing until an empty square is found
             while(!(map[randRow,0].Position.Empty))
             {
                 randRow = Random.Next(RowNum);
                 player = new Player(new Position(randRow, 0), RowNum,ColumnNum);
-            }  
+            }
+
+            //Sets position
             map[randRow,0].Position.PlayerOccupy();
         }
         private int Log(int x)
@@ -390,7 +415,8 @@ namespace RogueLike
         /// Gets weighted Random index from a weight list
         /// </summary>
         /// <param name="weights">List of weights</param>
-        /// <returns></returns>
+        /// <returns>Returns the probability value for a specific item on the 
+        /// list</returns>
         private int RandomWeight(List <float> weights)
         {
             float rnd = (float)(Random.NextDouble() * weights.Sum());

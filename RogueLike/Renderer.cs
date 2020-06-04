@@ -41,8 +41,8 @@ namespace RogueLike
             Console.Write($"|Moves Left: {player.Movement}"+
                             $"       Level: {level}" +
                             "       |Arrow Keys - to move |\n");
-            Console.Write($"|Player HP : {player.HP,-5} - {turn} Turn -  |   " +
-                            " Escape - to leave|\n");
+            Console.Write($"|Player HP : {player.HP,-5} - {turn+1} Turn -  |   " 
+                           + " Escape - to leave|\n");
             Console.Write("|___________________________________|_____________" +
                             "________|\n\n");
 
@@ -130,6 +130,9 @@ namespace RogueLike
             Console.WriteLine("|__________________|");
         }
 
+        /// <summary>
+        /// Prints the Title Text
+        /// </summary>
         public void Introduction()
         {
             Console.WriteLine();
@@ -247,6 +250,10 @@ namespace RogueLike
             }  
         }
 
+        /// <summary>
+        /// Prints Next level message 
+        /// </summary>
+        /// <param name="escaped"></param>
         public void GetGameActions(bool escaped)
         {
             if (actions.Count > 5)
@@ -287,6 +294,9 @@ namespace RogueLike
             Console.WriteLine("\nBetter luck next time adventurer.");
         }
 
+        /// <summary>
+        /// Prints the game's rules and controls
+        /// </summary>
         public void PrintInstructions()
         {
             Console.WriteLine(" ______________________________________________"+

@@ -3,7 +3,7 @@ namespace RogueLike
 {
     sealed public class Input
     {
-
+        
         string playerInput;
         private static Renderer print;
         /// <summary>
@@ -13,23 +13,36 @@ namespace RogueLike
         {
             print = new Renderer();
         }
-        //Controls all Menu Options until players chooses new game
+        
+        /// <summary>
+        /// Controls all Menu Options until players chooses new game
+        /// </summary>
+        /// <returns>Returns the user's input</returns>
         public string MenuOptions()
         {
             //Keeps running until players starts new game
             playerInput = Console.ReadLine();
             switch(playerInput)
             {
+                //Starts new game
                 case "1":
                     return playerInput;
+                
+                //Prints the Highscore Screen
                 case "2":
                     break;
+
+                //Prints the game's Instructions
                 case "3":
                     print.PrintInstructions();
                     break;
+
+                //Prints the game's developers
                 case "4":
                     print.PrintCredits();
                     break;
+                
+                //Prints Exit message and closes the game
                 case "5":
                     print.PrintExitMsg();
                     return playerInput;
@@ -38,6 +51,7 @@ namespace RogueLike
                     print.PrintInputError();
                     break;
             }
+            //Asks the user for an input to leave the option screen
             Console.ReadLine();
             return playerInput;
         }

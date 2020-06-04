@@ -28,21 +28,22 @@ namespace RogueLike
         }
 
         /// <summary>
-        /// Player loses HP equal to enemy.damage
+        /// Player loses HP equal to Enemies damage
         /// </summary>
         /// <param name="enemy">To get damage value from enemy</param>
         public void TakeDamage(Enemy enemy)
         {
+            //Checks if the player is Alive
             if (HP - enemy.damage < 1)
                 IsAlive = false;
             HP -= enemy.damage;  
         }
 
-
         /// <summary>
         /// Player recovers HP equal to powerUp.heal and destroys the powerup
         /// </summary>
         /// <param name="powerUp">To get heal value from powerUp</param>
+        /// <param name="powerUp">To get map positions</param>
         public void PickPowerUp(Map[,] map, PowerUp powerUp)
         {
                 HP += powerUp.Heal;
@@ -62,6 +63,7 @@ namespace RogueLike
         /// otherwise false</returns>
         public bool Move(Map[,] map, char input, Renderer print)
         {
+            //Checks if the player can move
             bool canMove = false;
 
             //Conditions used to check if 
@@ -70,6 +72,7 @@ namespace RogueLike
             {
                 switch(input)
                 {
+                    //Moves Left
                     case 'a':
                         if (map[this.Position.Row,this.Position.Column-1].
                             Position.Walkable == false)
@@ -80,7 +83,9 @@ namespace RogueLike
                             canMove = true;
                             
                         }
-                        break;   
+                        break; 
+
+                    //Moves Right
                     case 'd':
                         if (map[this.Position.Row, this.Position.Column+1].
                             Position.Walkable == false)
@@ -91,6 +96,8 @@ namespace RogueLike
                             canMove = true;
                         }                     
                         break;
+                    
+                    //Moves Upwards
                     case 'w':
                         if (map[this.Position.Row-1, this.Position.Column].
                             Position.Walkable == false)
@@ -101,6 +108,8 @@ namespace RogueLike
                             canMove = true; 
                         }   
                         break;
+
+                    //Moves Downwards
                     case 's':
                         if (map[this.Position.Row+1, this.Position.Column].
                             Position.Walkable == false)
@@ -111,6 +120,8 @@ namespace RogueLike
                             canMove = true;
                         }
                         break;
+                    
+                    //Prints error message in case of wrong Input
                     default:
                         print.PrintInputError();
                         break;
@@ -138,10 +149,19 @@ namespace RogueLike
             Movement = 2;
         }
 
+        /// <summary>
+        /// Changes the player status to Dead
+        /// </summary>
         public void Die()
         {
             IsAlive = false;
         }
+
+        /// <summary>
+        /// Used to reset players and exits tags for the start of a new level
+        /// </summary>
+        /// <param name="map">All game position</param>
+        /// <param name="level">Exit position</param>
         public void EscapeLevel(Map[,] map, Level level)
         {
             map[level.exit.Row,level.exit.Column].

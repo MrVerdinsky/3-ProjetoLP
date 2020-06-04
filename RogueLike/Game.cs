@@ -6,6 +6,8 @@ namespace RogueLike
     sealed public class Game
     {
         bool gameOver;
+        int levelNum;
+        bool nextLevel;
         // Enemy[] Enemies;
         // PowerUp[] powerUps;
         Map[,] map;
@@ -45,22 +47,19 @@ namespace RogueLike
             if (playerInput == "1")
             {
                 CreateMap(rows, columns);
-                /* CreatePlayer(0, rows, columns); */ ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
-                // CreatePowerUp(1); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
-                // CreateEnemy(1); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
-                
                 print.PrintGameActions(); // Prints First Action
-
+                
                 gameOver = false;
+                levelNum = 0;
                 // Generates the map and its elements
-                level.CreateLevel(map);
+                level.CreateLevel(map, levelNum);
                 Console.WriteLine(map[level.player.Position.Row,level.player.Position.Column]);
                 // CreateEnemy(level);                
                 while (gameOver == false)
                 {
+                    nextLevel = false;
                     // Resets Movement
-                    level.player.MovementReset(); 
-
+                    level.player.MovementReset();
                     ////////////////////////////////////////////////////////////
                     // Player Movement and Map print ///////////////////////////
                     if (NoRemainingMoves(level.player)){
@@ -83,12 +82,21 @@ namespace RogueLike
                                     print.GetGameActions(powerUp);
                                 }
                         // Prints actions list
+                        if (ExitPosition(level.player, level))
+                        {
+                            levelNum++;
+                            level.player.EscapeLevel(map, level);
+                            CreateMap(rows, columns);
+                            level.CreateLevel(map, levelNum);
+                            nextLevel = true;
+                            print.GetGameActions(nextLevel);
+                        }
                         print.PrintGameActions();
                     }
                     ////////////////////////////////////////////////////////////
 
                     // Enemy Turn //////////////////////////////////////////////
-                    if (level.player.IsAlive)
+                    if (level.player.IsAlive && nextLevel == false)
                     {   // Prints the map, moves enemy, prints the map
                         foreach (Enemy enemy in level.Enemies)
                         {
@@ -174,6 +182,15 @@ namespace RogueLike
             bool occupied = false;
                 if (p1.Position.Row == powerUp.Position.Row &&
                     p1.Position.Column == powerUp.Position.Column)
+                    occupied = true;
+            return occupied;
+        }
+
+        private bool ExitPosition(Character p1, Level level)
+        {
+            bool occupied = false;
+            if(p1.Position.Row == level.exit.Row &&
+                    p1.Position.Column == level.exit.Column)
                     occupied = true;
             return occupied;
         }

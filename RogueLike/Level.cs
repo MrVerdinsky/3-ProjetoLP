@@ -17,6 +17,7 @@ namespace RogueLike
         private Random Random;
         public PowerUp[] PowerUps   {get; set;}
         public Player player        {get; set;}
+        public Position exit        {get; set;}
         public int Seed            {get; private set;}
 
         public Level(int firstRowNum, int firstColumnNum, long seed)
@@ -35,22 +36,22 @@ namespace RogueLike
         /// Gets all level paramaters
         /// </summary>
         /// <param name="map">Current level map</param>
-        public void CreateLevel(Map[,] map)
+        public void CreateLevel(Map[,] map, int levelNum)
         {
             // Sets Random Exit position
             GetExitPos(map);
             // Sets Random player position
             GetPlayerPos(map);
             // Gets Random number of Enemies
-            GetEnemyNum();
+            GetEnemyNum(levelNum);
             // Sets Enemies to their positions
             GetEnemyPos(map);
             // Gets Random number of obstacles
-            GetObstacleNum();
+            GetObstacleNum(levelNum);
             // Sets obstacles to their position
             GetObsPos(map);
             // Gets Random number of power-ups
-            GetPowerUpNum();
+            GetPowerUpNum(levelNum);
             // Sets obstacles to their power-ups
             GetPowerUpPos(map);            
         }
@@ -58,8 +59,9 @@ namespace RogueLike
         /// <summary>
         /// Gets a Random number of power-ups
         /// </summary>
-        private void GetPowerUpNum()
+        private void GetPowerUpNum(int levelNum)
         {
+            LevelNum = levelNum;
             int tempPowerUpNum = 0;
             int maxPUNum = AvailableArea/2;
             while (tempPowerUpNum >= maxPUNum || tempPowerUpNum <= 0)
@@ -74,8 +76,9 @@ namespace RogueLike
         /// <summary>
         /// Gets a Random number of Enemies
         /// </summary>
-        private void GetEnemyNum()
+        private void GetEnemyNum(int levelNum)
         {
+            LevelNum = levelNum;
             // Temporary enemy number
             int tempEnemyNum = 0;
 
@@ -99,8 +102,10 @@ namespace RogueLike
         /// <summary>
         /// Get a Random number os obstacles
         /// </summary>
-        private void GetObstacleNum()
+        private void GetObstacleNum(int levelNum)
         {
+
+            LevelNum = levelNum;
             // temporary obstacle number
             int tempObsNum = 0;
 
@@ -340,7 +345,7 @@ namespace RogueLike
         private void GetExitPos(Map[,] map)
         {   
             int randRow = Random.Next(RowNum);
-            Position exit = new Position(randRow, ColumnNum-1);
+            exit = new Position(randRow, ColumnNum-1);
             while (!(map[exit.Row, exit.Column].Position.Empty))
             {
                 randRow = Random.Next(RowNum);

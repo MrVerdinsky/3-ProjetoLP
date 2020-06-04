@@ -38,6 +38,7 @@ namespace RogueLike
             HP -= enemy.damage;  
         }
 
+
         /// <summary>
         /// Player recovers HP equal to powerUp.heal and destroys the powerup
         /// </summary>
@@ -140,6 +141,13 @@ namespace RogueLike
         public void Die()
         {
             IsAlive = false;
+        }
+        public void EscapeLevel(Map[,] map, Level level)
+        {
+            map[level.exit.Row,level.exit.Column].
+                    Position.ExitFree();
+             map[level.exit.Row,level.exit.Column].
+                    Position.PlayerOccupy(); 
         }
     } 
 }

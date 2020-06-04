@@ -94,6 +94,14 @@ namespace RogueLike
             Empty = false;
             Walkable = true;
             HasExit = true;
+            HasPlayer = false;
+        }
+        public void ExitFree()
+        {
+            Empty       = true;
+            Walkable    = true;
+            HasExit     = false;
+            HasPlayer   = true;
         }
     }
 }

@@ -156,17 +156,5 @@ namespace RogueLike
             IsAlive = false;
         }
 
-        /// <summary>
-        /// Used to reset players and exits tags for the start of a new level
-        /// </summary>
-        /// <param name="map">All game position</param>
-        /// <param name="level">Exit position</param>
-        public void EscapeLevel(Map[,] map, Level level)
-        {
-            map[level.exit.Row,level.exit.Column].
-                    Position.ExitFree();
-             map[level.exit.Row,level.exit.Column].
-                    Position.PlayerOccupy(); 
-        }
     } 
 }

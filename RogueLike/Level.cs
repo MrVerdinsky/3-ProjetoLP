@@ -20,7 +20,6 @@ namespace RogueLike
         private Random Random;
         public PowerUp[] PowerUps   {get; set;}
         public Player player        {get; set;}
-        public Position exit        {get; set;}
         public int Seed             {get; private set;}
 
         /// <summary>
@@ -45,23 +44,22 @@ namespace RogueLike
         /// Gets all level paramaters
         /// </summary>
         /// <param name="map">Current level map</param>
-        /// <param name="levelNum">Level's Number</param>
-        public void CreateLevel(Map[,] map, int levelNum)
+        public void CreateLevel(Map[,] map, int LevelNum)
         {
             // Sets Random Exit position
             GetExitPos(map);
             // Sets Random player position
             GetPlayerPos(map);
             // Gets Random number of Enemies
-            GetEnemyNum(levelNum);
+            GetEnemyNum(LevelNum);
             // Sets Enemies to their positions
             GetEnemyPos(map);
             // Gets Random number of obstacles
-            GetObstacleNum(levelNum);
+            GetObstacleNum(LevelNum);
             // Sets obstacles to their position
             GetObsPos(map);
             // Gets Random number of power-ups
-            GetPowerUpNum(levelNum);
+            GetPowerUpNum(LevelNum);
             // Sets obstacles to their power-ups
             GetPowerUpPos(map);            
         }
@@ -69,10 +67,9 @@ namespace RogueLike
         /// <summary>
         /// Gets a Random number of power-ups
         /// </summary>
-        /// <param name="levelNum">Level's Number</param>
-        private void GetPowerUpNum(int levelNum)
+        /// <param name="LevelNum">Level's Number</param>
+        private void GetPowerUpNum(int LevelNum)
         {
-            LevelNum = levelNum;
             int tempPowerUpNum = 0;
             int maxPUNum = AvailableArea/2;
             while (tempPowerUpNum >= maxPUNum || tempPowerUpNum <= 0)
@@ -87,10 +84,10 @@ namespace RogueLike
         /// <summary>
         /// Gets a Random number of Enemies
         /// </summary>
-        /// <param name="levelNum">Level's Number</param>
-        private void GetEnemyNum(int levelNum)
+        /// <param name="LevelNum">Level's Number</param>
+        private void GetEnemyNum(int LevelNum)
         {
-            LevelNum = levelNum;
+            
             // Temporary enemy number
             int tempEnemyNum = 0;
 
@@ -114,11 +111,11 @@ namespace RogueLike
         /// <summary>
         /// Get a Random number os obstacles
         /// </summary>
-        /// <param name="levelNum">Level's Number</param>
-        private void GetObstacleNum(int levelNum)
+        /// <param name="LevelNum">Level's Number</param>
+        private void GetObstacleNum(int LevelNum)
         {
 
-            LevelNum = levelNum;
+            
             // temporary obstacle number
             int tempObsNum = 0;
 
@@ -360,18 +357,14 @@ namespace RogueLike
             //Creates a random number based on the row's total
             int randRow = Random.Next(RowNum);
             
-            //Creates exit position based on random number
-            exit = new Position(randRow, ColumnNum-1);
-
             //Continues Randomizing until an empty square is found
-            while (!(map[exit.Row, exit.Column].Position.Empty))
+            while (!(map[randRow, ColumnNum-1].Position.Empty))
             {
                 randRow = Random.Next(RowNum);
-                exit = new Position(randRow, ColumnNum-1);
             }
 
             //Sets position
-            map[exit.Row, exit.Column].Position.ExitOccupy();
+            map[randRow,ColumnNum-1].Position.ExitOccupy();
         }
 
         /// <summary>
@@ -433,6 +426,21 @@ namespace RogueLike
                     }
             }
             return randomNum;
+        }
+
+        /// <summary>
+        /// Used to reset players and exits tags for the start of a new level
+        /// </summary>
+        /// <param name="map">All game position</param>
+        /// <param name="level">Exit position</param>
+        public void EscapeLevel(Map[,] map)
+        {
+            map[player.Position.Row,
+                player.Position.Column].Position.PlayerFree(); 
+            map[player.Position.Row,
+                player.Position.Column].Position.ExitFree();
+            map[player.Position.Row,
+                player.Position.Column].Position.PlayerOccupy(); 
         }
     }
 }

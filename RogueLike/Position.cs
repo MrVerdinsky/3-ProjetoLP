@@ -105,7 +105,6 @@ namespace RogueLike
             Empty = false;
             Walkable = true;
             HasExit = true;
-            HasPlayer = false;
         }
 
         /// <summary>
@@ -116,7 +115,6 @@ namespace RogueLike
             Empty       = true;
             Walkable    = true;
             HasExit     = false;
-            HasPlayer   = true;
         }
     }
 }

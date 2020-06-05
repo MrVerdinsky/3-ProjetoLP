@@ -25,7 +25,7 @@ namespace RogueLike
             Renderer print  = new Renderer();
             Input input     = new Input(); 
             map             = new Map[rows, columns];
-            bool nextLevel;
+            bool levelUp;
             string playerInput;
             string turn;
 
@@ -70,7 +70,7 @@ namespace RogueLike
                 // CreateEnemy(level);                
                 while (gameOver == false)
                 {
-                    nextLevel = false;
+                    levelUp = false;
 
                     // If player has not moves left, it's gameover
                     if (NoRemainingMoves(level.player)){
@@ -109,21 +109,22 @@ namespace RogueLike
                                 }
                         
                         // Checks if the player has reached the exit 
-                        if (ExitPosition(level.player, level))
+                        if (map[level.player.Position.Row, 
+                            level.player.Position.Column].Position.HasExit)
                         {
                             //Adds 1 to the level number
                             level.LevelNum++;
                             
                             //Resets the tags in the player and exit position
-                            level.player.EscapeLevel(map, level);
+                            level.EscapeLevel(map);
 
                             //Redraws the game's map and Sets new positions for
                             // the player and exit
                             CreateMap(rows, columns);
                             level.CreateLevel(map, level.LevelNum);
-                            nextLevel = true;
+                            levelUp = true;
                             //Prints a message to the screen once player exits.
-                            print.GetGameActions(nextLevel);
+                            print.GetGameActions(levelUp);
                         }
                         //Prints list of the game's actions
                         print.PrintGameActions();
@@ -132,7 +133,7 @@ namespace RogueLike
                     // Enemy Turn
                     //Checks if the player is alive and hasn't 
                     //finished the level
-                    if (level.player.IsAlive && nextLevel == false)
+                    if (level.player.IsAlive && levelUp == false)
                     {   // Prints the map, moves enemy, prints the map
                         foreach (Enemy enemy in level.Enemies)
                         {
@@ -231,22 +232,6 @@ namespace RogueLike
             bool occupied = false;
                 if (p1.Position.Row == powerUp.Position.Row &&
                     p1.Position.Column == powerUp.Position.Column)
-                    occupied = true;
-            return occupied;
-        }
-
-        /// <summary>
-        /// Checks if the player is in the same square has the exit
-        /// </summary>
-        /// <param name="p1">Player's Position</param>
-        /// <param name="level">Exit Position</param>
-        /// <returns>Returns True if the player is in the same position has the
-        /// exit, otherwise false</returns>
-        private bool ExitPosition(Character p1, Level level)
-        {
-            bool occupied = false;
-            if(p1.Position.Row == level.exit.Row &&
-                    p1.Position.Column == level.exit.Column)
                     occupied = true;
             return occupied;
         }

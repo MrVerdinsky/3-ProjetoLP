@@ -178,8 +178,10 @@ namespace RogueLike
                                 //Delays the game for the Enemys movement
                                 Thread.Sleep(500);
 
-                                //Moves the enemy, occupies and prints it
-                                enemy.Move(level.player, level.EnemyMoveNum, map);
+                                // Moves the enemy, occupies the position 
+                                // and prints and prints it
+                                enemy.Move(level.player, level.EnemyMoveNum, 
+                                            map);
                                 map[enemy.Position.Row, enemy.Position.Column].
                                     Position.EnemyOccupy();
                                 print.Map(map, level.PowerUps, level.Enemies,

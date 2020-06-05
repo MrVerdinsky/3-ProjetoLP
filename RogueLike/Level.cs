@@ -23,12 +23,8 @@ namespace RogueLike
         /// <summary>
         /// Creates Level
         /// </summary>
-
-        /// <param name="firstColumnNum">totals of Columns</param>
-        /// <param name="seed">Current Game's seed</param>
         public Level()
         {
-
             LevelNum        = 0;
             EnemyNum        = 0;
             ObstacleNum     = 0;
@@ -67,7 +63,8 @@ namespace RogueLike
         /// <summary>
         /// Resets the area availble to create new level elements 
         /// </summary>
-        private void ResetAvailableArea() => AvailbleArea = Game.rows * Game.columns;
+        private void ResetAvailableArea() => 
+            AvailbleArea = Game.rows * Game.columns;
 
         /// <summary>
         /// Gets a Random number of power-ups
@@ -214,9 +211,8 @@ namespace RogueLike
                         continue;
                 }    
             }
-            string[]  testear = new string[2];
-            // Goes throes the whole PowerUps list and occupies the map positions
-            // with them
+            
+            // Fills the map with powerup positions
             foreach (PowerUp powerUp in PowerUps)
             {
                 map[powerUp.Position.Row, powerUp.Position.Column].Position.

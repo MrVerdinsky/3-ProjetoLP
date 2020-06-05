@@ -31,23 +31,16 @@ namespace RogueLike
         /// <param name="map">Map positions</param>
         public void Move(Player player, int random, Map[,] map)
         {
-            int p1R = player.Position.Row;
-            int p1C = player.Position.Column;
-            int eR  = this.Position.Row;
-            int eC  = this.Position.Column;
-            int distanceX = (p1C - eC);
-            int distanceY = (p1R - eR);
+            int distanceX = (player.Position.Column - this.Position.Column);
+            int distanceY = (player.Position.Row - this.Position.Row);
 
-            
-                    // MAGIC HERE GABRIEL
-            Random rand = new Random();
-
-            int chance = rand.Next(2);   // 0 e 1
- 
+            // Number beetween 0 and 1
+            int chance = random;  
+            // Number 1 or -1
             int rMove;
-            rMove = chance == 1 ? +1: -1;   // 1 ou -1  
-                    //
+            rMove = chance == 1 ? +1: -1;
 
+            Console.WriteLine(random);
 
             // One square range
             if (this.Position.Row == player.Position.Row +1 &&

@@ -33,9 +33,9 @@ namespace RogueLike
         /// <param name="enemy">To get damage value from enemy</param>
         public void TakeDamage(Enemy enemy)
         {
-            if (HP - enemy.damage < 1)
+            if (HP - enemy.Damage < 1)
                 IsAlive = false;
-            HP -= enemy.damage;  
+            HP -= enemy.Damage;  
         }
 
         /// <summary>

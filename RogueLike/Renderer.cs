@@ -75,24 +75,21 @@ namespace RogueLike
                     if (map[i,j].Position.HasEnemy)
                         foreach (Enemy enemy in enemies)
                         {
-                            if (enemy.damage == 5) Console.Write($"|\u265F |");
-                            if (enemy.damage == 10) Console.Write($"|\u265A |");
-                            else break;  
+                            if(map[i,j].Position.Equals(enemy.Position))
+                            {
+                                Console.Write(enemy.Symbol);
+                            }
                         }
                     
                     //Prints all power Ups in the list
                     else if (map[i,j].Position.HasPowerUp)
                     {   
-                        
                         foreach (PowerUp powerUp in powerUps)
                         {
-                            if (powerUp.Picked == false)
+                            if ((map[i,j].Position.Equals(powerUp.Position)) &&
+                                powerUp.Picked == false)
                             {
-                                if (powerUp.Heal == 4) Console.Write("|\u2749 |");
-                                if (powerUp.Heal == 8) Console.Write("|\u273E |"); 
-                                if (powerUp.Heal == 16) Console.Write("|\u2740 |");
-                                if (powerUp.Heal == 20){}
-                                else break;
+                                Console.Write(powerUp.Symbol);
                             }
                         }  
                     }
@@ -235,15 +232,15 @@ namespace RogueLike
             if (actions.Count > 5)
                 actions.RemoveAt(0);
 
-            if (enemy.damage == 5)
+            if (enemy.Damage == 5)
             {
                 actions.Add("\nA small goblin attacked you and damaged you " +
-                    $"for {enemy.damage} hp !!");
+                    $"for {enemy.Damage} hp !!");
             }
             else
             {
                 actions.Add("\nA Giant Troll attacked you and damaged you " +
-                    $"for {enemy.damage} hp !!");
+                    $"for {enemy.Damage} hp !!");
             }  
         }
 

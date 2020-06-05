@@ -89,6 +89,19 @@ namespace RogueLike
             Walkable    = false;
         }
 
+        public override int GetHashCode()
+        {
+            return Row.GetHashCode() ^ Column.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            Position other = obj as Position;
+            if (other == null) return false;
+            return Row == other.Row && Column == other.Column;
+
+        }
+
         public void ExitOccupy()
         {
             Empty = false;

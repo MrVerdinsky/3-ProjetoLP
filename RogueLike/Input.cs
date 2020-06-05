@@ -57,7 +57,7 @@ namespace RogueLike
                 PlayerFree();
 
             // Gets player input
-            playerInput = Console.ReadLine()[0];
+            playerInput = Console.ReadKey().KeyChar;
 
             // Moves player to new free position    
             if(level.player.Move(map, playerInput, print))

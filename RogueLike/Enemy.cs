@@ -6,17 +6,19 @@ namespace RogueLike
     /// </summary>
     public class Enemy : Character
     {
-        internal int damage { get; private set; }
+        internal int Damage     { get; private set; }
+        internal string Symbol  { get; private set; }
 
         /// <summary>
         /// Creates an Enemy
         /// </summary>
         /// <param name="position">Sets the enemy position</param>
         /// <param name="damage">Sets the enemy damage</param>
-        public Enemy (Position position, int damage)
+        public Enemy (Position position, int damage, string symbol)
         {
-            base.Position           = position;
-            this.damage             = damage;
+            base.Position   = position;
+            Damage          = damage;
+            Symbol          = symbol;
         }
 
         /// <summary>

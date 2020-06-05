@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Collections.Generic;
+
 namespace RogueLike
 {
     /// <summary>
@@ -8,6 +11,7 @@ namespace RogueLike
         internal Position     Position  { get; private set; }
         internal int          Heal      { get; private set; }
         internal bool         Picked    { get; private set; }
+        internal string       Symbol      { get; private set; }
 
         /// <summary>
         /// Creates a PowerUp
@@ -19,6 +23,7 @@ namespace RogueLike
             Position            = position;
             Heal                = heal;
             Picked              = false;
+            SetName();
         }
 
         /// <summary>
@@ -28,5 +33,14 @@ namespace RogueLike
         {
             Picked = true;
         }
+
+        private void SetName()
+        {
+            if (Heal == 4) Symbol = "|\u2749 |";
+            else if (Heal == 8) Symbol = "|\u273E |";
+            else if (Heal == 16) Symbol = "|\u2740 |";
+
+        }
+
     }
 }

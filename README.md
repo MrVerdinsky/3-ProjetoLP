@@ -14,13 +14,14 @@
 
 |Gonçalo Verde|Luiz Santos|Pedro Marques|
 |:-:|:-:|:-:|
-|Add Input / Renderer|Improve Input, |Add Character / Enemy/ PowerUp|
-|Add Initial Game Input|Add Movement Input|Add Map/Render / Player Creation|
+|Add `Input` / `Renderer`|Improve `Input`|Add `Character` / `Enemy`/ `PowerUp`|
+|Add Initial Game Input|Add Movement Input|Add `Map`/`Render` / Player Creation|
 |Add Main Menu / Menu Input|Add Procedural Generation|Add GameLoop|
 |Add Enemy Render|Procedural Generation - Enemies|Add Enemy Damage Collision|
 |Add PowerUp Render|Procedural Generation - Enemies|Add PickUp Collision|
-|Add Enemy Collision|Procedural generation - PowerUps|Add Enemy movement|
+|Add Enemy Collision|Procedural generation - PowerUps|Add Enemy Movement|
 |Add Sprites|Procedural generation - PowerUps|Add Game Actions Information|
+|Add Next Level|Override Equals on `Position`|Add High Score|
 
 ## Repositório git
 
@@ -33,3 +34,7 @@
 ### Diagrama UML
 
 ### Trocas de ideias/referências
+
+["C# documentation",_Microsoft_, Microsoft 2020](
+  https://docs.microsoft.com/en-us/dotnet/csharp)
+  

@@ -1,13 +1,15 @@
-using System; // SO PARA TESTES, APAGAR <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 using System.Threading;
 
 namespace RogueLike
 {
+    /// <summary>
+    /// Runs the game loop
+    /// </summary>
     sealed public class Game
     {
+        //Controls the game cycle
         bool gameOver;
-        // Enemy[] Enemies;
-        // PowerUp[] powerUps;
+        //Holds all positions of the game
         Map[,] map;
     
         /// <summary>
@@ -15,137 +17,213 @@ namespace RogueLike
         /// </summary>
         /// <param name="rows">Number of Rows</param>
         /// <param name="columns">Number of Columns</param>
+        /// <param name="seed">Seed of the game</param>
         public Game(int rows, int columns, long seed)
         {
-            // Instances / Variable
+            // Instances / Variables
             Level level     = new Level(rows, columns, seed);
-            Renderer print = new Renderer();
+            Renderer print  = new Renderer();
             Input input     = new Input(); 
             map             = new Map[rows, columns];
+            
             string playerInput;
-            string turn;
+            string turn = "";
+            bool firstTurnCheck = true;
+
+            bool levelUp = false;
+            gameOver = false;
 
             ////////////////////////////////////////////////////////////////////
-            // Runs Menu Loop
+            // MAIN MENU ///////////////////////////////////////////////////////
+            // Runs Menu Loop until user inputs 1 or 5
             do
-            {
+            {  
+                //Prints the Title Card
                 print.Introduction();
+
+                //Prints a blank line
                 print.BlankLine();
+                
                 // Prints Initial Menu
                 print.PrintMenu();
+                
                 // Gets user Input
-                playerInput = input.MenuOptions();
+                playerInput = input.MenuOptions(rows, columns);
                 if(playerInput == "1") break;
+                
+                //Breaks the loop and quits the game
                 if(playerInput == "5") break;
+
             } while (playerInput != "5" || playerInput != "1");
             ////////////////////////////////////////////////////////////////////
-            
-            ////////////////////////////////////////////////////////////////////
-            // Run Game
+
+            // NEW GAME ////////////////////////////////////////////////////////
+            // Run Game after player inputs 1
             if (playerInput == "1")
             {
+                //Creates all squares and pieces of the game
                 CreateMap(rows, columns);
-                /* CreatePlayer(0, rows, columns); */ ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
-                // CreatePowerUp(1); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
-                // CreateEnemy(1); ///////////////////////// < METER O NUMERO RANDOM EM VEZ DE 0
-                
-                print.PrintGameActions(); // Prints First Action
 
-                gameOver = false;
                 // Generates the map and its elements
-                level.CreateLevel(map);
-                Console.WriteLine(map[level.player.Position.Row,level.player.Position.Column]);
-                // CreateEnemy(level);                
+                level.CreateLevel(map, level.LevelNum);
+
+                // MAIN GAME LOOP //////////////////////////////////////////////
                 while (gameOver == false)
                 {
-                    // Resets Movement
-                    level.player.MovementReset(); 
-
-                    ////////////////////////////////////////////////////////////
-                    // Player Movement and Map print ///////////////////////////
-                    if (NoRemainingMoves(level.player)){
-                        print.NoMoves();
-                        level.player.Die();
-                    }
-                    while (level.player.Movement > 0 &&    // Player has 2 Movements
-                            level.player.IsAlive)          // Player is alive
-                    {
-                        turn = "Player";
-                        print.Map(map, rows, columns, level.PowerUps, level.Enemies, 
-                                level.player, turn, level.LevelNum);
-                        map = input.GetPosition(level, map, print);
-                        // Checks if the level.player got any powerUp
-                        foreach (PowerUp powerUp in level.PowerUps)
-                            if (PowerUpPosition(level.player, powerUp))
-                                if (!powerUp.Picked)
-                                {
-                                    level.player.PickPowerUp(map, powerUp);
-                                    print.GetGameActions(powerUp);
-                                }
-                        // Prints actions list
-                        print.PrintGameActions();
-                    }
-                    ////////////////////////////////////////////////////////////
-
-                    // Enemy Turn //////////////////////////////////////////////
-                    if (level.player.IsAlive)
-                    {   // Prints the map, moves enemy, prints the map
-                        foreach (Enemy enemy in level.Enemies)
+                    // ON LEVEL UP /////////////////////////////////////////////
+                    if (levelUp)
+                    { 
+                        // Prints "loading" bar
+                        print.BlankLine();
+                        for (int i = 0; i < 58; i++)
                         {
-                            turn = "Enemy";
-                            print.Map(map, rows, columns, level.PowerUps, level.Enemies, 
-                                    level.player, turn,  level.LevelNum);
-                            if (map[enemy.Position.Row, enemy.Position.Column].Position.HasPowerUp)
+                            Thread.Sleep(25);
+                            print.Dot();
+                        }
+                        print.BlankLine();
+                        // Creates new level elements
+                        LevelUp(level, print, rows, columns);
+                        print.PrintGameActions(); 
+                        levelUp = false;
+                        firstTurnCheck = true;
+                    } else  print.PrintGameActions(); 
+
+                    // LEVEL GAME LOOP /////////////////////////////////////////
+                    while (levelUp == false && level.player.IsAlive)
+                    {
+                        // If player has not moves left, it's gameover
+                        if (NoRemainingMoves(level.player)){
+                            print.NoMoves();
+                            level.player.Die();
+                        }
+                        else
+                        {
+                            ////////////////////////////////////////////////////
+                            // Player Movement and Map print ///////////////////
+                            // Resets player's Movement per turn
+                            level.player.MovementReset();
+                        }
+
+                        
+
+                        // Player's turn until he moves twice or dies///////////
+                        while (level.player.Movement > 0 &&    
+                                level.player.IsAlive)          
+                        {
+                            //Used to print Player in the game's screen
+                            turn = "Player";
+
+                            //Prints all the game's information in the screen
+                            print.Map(map, rows, columns, level.PowerUps, 
+                                    level.Enemies, level.player, turn, 
+                                    level.LevelNum, firstTurnCheck);
+
+                            // Ends threading on render
+                            firstTurnCheck = false;
+                            
+                            //Asks the user for input to move the player
+                            map = input.GetPosition(level, map, print);
+
+                            //Checks if the player's in a square with a Power-Up
+                            //and picks it up, printing a message on screen.
+                            foreach (PowerUp powerUp in level.PowerUps)
+                                if (PowerUpPosition(level.player, powerUp))
+                                    if (!powerUp.Picked)
+                                    {
+                                        level.player.PickPowerUp(map, powerUp);
+                                        print.GetGameActions(powerUp);
+                                    }
+                            // Checks if the player has reached the exit 
+                            if (map[level.player.Position.Row, 
+                                level.player.Position.Column].Position.HasExit)
                             {
-                                map[enemy.Position.Row, enemy.Position.Column].
-                                    Position.EnemyFree(false);
+                                levelUp = true;
+                                break;
                             }
                             else
-                            {   // If the enemy moves to an empty position
-                                map[enemy.Position.Row, enemy.Position.Column].
-                                    Position.EnemyFree(); 
-                            }
-                            Thread.Sleep(1000);
-                            // Moves the enemy, occupies its space and prints it
-                            enemy.Move(level.player, 1, map);
-                            map[enemy.Position.Row, enemy.Position.Column].
-                                Position.EnemyOccupy();
-                            print.Map(map, rows, columns, level.PowerUps, level.Enemies, 
-                                    level.player, turn, level.LevelNum);
+                            //Prints list of the game's actions
+                            print.PrintGameActions();
                         }
-                        // Player gets damage if the he's 1 square distance
-                        foreach (Enemy enemy in level.Enemies)
-                            if (DamagePosition(level.player, enemy))
+                        
+                        // Enemy Turn //////////////////////////////////////////
+                        //Checks if the player is alive and hasn't 
+                        //finished the level
+                        if (level.player.IsAlive && levelUp == false)
+                        {   // Prints the map, moves enemy, prints the map
+                            foreach (Enemy enemy in level.Enemies)
                             {
-                                level.player.TakeDamage(enemy);
-                                print.GetGameActions(enemy);
+                                //Used to print Enemy in the game's screen
+                                turn = "Enemy";
+
+                                // Prints all the game's information 
+                                print.Map(map, rows, columns, level.PowerUps, 
+                                        level.Enemies, level.player, turn,
+                                        level.LevelNum, firstTurnCheck);
+
+                                // Checks if the player is in a square with a 
+                                //Power-Up and blocks the square
+                                if (map[enemy.Position.Row, 
+                                    enemy.Position.Column].Position.HasPowerUp)
+                                {
+                                    map[enemy.Position.Row, 
+                                    enemy.Position.Column].
+                                    Position.EnemyFree(false);
+                                }
+                                else
+                                {   // If the enemy moves to an empty position
+                                    map[enemy.Position.Row, enemy.
+                                    Position.Column].Position.EnemyFree(); 
+                                }
+
+                                //Delays the game for the Enemys movement
+                                Thread.Sleep(500);
+
+                                //Moves the enemy, occupies and prints it
+                                enemy.Move(level.player, 1, map);
+                                map[enemy.Position.Row, enemy.Position.Column].
+                                    Position.EnemyOccupy();
+                                print.Map(map, rows, columns, level.PowerUps, 
+                                        level.Enemies,level.player, turn, 
+                                        level.LevelNum, firstTurnCheck);
                             }
-                        // Prints actions list
-                        print.PrintGameActions();
+
+                            // Player gets damage if the he's 1 square distance
+                            foreach (Enemy enemy in level.Enemies)
+                                if (DamagePosition(level.player, enemy))
+                                {
+                                    level.player.TakeDamage(enemy);
+                                    print.GetGameActions(enemy);
+                                }
+                            // Prints actions list
+                            print.PrintGameActions();
+                        }
                     }
-                    ////////////////////////////////////////////////////////////
 
-
-                    // Prints level.player HP or ends the game
+                    // Checks if the player is dead and closes the game loop
                     if (!level.player.IsAlive)
                     {
-                        print.Map(map, rows, columns, level.PowerUps, level.Enemies, 
-                                level.player, "Enemy", level.LevelNum);
+                        //Prints the last round information
+                        print.Map(map, rows, columns, level.PowerUps, level.
+                            Enemies, level.player, turn, level.LevelNum,
+                            firstTurnCheck);
+
+                        //Prints a goodbye message
                         print.GoodBye();
+                        // Saves score
+                        print.SaveScore(level.LevelNum, rows, columns);
                         Quit();
                     }
                 }
             }
         
         }
-        ////////////////////////////////////////////////////////////////////////
 
         /// <summary>
         /// Compares character position with another character position
         /// </summary>
         /// <param name="p1">Character1 Position</param>
         /// <param name="en">Character2 Position</param>
-        /// <returns>True if the distance is 1 square around
+        /// <returns>Returns true if the distance is 1 square around
         ///  otherwise false</returns>
         private bool DamagePosition(Character p1, Character en)
         {
@@ -191,25 +269,10 @@ namespace RogueLike
         }
 
         /// <summary>
-        /// Creates level.player
+        /// Checks if the player can move
         /// </summary>
-        /// <param name="x">Random number to spawn level.player</param>
-        /// <param name="rows">Number of rows in the game</param>
-        /// <param name="columns">Number of columns in the game</param>
-       /*  private void CreatePlayer(int x, int rows, int columns)
-        {
-            level.player = new Player(new Position(x, 0), rows, columns);
-            map[x, 0].Position.PlayerOccupy();
-        } */
-
-        /// <summary>
-        /// Stops the game loop and exits game
-        /// </summary>
-
-        /// <summary>
-        /// Checks if the level.player can move
-        /// </summary>
-        /// <returns>True if they level.player can't move</returns>
+        /// <returns>Returns true if the player is stuck, otherwise 
+        /// false</returns>
         private bool NoRemainingMoves(Player player)
         {
             int  count = 0;
@@ -238,6 +301,31 @@ namespace RogueLike
             // If count == 4, it's gameover
             if (count == 4) lose = true;
             return lose;
+        
+        }
+
+        /// <summary>
+        /// Passes to the next level after reaching the exit
+        /// </summary>
+        /// <param name="level">Gets level number</param>
+        /// <param name="print">Gets Renderer class to print</param>
+        /// <param name="rows">Gets game's number of rows</param>
+        /// <param name="columns">Gets game's number of columns</param>
+        private void LevelUp(Level level, Renderer print, int rows, int columns)
+        {
+            //Adds 1 to the level number
+            level.LevelNum++;
+            
+            //Resets the tags in the player and exit position
+            //level.EscapeLevel(map);
+
+            //Prints a message to the screen once player exits.
+            print.GetGameActions();
+
+            //Redraws the game's map and Sets new positions for
+            // the player and exit
+            CreateMap(rows, columns);
+            level.CreateLevel(map, level.LevelNum);
         }
 
         /// <summary>

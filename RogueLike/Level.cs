@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace RogueLike
 {
+    /// <summary>
+    /// Creates levels and its elements
+    /// </summary>
     sealed public class Level
     {
         private int EnemyNum        { get; set; }
@@ -19,6 +22,12 @@ namespace RogueLike
         public Player player        { get; set; }
         public int Seed             { get; private set; }
 
+        /// <summary>
+        /// Creates Level
+        /// </summary>
+        /// <param name="firstRowNum">Total of rows</param>
+        /// <param name="firstColumnNum">totals of Columns</param>
+        /// <param name="seed">Current Game's seed</param>
         public Level(int firstRowNum, int firstColumnNum, long seed)
         {
             RowNum          = firstRowNum;
@@ -35,22 +44,22 @@ namespace RogueLike
         /// Gets all level paramaters
         /// </summary>
         /// <param name="map">Current level map</param>
-        public void CreateLevel(Map[,] map)
+        public void CreateLevel(Map[,] map, int LevelNum)
         {
             // Sets Random Exit position
             GetExitPos(map);
             // Sets Random player position
             GetPlayerPos(map);
             // Gets Random number of Enemies
-            GetEnemyNum();
+            GetEnemyNum(LevelNum);
             // Sets Enemies to their positions
             GetEnemyPos(map);
             // Gets Random number of obstacles
-            GetObstacleNum();
+            GetObstacleNum(LevelNum);
             // Sets obstacles to their position
             GetObsPos(map);
             // Gets Random number of power-ups
-            GetPowerUpNum();
+            GetPowerUpNum(LevelNum);
             // Sets obstacles to their power-ups
             GetPowerUpPos(map);            
         }
@@ -58,7 +67,8 @@ namespace RogueLike
         /// <summary>
         /// Gets a Random number of power-ups
         /// </summary>
-        private void GetPowerUpNum()
+        /// <param name="LevelNum">Level's Number</param>
+        private void GetPowerUpNum(int LevelNum)
         {
             int tempPowerUpNum = 0;
             int maxPUNum = AvailableArea/2;
@@ -75,8 +85,10 @@ namespace RogueLike
         /// <summary>
         /// Gets a Random number of Enemies
         /// </summary>
-        private void GetEnemyNum()
+        /// <param name="LevelNum">Level's Number</param>
+        private void GetEnemyNum(int LevelNum)
         {
+            
             // Temporary enemy number
             int tempEnemyNum = 0;
 
@@ -100,8 +112,11 @@ namespace RogueLike
         /// <summary>
         /// Get a Random number os obstacles
         /// </summary>
-        private void GetObstacleNum()
+        /// <param name="LevelNum">Level's Number</param>
+        private void GetObstacleNum(int LevelNum)
         {
+
+            
             // temporary obstacle number
             int tempObsNum = 0;
 
@@ -123,6 +138,7 @@ namespace RogueLike
             AvailableArea -= maxObsNum;
 
         }
+
         /// <summary>
         /// Positions each power up on the map
         /// </summary>
@@ -199,7 +215,6 @@ namespace RogueLike
             // with them
             foreach (PowerUp powerUp in PowerUps)
             {
-                Console.WriteLine($"heal:[{powerUp.Heal}]");
                 map[powerUp.Position.Row, powerUp.Position.Column].Position.
                 PowerUpOccupy();
             }
@@ -363,14 +378,17 @@ namespace RogueLike
         /// <param name="map">Current level map</param>
         private void GetExitPos(Map[,] map)
         {   
+            //Creates a random number based on the row's total
             int randRow = random.Next(RowNum);
-            Position exit = new Position(randRow, ColumnNum-1);
-            while (!(map[exit.Row, exit.Column].Position.Empty))
+            
+            //Continues Randomizing until an empty square is found
+            while (!(map[randRow, ColumnNum-1].Position.Empty))
             {
                 randRow = random.Next(RowNum);
-                exit = new Position(randRow, ColumnNum-1);
             }
-            map[exit.Row, exit.Column].Position.ExitOccupy();
+
+            //Sets position
+            map[randRow,ColumnNum-1].Position.ExitOccupy();
         }
 
         /// <summary>
@@ -381,11 +399,15 @@ namespace RogueLike
         {
             int randRow = random.Next(RowNum);
             player = new Player(new Position(randRow, 0), RowNum,ColumnNum);
+
+            //Continues Randomizing until an empty square is found
             while(!(map[randRow,0].Position.Empty))
             {
                 randRow = random.Next(RowNum);
                 player = new Player(new Position(randRow, 0), RowNum,ColumnNum);
-            }  
+            }
+
+            //Sets position
             map[randRow,0].Position.PlayerOccupy();
         }
         // private int Log(int x)
@@ -422,7 +444,8 @@ namespace RogueLike
         /// Gets weighted Random index from a weight list
         /// </summary>
         /// <param name="weights">List of weights</param>
-        /// <returns></returns>
+        /// <returns>Returns the probability value for a specific item on the 
+        /// list</returns>
         private int RandomWeight(List <float> weights)
         {
             float rnd = (float)(random.NextDouble() * weights.Sum());
@@ -438,5 +461,22 @@ namespace RogueLike
             }
             return randomNum;
         }
+
+        /*    PDOE IR FORA <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        /// <summary>
+        /// Used to reset players and exits tags for the start of a new level
+        /// </summary>
+        /// <param name="map">All game position</param>
+        /// <param name="level">Exit position</param>
+        public void EscapeLevel(Map[,] map)
+        {
+            map[player.Position.Row,
+                player.Position.Column].Position.PlayerFree(); 
+            map[player.Position.Row,
+                player.Position.Column].Position.ExitFree();
+            map[player.Position.Row,
+                player.Position.Column].Position.PlayerOccupy(); 
+        }
+        */
     }
 }

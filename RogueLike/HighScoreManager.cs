@@ -44,6 +44,7 @@ namespace RogueLike
         public void SaveFile(int levelScore)
         {
             Input input         = new Input();
+            Renderer print      = new Renderer();
             int count           = 0;
             const char space    = ' ';
             string s;
@@ -72,9 +73,7 @@ namespace RogueLike
             // If player's score is higher than last value
             if (levelScore > scores.Last().Score)
             {   // Asks for player name and adds it to the list
-                Console.WriteLine(
-                    "\nCongratulations mighty warrior, you are now in the" +
-                    " high score table.\nPlease insert your name below.");
+                print.InsertHighScore();
                 string name = input.InsertName();
                 scores.Add(new HighScore(name, levelScore));
             }

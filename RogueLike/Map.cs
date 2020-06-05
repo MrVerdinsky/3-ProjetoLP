@@ -1,9 +1,7 @@
 namespace RogueLike
 {
-    sealed public class Map
+    sealed public class Map : ObjectPosition
     {
-        internal Position Position      { get; private set; }
-
         /// <summary>
         /// Creates game's map
         /// </summary>

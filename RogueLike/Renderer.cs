@@ -204,6 +204,13 @@ namespace RogueLike
                     "\nThere are no high scores for this level yet :<");
         }
 
+        public void InsertHighScore()
+        {
+            Console.WriteLine(
+                    "\nCongratulations mighty warrior, you are now in the" +
+                    " high score table.\nPlease insert your name below.");
+        }
+
         /// <summary>
         /// Prints a dot
         /// </summary>

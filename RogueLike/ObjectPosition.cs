@@ -1,9 +1,9 @@
 namespace RogueLike
 {
     /// <summary>
-    /// Character class
+    /// ObjectPosition class
     /// </summary>
-    public class Character
+    public class ObjectPosition
     {
         internal Position   Position { get; set; }
     }

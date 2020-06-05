@@ -2,9 +2,9 @@ using System; //tESTING
 namespace RogueLike
 { 
     /// <summary>
-    /// Player class, created from Character class
+    /// Player class, created from ObjectPosition class
     /// </summary>
-    sealed public class Player : Character
+    sealed public class Player : ObjectPosition
     {
         //static internal int HP = (Game.rows * Game.columns) / 4;
         static internal int HP = 250;
@@ -16,12 +16,10 @@ namespace RogueLike
         /// Creates the player
         /// </summary>
         /// <param name="position">Gives a position to the player</param>
-        /// <param name="gameRows">Used to give player's initial HP</param>
-        /// <param name="gameColumns">Used to give player's initial HP</param>
         public Player (Position position)
         {
-            base.Position           = position;
-            IsAlive                 = true;
+            Position    = position;
+            IsAlive     = true;
         }
 
         /// <summary>
@@ -38,8 +36,8 @@ namespace RogueLike
         /// <summary>
         /// Player recovers HP equal to powerUp.heal and destroys the powerup
         /// </summary>
-        /// <param name="powerUp">To get heal value from powerUp</param>
-        /// <param name="powerUp">To get map positions</param>
+        /// <param name="map">Gets map for position</param>
+        /// <param name="powerUp">Gets powerup heal power</param>
         public void PickPowerUp(Map[,] map, PowerUp powerUp)
         {
                 HP += powerUp.Heal;
@@ -55,6 +53,7 @@ namespace RogueLike
         /// </summary>
         /// <param name="map">All map Positions</param>
         /// <param name="input">Gets which character the user pressed</param>
+        /// <param name="print">Gets renderer</param>
         /// <returns>Returns true if the movement is possible 
         /// otherwise false</returns>
         public bool Move(Map[,] map, char input, Renderer print)

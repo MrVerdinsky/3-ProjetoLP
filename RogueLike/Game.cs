@@ -225,7 +225,7 @@ namespace RogueLike
         /// <param name="en">Character2 Position</param>
         /// <returns>Returns true if the distance is 1 square around
         ///  otherwise false</returns>
-        private bool DamagePosition(Character p1, Character en)
+        private bool DamagePosition(ObjectPosition p1, ObjectPosition en)
         {
             bool occupied = false;
                 if (p1.Position.Row == en.Position.Row -1 &&
@@ -241,13 +241,13 @@ namespace RogueLike
         }
 
         /// <summary>
-        /// Compares character position with powerUp position
+        /// Compares ObjectPosition position with powerUp position
         /// </summary>
-        /// <param name="p1">Character position</param>
+        /// <param name="p1">ObjectPosition position</param>
         /// <param name="powerUp">PowerUp position</param>
         /// <returns>True if both positions are the same 
         /// otherwise false</returns>
-        private bool PowerUpPosition(Character p1, PowerUp powerUp)
+        private bool PowerUpPosition(ObjectPosition p1, PowerUp powerUp)
         {
             bool occupied = false;
                 if (p1.Position.Row == powerUp.Position.Row &&

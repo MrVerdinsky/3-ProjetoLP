@@ -2,9 +2,9 @@ using System;
 namespace RogueLike
 {
     /// <summary>
-    /// Enemy class, created from Character class
+    /// Enemy class, created from ObjectPosition class
     /// </summary>
-    public class Enemy : Character
+    public class Enemy : ObjectPosition
     {
         internal int Damage     { get; private set; }
         internal string Symbol  { get; private set; }

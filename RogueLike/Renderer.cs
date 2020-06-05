@@ -46,7 +46,7 @@ namespace RogueLike
             Console.Write($"|Moves Left: {player.Movement}"+
                             $"       Level: {level}" +
                             "       |Arrow Keys - to move |\n");
-            Console.Write($"|Player HP : {player.HP,-5} - {turn+1} Turn -  |   " 
+            Console.Write($"|Player HP : {player.HP,-5} - {turn+1} Turn - |   " 
                            + " Escape - to leave|\n");
             Console.Write("|___________________________________|_____________" +
                             "________|\n\n");

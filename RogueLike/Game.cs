@@ -179,7 +179,7 @@ namespace RogueLike
                                 Thread.Sleep(500);
 
                                 //Moves the enemy, occupies and prints it
-                                enemy.Move(level.player, 1, map);
+                                enemy.Move(level.player, level.EnemyMoveNum, map);
                                 map[enemy.Position.Row, enemy.Position.Column].
                                     Position.EnemyOccupy();
                                 print.Map(map, level.PowerUps, level.Enemies,

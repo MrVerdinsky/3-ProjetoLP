@@ -26,6 +26,7 @@ namespace RogueLike
             rows = gameRows;
             columns = gameColumns;
             // Instances / Variables
+            HighScoreManager highScore = new HighScoreManager();
             Level level     = new Level(seed);
             Renderer print  = new Renderer();
             Input input     = new Input(); 
@@ -100,16 +101,8 @@ namespace RogueLike
                         if (NoRemainingMoves(level.player)){
                             print.NoMoves();
                             level.player.Die();
-                        }
-                        else
-                        {
-                            ////////////////////////////////////////////////////
-                            // Player Movement and Map print ///////////////////
-                            // Resets player's Movement per turn
-                            level.player.MovementReset();
-                        }
-
-                        
+                        }    // Resets player's Movement per turn
+                        else level.player.MovementReset();                
 
                         // Player's turn until he moves twice or dies///////////
                         while (level.player.Movement > 0 &&    
@@ -127,7 +120,7 @@ namespace RogueLike
                             firstTurnCheck = false;
                             
                             //Asks the user for input to move the player
-                            input.GetPosition(level, map, print);
+                            input.GetPosition(level, map);
 
                             //Checks if the player's in a square with a Power-Up
                             //and picks it up, printing a message on screen.
@@ -215,7 +208,7 @@ namespace RogueLike
                         //Prints a goodbye message
                         print.GoodBye();
                         // Saves score
-                        print.SaveScore(level.LevelNum);
+                        highScore.SaveScore(level.LevelNum);
                         Quit();
                     }
                 }

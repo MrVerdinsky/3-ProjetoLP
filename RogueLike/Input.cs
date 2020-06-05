@@ -6,7 +6,6 @@ namespace RogueLike
     /// </summary>
     sealed public class Input
     {
-        private string playerInput;
         private Renderer print;
         
         /// <summary>
@@ -23,6 +22,9 @@ namespace RogueLike
         /// <returns>Returns player's option</returns>
         public string MenuOptions()
         {
+            HighScoreManager highScore = new HighScoreManager();
+            string playerInput;
+
             //Keeps running until players starts new game
             playerInput = Console.ReadLine();
             switch(playerInput)
@@ -33,7 +35,7 @@ namespace RogueLike
                 
                 //Prints the Highscore Screen
                 case "2":
-                    print.PrintScore();
+                    highScore.PrintScore();
                     break;
 
                 //Prints the game's Instructions
@@ -66,7 +68,7 @@ namespace RogueLike
         /// <param name="player">Player's position</param>
         /// <param name="map">All map Positions</param>
         /// <returns>Returns a map position for the player</returns>
-        public void GetPosition(Level level , Map[,] map, Renderer print)
+        public void GetPosition(Level level , Map[,] map)
         {
             // players input
             char playerInput;

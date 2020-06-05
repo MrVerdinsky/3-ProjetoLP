@@ -61,6 +61,7 @@ namespace RogueLike
             //Checks if the player can move
             bool canMove = false;
 
+            bool loseHP = true;
             //Conditions used to check if 
             //chosen Input goes into an occupied position
             try
@@ -127,8 +128,25 @@ namespace RogueLike
             {}
             if (canMove)
             {
+                
                 Movement -= 1;
-                HP -= 1;
+                 if(map[Position.Row,Position.Column]
+                    .Position.HasPowerUp && HP == 1)
+                {
+                    loseHP = false;
+                }
+                else if(map[Position.Row,Position.Column]
+                    .Position.HasExit && HP == 1)
+                {
+                    loseHP = false;
+                }
+                
+                if (loseHP == true)
+                {   
+                    
+                    HP -= 1;
+                }
+
                 print.GetGameActions(input);
             }
             if (HP < 1) IsAlive = false;
@@ -150,6 +168,13 @@ namespace RogueLike
         public void Die()
         {
             IsAlive = false;
+        }
+
+        public void AbandonAllHope()
+        {
+            if (HP == 1)
+                IsAlive = false;
+                
         }
 
     } 

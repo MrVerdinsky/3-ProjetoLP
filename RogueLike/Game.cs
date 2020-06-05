@@ -79,6 +79,7 @@ namespace RogueLike
                     // ON LEVEL UP /////////////////////////////////////////////
                     if (levelUp)
                     { 
+                        
                         // Prints "loading" bar
                         print.BlankLine();
                         for (int i = 0; i < 58; i++)
@@ -92,6 +93,7 @@ namespace RogueLike
                         print.PrintGameActions(); 
                         levelUp = false;
                         firstTurnCheck = true;
+                        level.player.AbandonAllHope();
                     } else  print.PrintGameActions(); 
 
                     // LEVEL GAME LOOP /////////////////////////////////////////

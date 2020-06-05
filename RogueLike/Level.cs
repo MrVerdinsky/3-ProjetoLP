@@ -4,6 +4,9 @@ using System.Linq;
 
 namespace RogueLike
 {
+    /// <summary>
+    /// Creates levels and its elements
+    /// </summary>
     sealed public class Level
     {
         public int EnemyNum         {get; set;}

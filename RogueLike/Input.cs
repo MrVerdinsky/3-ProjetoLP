@@ -1,6 +1,9 @@
 using System;
 namespace RogueLike
 {
+    /// <summary>
+    /// Responsible for every user input on the console
+    /// </summary>
     sealed public class Input
     {
         string playerInput;
@@ -94,7 +97,7 @@ namespace RogueLike
                 string name = Console.ReadLine();
                 trim = name.Trim();
                 trim = trim.Replace( " ", "_");
-                if (trim.Length < 12) leave = true;
+                if (trim.Length < 12 && trim.Length > 0) leave = true;
                 else print.InsertShorterName();
             }
             return trim;

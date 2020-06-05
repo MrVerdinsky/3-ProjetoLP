@@ -1,5 +1,8 @@
 namespace RogueLike
 {
+    /// <summary>
+    /// Position for every element in the game
+    /// </summary>
     sealed public class Position
     {
         internal int Row        { get; set; }

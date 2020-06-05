@@ -6,6 +6,9 @@ using System.Linq;
 
 namespace RogueLike
 {
+    /// <summary>
+    /// Renders every element of the game to the consolo
+    /// </summary>
     sealed public class Renderer
     {
         List<string> actions;
@@ -15,6 +18,7 @@ namespace RogueLike
         {
             actions = new List<string>();
             scores = new List<HighScore>();
+            System.IO.Directory.CreateDirectory(@"RogueLike\Scores");
         }
         
         /// <summary>
@@ -44,9 +48,9 @@ namespace RogueLike
             Console.Write("|                                   |A/W/S/D or   " +
                             "  *KEYS*|\n");
             Console.Write($"|Moves Left: {player.Movement}"+
-                            $"       Level: {level}" +
+                            $"       Level: {level,-1}" +
                             "       |Arrow Keys - to move |\n");
-            Console.Write($"|Player HP : {player.HP,-5} - {turn+1} Turn -  |   " 
+            Console.Write($"|Player HP : {player.HP,-5} - {turn,-6} Turn -  |   " 
                            + " Escape - to leave|\n");
             Console.Write("|___________________________________|_____________" +
                             "________|\n\n");

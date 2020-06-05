@@ -2,6 +2,9 @@ using System.Threading;
 
 namespace RogueLike
 {
+    /// <summary>
+    /// Runs the game loop
+    /// </summary>
     sealed public class Game
     {
         //Controls the game cycle

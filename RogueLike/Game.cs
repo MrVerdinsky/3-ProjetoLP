@@ -122,7 +122,7 @@ namespace RogueLike
                             firstTurnCheck = false;
                             
                             //Asks the user for input to move the player
-                            map = input.GetPosition(level, map, print);
+                            input.GetPosition(level, map, print);
 
                             //Checks if the player's in a square with a Power-Up
                             //and picks it up, printing a message on screen.

@@ -14,7 +14,7 @@ namespace RogueLike
         private int ColumnNum       { get; set; }
         private int PowerUpNum      { get; set; }
         public int LevelNum         { get; set; }
-        private int AvailableArea   { get; set; }
+        private int AvailbleArea   { get; set; }
         private int ObstacleNum     { get; set; }
         public Enemy[] Enemies      { get; set; }
         private Random random;
@@ -36,7 +36,7 @@ namespace RogueLike
             LevelNum        = 0;
             EnemyNum        = 0;
             ObstacleNum     = 0;
-            AvailableArea   = RowNum * ColumnNum;
+            AvailbleArea   = RowNum * ColumnNum;
             random          = new Random((int)(Seed));
         }
 
@@ -46,6 +46,8 @@ namespace RogueLike
         /// <param name="map">Current level map</param>
         public void CreateLevel(Map[,] map, int LevelNum)
         {
+            // Rests availble area
+            ResetAvailableArea();
             // Sets Random Exit position
             GetExitPos(map);
             // Sets Random player position
@@ -65,13 +67,18 @@ namespace RogueLike
         }
 
         /// <summary>
+        /// Resets the area availble to create new level elements 
+        /// </summary>
+        private void ResetAvailableArea() => AvailbleArea = RowNum * ColumnNum;
+
+        /// <summary>
         /// Gets a Random number of power-ups
         /// </summary>
         /// <param name="LevelNum">Level's Number</param>
         private void GetPowerUpNum(int LevelNum)
         {
             int tempPowerUpNum = 0;
-            int maxPUNum = AvailableArea/2;
+            int maxPUNum = AvailbleArea/2;
             while (tempPowerUpNum >= maxPUNum || tempPowerUpNum <= 0)
             {
                 tempPowerUpNum = 0;
@@ -79,7 +86,7 @@ namespace RogueLike
 
             }
             PowerUpNum = tempPowerUpNum;
-            AvailableArea -= maxPUNum;
+            AvailbleArea -= maxPUNum;
         }
 
         /// <summary>
@@ -93,7 +100,7 @@ namespace RogueLike
             int tempEnemyNum = 0;
 
             // Max enemy number
-            int maxEnemyNum =  AvailableArea/2;
+            int maxEnemyNum =  AvailbleArea/2;
             // Loop the runs while the Random generated number of Enemies
             // is grater then the maximum amount of Enemies allowed
             // or if it is equal or smaller then 0
@@ -103,10 +110,9 @@ namespace RogueLike
             {
                 tempEnemyNum = 0;
                 tempEnemyNum = Logistic(LevelNum, maxEnemyNum);
-
             }
             EnemyNum = tempEnemyNum;
-            AvailableArea -= EnemyNum;
+            AvailbleArea -= EnemyNum;
         }
 
         /// <summary>
@@ -121,7 +127,7 @@ namespace RogueLike
             int tempObsNum = 0;
 
             // Max obstacle number
-            int maxObsNum = AvailableArea/2 - 1;
+            int maxObsNum = AvailbleArea/2 - 1;
 
             // Loop the runs while the Random generated number of obstacles
             // is grater then the maximum amount of obstacles allowed
@@ -135,7 +141,7 @@ namespace RogueLike
 
             }
             ObstacleNum = tempObsNum;
-            AvailableArea -= maxObsNum;
+            AvailbleArea -= maxObsNum;
 
         }
 
@@ -413,7 +419,7 @@ namespace RogueLike
         // private int Log(int x)
         // {
         //     int a;
-        //     a = random.Next((AvailableArea)/2);
+        //     a = random.Next((AvailbleArea)/2);
         //     return (int)( a * Math.Log(1.2 * (x + 1)) + 1);
         // }
         private int Logistic(int x, int max, bool descending = false)
@@ -426,7 +432,6 @@ namespace RogueLike
                  k = -0.6f; 
             else
                  k  = 0.6f; 
-
             return (int)((L)/(1 + Math.Pow(Math.E, -k * (x - x0)))+1);
         }
 

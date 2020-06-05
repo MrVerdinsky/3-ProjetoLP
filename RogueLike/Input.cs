@@ -6,7 +6,7 @@ namespace RogueLike
     /// </summary>
     sealed public class Input
     {
-        string playerInput;
+        private string playerInput;
         private Renderer print;
         
         /// <summary>
@@ -62,7 +62,7 @@ namespace RogueLike
         /// <param name="player">Player's position</param>
         /// <param name="map">All map Positions</param>
         /// <returns>Returns a map position for the player</returns>
-        public Map[,] GetPosition(Level level , Map[,] map, Renderer print)
+        public void GetPosition(Level level , Map[,] map, Renderer print)
         {
             // players input
             char playerInput;
@@ -81,7 +81,6 @@ namespace RogueLike
                 map[level.player.Position.Row,level.player.Position.Column].
                 Position.PlayerOccupy();
                 
-            return map;
         }
 
         /// <summary>

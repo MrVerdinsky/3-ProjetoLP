@@ -14,7 +14,7 @@ namespace RogueLike
         private int ColumnNum       { get; set; }
         private int PowerUpNum      { get; set; }
         public int LevelNum         { get; set; }
-        private int AvailbleArea   { get; set; }
+        private int AvailbleArea    { get; set; }
         private int ObstacleNum     { get; set; }
         public Enemy[] Enemies      { get; set; }
         private Random random;
@@ -25,18 +25,18 @@ namespace RogueLike
         /// <summary>
         /// Creates Level
         /// </summary>
-        /// <param name="firstRowNum">Total of rows</param>
+
         /// <param name="firstColumnNum">totals of Columns</param>
         /// <param name="seed">Current Game's seed</param>
-        public Level(int firstRowNum, int firstColumnNum, long seed)
+        public Level(long seed)
         {
-            RowNum          = firstRowNum;
-            ColumnNum       = firstColumnNum;
+            RowNum          = Game.rows;
+            ColumnNum       = Game.columns;
             Seed            = (int)seed;
             LevelNum        = 0;
             EnemyNum        = 0;
             ObstacleNum     = 0;
-            AvailbleArea   = RowNum * ColumnNum;
+            AvailbleArea    = RowNum * ColumnNum;
             random          = new Random((int)(Seed));
         }
 
@@ -404,13 +404,13 @@ namespace RogueLike
         private void GetPlayerPos(Map[,] map)
         {
             int randRow = random.Next(RowNum);
-            player = new Player(new Position(randRow, 0), RowNum,ColumnNum);
+            player = new Player(new Position(randRow, 0));
 
             //Continues Randomizing until an empty square is found
             while(!(map[randRow,0].Position.Empty))
             {
                 randRow = random.Next(RowNum);
-                player = new Player(new Position(randRow, 0), RowNum,ColumnNum);
+                player = new Player(new Position(randRow, 0));
             }
 
             //Sets position

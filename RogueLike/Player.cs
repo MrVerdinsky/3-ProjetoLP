@@ -6,8 +6,7 @@ namespace RogueLike
     /// </summary>
     sealed public class Player : Character
     {
-        
-        internal int    HP              { get; private set; }
+        static internal int HP = (Game.rows * Game.columns) / 4;
         internal int    Movement        { get; private set; }
         internal bool   IsAlive         { get; private set; }
         
@@ -18,11 +17,9 @@ namespace RogueLike
         /// <param name="position">Gives a position to the player</param>
         /// <param name="gameRows">Used to give player's initial HP</param>
         /// <param name="gameColumns">Used to give player's initial HP</param>
-        public Player (Position position, int gameRows, int gameColumns)
+        public Player (Position position)
         {
             base.Position           = position;
-            HP                      = (gameRows * gameColumns) / 4;
-            //HP                      = 100;
             IsAlive                 = true;
         }
 

@@ -22,18 +22,9 @@ namespace RogueLike
             System.IO.Directory.CreateDirectory(@"RogueLike\Scores");
         }
         
-        /// <summary>
-        /// Prints the map
-        /// </summary>
-        /// <param name="map">Map Positions</param>
-        /// <param name="rows">Number of Rows</param>
-        /// <param name="columns">Number of Columns</param>
-        /// <param name="powerUps">List of PowerUps</param>
-        /// <param name="enemies">List of enemies</param>
-        public void Map(Map[,] map, int rows, int columns, 
-                            PowerUp[] powerUps,Enemy[] enemies,
-                            Player player, string turn, int level,
-                            bool firstTurn)
+
+        public void Map(Map[,] map, PowerUp[] powerUps,Enemy[] enemies,
+                        Player player, string turn, int level, bool firstTurn)
         {            
             Console.OutputEncoding = Encoding.UTF8;
             
@@ -52,24 +43,24 @@ namespace RogueLike
             Console.Write($"|Moves Left: {player.Movement}"+
                             $"       Level: {level,-1}" +
                             "       |Arrow Keys - to move |\n");
-            Console.Write($"|Player HP : {player.HP,-5} - {turn,-6} Turn -  |  " 
+            Console.Write($"|Player HP : {Player.HP,-5} - {turn,-6} Turn -  |  " 
                            + "  Escape - to leave|\n");
             Console.Write("|___________________________________|_____________" +
                             "________|\n\n");
 
 
-            for (int i = 0; i < rows; i++)
+            for (int i = 0; i < Game.rows; i++)
             {    
                 // For first turn
                 if (firstTurn) Thread.Sleep(250);
                 // For FIRST row
-                for (int j = 0; j < columns; j++)
+                for (int j = 0; j < Game.columns; j++)
                     Console.Write(" __ ");
                 Console.WriteLine();
         
                 // For the OTHER rows
                 // A magia acontece aqui V
-                for (int j = 0; j < columns; j++)
+                for (int j = 0; j < Game.columns; j++)
                 {
                     // If the square is empty   
                     if (map[i,j].Position.Empty)
@@ -369,17 +360,15 @@ namespace RogueLike
         /// Saves scores to a new file or a file that already exists
         /// </summary>
         /// <param name="level">Level Number</param>
-        /// <param name="rows">Rows of the game</param>
-        /// <param name="columns">Column of the game</param>
-        public void SaveScore(int levelScore, int rows, int columns)
+        public void SaveScore(int levelScore)
         {
             if (File.Exists(
-                $@"RogueLike\Scores\{rows}_x_{columns}_HighScores.txt"))
-                SaveFile(levelScore, rows, columns);
+            $@"RogueLike\Scores\{Game.rows}_x_{Game.columns}_HighScores.txt"))
+                SaveFile(levelScore);
             else
             {
-                CreateFile(rows, columns);
-                SaveFile(levelScore, rows, columns);
+                CreateFile();
+                SaveFile(levelScore);
             }
         }
 
@@ -387,7 +376,7 @@ namespace RogueLike
         /// Saves a file with level information
         /// </summary>
         /// <param name="levelScore">Number of level</param>
-        public void SaveFile(int levelScore, int rows, int columns)
+        public void SaveFile(int levelScore)
         {
             Input input         = new Input();
             int count           = 0;
@@ -396,7 +385,7 @@ namespace RogueLike
             ////////////////////////////////////////////////////////////////////
             // Reader
             StreamReader scoreR = new StreamReader(
-                $@"RogueLike\Scores\{rows}_x_{columns}_HighScores.txt");
+            $@"RogueLike\Scores\{Game.rows}_x_{Game.columns}_HighScores.txt");
             
             using (scoreR)
             {   // While readline isn't null
@@ -431,7 +420,7 @@ namespace RogueLike
             ////////////////////////////////////////////////////////////////////
             // Writer
             StreamWriter scoreW = new StreamWriter(
-                    $@"RogueLike\Scores\{rows}_x_{columns}_HighScores.txt");
+            $@"RogueLike\Scores\{Game.rows}_x_{Game.columns}_HighScores.txt");
             // Writes players to file
             
             using (scoreW)
@@ -446,17 +435,17 @@ namespace RogueLike
                 }
             }
 
-            PrintScore(rows,columns);
+            PrintScore();
         }
 
         /// <summary>
         /// Creates a file with unknown names
         /// </summary>
-        public void CreateFile(int rows, int columns)
+        public void CreateFile()
         {
             int count = 0;
             StreamWriter scoreW = new StreamWriter(
-                $@"RogueLike\Scores\{rows}_x_{columns}_HighScores.txt");
+            $@"RogueLike\Scores\{Game.rows}_x_{Game.columns}_HighScores.txt");
                 
             using(scoreW) 
             {
@@ -480,19 +469,20 @@ namespace RogueLike
         /// <summary>
         /// Prints high score
         /// </summary>
-        public void PrintScore(int rows, int columns)
+        public void PrintScore()
         {
             int count = 0;
             string s;
             const char space = ' ';
             if (File.Exists(
-                $@"RogueLike\Scores\{rows}_x_{columns}_HighScores.txt"))
+            $@"RogueLike\Scores\{Game.rows}_x_{Game.columns}_HighScores.txt"))
             {
                 StreamReader scoreR = new StreamReader(
-                    $@"RogueLike\Scores\{rows}_x_{columns}_HighScores.txt");
+                $@"RogueLike\Scores\{Game.rows}_x_{Game.columns}_" +
+                "HighScores.txt");
 
                 Console.WriteLine("\n** HIGH SCORE **");
-                Console.WriteLine($"     {rows} x {columns}");
+                Console.WriteLine($"     {Game.rows} x {Game.columns}");
                 Console.WriteLine("_________________");
                 while ((s = scoreR.ReadLine()) != null)
                 {

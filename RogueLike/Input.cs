@@ -16,8 +16,12 @@ namespace RogueLike
         {
             print = new Renderer();
         }
-        //Controls all Menu Options until players chooses new game
-        public string MenuOptions(int rows, int columns)
+
+        /// <summary>
+        /// Creates options menu
+        /// </summary>
+        /// <returns>Returns player's option</returns>
+        public string MenuOptions()
         {
             //Keeps running until players starts new game
             playerInput = Console.ReadLine();
@@ -29,7 +33,7 @@ namespace RogueLike
                 
                 //Prints the Highscore Screen
                 case "2":
-                    print.PrintScore(rows, columns);
+                    print.PrintScore();
                     break;
 
                 //Prints the game's Instructions

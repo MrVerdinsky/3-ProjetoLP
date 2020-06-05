@@ -7,7 +7,10 @@ namespace RogueLike
     /// </summary>
     sealed public class Game
     {
-        //Controls the game cycle
+        // Game rows and game columns
+        static public int rows;
+        static public int columns;
+        // Controls the game cycle
         bool gameOver;
         //Holds all positions of the game
         Map[,] map;
@@ -18,10 +21,12 @@ namespace RogueLike
         /// <param name="rows">Number of Rows</param>
         /// <param name="columns">Number of Columns</param>
         /// <param name="seed">Seed of the game</param>
-        public Game(int rows, int columns, long seed)
+        public Game(int gameRows, int gameColumns, long seed)
         {
+            rows = gameRows;
+            columns = gameColumns;
             // Instances / Variables
-            Level level     = new Level(rows, columns, seed);
+            Level level     = new Level(seed);
             Renderer print  = new Renderer();
             Input input     = new Input(); 
             map             = new Map[rows, columns];
@@ -48,7 +53,7 @@ namespace RogueLike
                 print.PrintMenu();
                 
                 // Gets user Input
-                playerInput = input.MenuOptions(rows, columns);
+                playerInput = input.MenuOptions();
                 if(playerInput == "1") break;
                 
                 //Breaks the loop and quits the game
@@ -62,7 +67,7 @@ namespace RogueLike
             if (playerInput == "1")
             {
                 //Creates all squares and pieces of the game
-                CreateMap(rows, columns);
+                CreateMap();
 
                 // Generates the map and its elements
                 level.CreateLevel(map, level.LevelNum);
@@ -82,7 +87,7 @@ namespace RogueLike
                         }
                         print.BlankLine();
                         // Creates new level elements
-                        LevelUp(level, print, rows, columns);
+                        LevelUp(level, print);
                         print.PrintGameActions(); 
                         levelUp = false;
                         firstTurnCheck = true;
@@ -114,9 +119,9 @@ namespace RogueLike
                             turn = "Player";
 
                             //Prints all the game's information in the screen
-                            print.Map(map, rows, columns, level.PowerUps, 
-                                    level.Enemies, level.player, turn, 
-                                    level.LevelNum, firstTurnCheck);
+                            print.Map(map, level.PowerUps, level.Enemies, 
+                                level.player, turn, level.LevelNum, 
+                                firstTurnCheck);
 
                             // Ends threading on render
                             firstTurnCheck = false;
@@ -156,9 +161,9 @@ namespace RogueLike
                                 turn = "Enemy";
 
                                 // Prints all the game's information 
-                                print.Map(map, rows, columns, level.PowerUps, 
-                                        level.Enemies, level.player, turn,
-                                        level.LevelNum, firstTurnCheck);
+                                print.Map(map, level.PowerUps, level.Enemies,
+                                        level.player, turn, level.LevelNum, 
+                                        firstTurnCheck);
 
                                 // Checks if the player is in a square with a 
                                 //Power-Up and blocks the square
@@ -182,9 +187,9 @@ namespace RogueLike
                                 enemy.Move(level.player, 1, map);
                                 map[enemy.Position.Row, enemy.Position.Column].
                                     Position.EnemyOccupy();
-                                print.Map(map, rows, columns, level.PowerUps, 
-                                        level.Enemies,level.player, turn, 
-                                        level.LevelNum, firstTurnCheck);
+                                print.Map(map, level.PowerUps, level.Enemies,
+                                        level.player, turn, level.LevelNum,
+                                        firstTurnCheck);
                             }
 
                             // Player gets damage if the he's 1 square distance
@@ -203,14 +208,14 @@ namespace RogueLike
                     if (!level.player.IsAlive)
                     {
                         //Prints the last round information
-                        print.Map(map, rows, columns, level.PowerUps, level.
-                            Enemies, level.player, turn, level.LevelNum,
-                            firstTurnCheck);
+                        print.Map(map, level.PowerUps, level.Enemies, 
+                                level.player, turn, level.LevelNum,
+                                firstTurnCheck);
 
                         //Prints a goodbye message
                         print.GoodBye();
                         // Saves score
-                        print.SaveScore(level.LevelNum, rows, columns);
+                        print.SaveScore(level.LevelNum);
                         Quit();
                     }
                 }
@@ -259,12 +264,10 @@ namespace RogueLike
         /// <summary>
         /// Creates the game map
         /// </summary>
-        /// <param name="rows">Number of rows in the game</param>
-        /// <param name="columns">Number of columns in the game</param>
-        private void CreateMap(int rows, int columns)
+        private void CreateMap()
         {
-            for (int i = 0; i < rows; i++) 
-                for (int j = 0; j < columns; j++)
+            for (int i = 0; i < Game.rows; i++) 
+                for (int j = 0; j < Game.columns; j++)
                     map[i,j] = new Map (new Position(i,j));
         }
 
@@ -311,7 +314,7 @@ namespace RogueLike
         /// <param name="print">Gets Renderer class to print</param>
         /// <param name="rows">Gets game's number of rows</param>
         /// <param name="columns">Gets game's number of columns</param>
-        private void LevelUp(Level level, Renderer print, int rows, int columns)
+        private void LevelUp(Level level, Renderer print)
         {
             //Adds 1 to the level number
             level.LevelNum++;
@@ -324,7 +327,7 @@ namespace RogueLike
 
             //Redraws the game's map and Sets new positions for
             // the player and exit
-            CreateMap(rows, columns);
+            CreateMap();
             level.CreateLevel(map, level.LevelNum);
         }
 

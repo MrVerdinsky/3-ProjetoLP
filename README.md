@@ -21,7 +21,7 @@
 |Add PowerUp Render|Procedural Generation - Enemies|Add PickUp Collision|
 |Add Enemy Collision|Procedural generation - PowerUps|Add Enemy Movement|
 |Add Sprites|Procedural generation - PowerUps|Add Game Actions Information|
-|Add Next Level|Override Equals on `Position`|Add High Score|
+|Add Next Level|Override Equals on `Position`|Add `HighScoreManager`|
 
 ## Repositório git
 

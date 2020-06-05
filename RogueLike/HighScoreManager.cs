@@ -5,10 +5,16 @@ using System.Collections.Generic;
 
 namespace RogueLike
 {
+    /// <summary>
+    /// Creates, saves or prints high score tables
+    /// </summary>
     public class HighScoreManager
     {
         List<HighScore> scores;
 
+        /// <summary>
+        /// HighScoreManager constructor
+        /// </summary>
         public HighScoreManager()
         {
             scores = new List<HighScore>();
@@ -116,11 +122,8 @@ namespace RogueLike
                 
                 foreach (string name in names)
                 {
-                    if(count < 10)
-                    {
-                        scores.Add(new HighScore(name, count));
-                        count++;
-                    }
+                    scores.Add(new HighScore(name, count));
+                    count++;
                 }
             }
         }
@@ -131,8 +134,7 @@ namespace RogueLike
         public void PrintScore()
         {
             Renderer print = new Renderer();
-            
-            int count = 0;
+
             string s;
             const char space = ' ';
             if (File.Exists(
@@ -152,7 +154,6 @@ namespace RogueLike
                     string name     = split[0];
                     int score       = Convert.ToInt32(split[1]);
                     Console.WriteLine($" {name,-12}{score,+3}");
-                    count ++;
                 }
                 Console.WriteLine("_________________");
             }

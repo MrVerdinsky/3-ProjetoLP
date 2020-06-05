@@ -119,15 +119,5 @@ namespace RogueLike
             Walkable    = true;
             HasExit     = true;
         }
-
-        /// <summary>
-        /// Removes the Exit position
-        /// </summary>
-        public void ExitFree()
-        {
-            Empty       = true;
-            Walkable    = true;
-            HasExit     = false;
-        }
     }
 }

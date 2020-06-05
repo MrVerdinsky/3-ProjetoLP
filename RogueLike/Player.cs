@@ -6,7 +6,8 @@ namespace RogueLike
     /// </summary>
     sealed public class Player : Character
     {
-        static internal int HP = (Game.rows * Game.columns) / 4;
+        //static internal int HP = (Game.rows * Game.columns) / 4;
+        static internal int HP = 250;
         internal int    Movement        { get; private set; }
         internal bool   IsAlive         { get; private set; }
         

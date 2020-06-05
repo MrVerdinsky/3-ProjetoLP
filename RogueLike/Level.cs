@@ -475,6 +475,6 @@ namespace RogueLike
         /// <summary>
         /// Sets and random integer for enemies movement
         /// </summary>
-        private void SetEnemyMoveNum() => EnemyMoveNum = random.Next(0, 2);
+        public void SetEnemyMoveNum() => EnemyMoveNum = random.Next(0, 2);
     }
 }

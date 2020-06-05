@@ -152,6 +152,7 @@ namespace RogueLike
                         {   // Prints the map, moves enemy, prints the map
                             foreach (Enemy enemy in level.Enemies)
                             {
+                                level.SetEnemyMoveNum();
                                 //Used to print Enemy in the game's screen
                                 turn = "Enemy";
 

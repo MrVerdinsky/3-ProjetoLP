@@ -71,13 +71,22 @@ namespace RogueLike
         public void GetPosition(Level level , Map[,] map, Renderer print)
         {
             // players input
-            char playerInput;
+            ConsoleKeyInfo playerInput;
             // Frees the player position
             map[level.player.Position.Row, level.player.Position.Column].
                 Position.PlayerFree();
 
             // Gets player input
-            playerInput = Console.ReadKey().KeyChar;
+            playerInput = Console.ReadKey();
+            
+            // Checks if the player pressed the ESC key and quits the game
+            if (playerInput.Key == ConsoleKey.Escape)
+            {
+                level.player.Die();
+                level.player.LeaveGame();
+                return;
+            }
+ 
 
             // Moves player to new free position    
             if(level.player.Move(map, playerInput, print))

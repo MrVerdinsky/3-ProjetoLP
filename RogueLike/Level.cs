@@ -67,21 +67,33 @@ namespace RogueLike
             AvailbleArea = Game.rows * Game.columns;
 
         /// <summary>
-        /// Gets a Random number of power-ups
+        /// Gets a Random number of Power-Ups
         /// </summary>
         /// <param name="LevelNum">Level's Number</param>
         private void GetPowerUpNum(int LevelNum)
         {
+            // Temporary number of power ups
             int tempPowerUpNum = 0;
+            // Max number of power ups, based on available area
             int maxPUNum = AvailbleArea/2;
+ 
+            // Loop that runs while the Random generated number of power ups
+            // is grater then the maximum amount of power ups allowed
+            // or if it is equal or smaller then 0
+            // In every loop iteration, it will aks for a Random number of 
+            // power ups
             while (tempPowerUpNum >= maxPUNum || tempPowerUpNum <= 0)
-            {
+            {   
+                // resets temporary number of power ups
                 tempPowerUpNum = 0;
                 tempPowerUpNum = Logistic(LevelNum, maxPUNum, true);
-
             }
+            // Sets the number of power ups to the random generated value stored
+            // on the temporary value
             PowerUpNum = tempPowerUpNum;
-            AvailbleArea -= maxPUNum;
+
+            // Decrements the availble area based on the number of power ups
+            AvailbleArea -= PowerUpNum;
         }
 
         /// <summary>
@@ -96,7 +108,7 @@ namespace RogueLike
 
             // Max enemy number
             int maxEnemyNum =  AvailbleArea/2;
-            // Loop the runs while the Random generated number of Enemies
+            // Loop that runs while the Random generated number of Enemies
             // is grater then the maximum amount of Enemies allowed
             // or if it is equal or smaller then 0
             // In every loop iteration, it will aks for a Random number of 
@@ -211,8 +223,8 @@ namespace RogueLike
                         continue;
                 }    
             }
-            
-            // Fills the map with powerup positions
+            // Goes through the whole PowerUps list and occupies the map positions
+            // with them
             foreach (PowerUp powerUp in PowerUps)
             {
                 map[powerUp.Position.Row, powerUp.Position.Column].Position.
@@ -279,7 +291,7 @@ namespace RogueLike
                     // Random column
                     int randColumn      = random.Next(Game.columns);
                     // Random damage
-                    int randomDamage    = GetEnemyType(EnemyNum);
+                    int randomDamage    = GetEnemyType();
                     if (randomDamage == 5)
                         symbol          = "|\u265F |";
 
@@ -357,13 +369,20 @@ namespace RogueLike
 
         }
 
-        private int GetEnemyType(int enemyNum)
+        /// <summary>
+        /// Gets a weightned random choice of enemy type
+        /// </summary>
+        /// <returns></returns>
+        private int GetEnemyType()
         {
             // Enemy index
             int index;
 
             // array of enemy type's damage
             int[] enemyDamage = new int[2]{5, 10};
+
+            // Stablishes 85% chance of getting a minion and 15% chance of 
+            // getting a boss
             List <float> weights = new List<float>(){85, 15}; 
 
             // Asks for weightned Random index
@@ -410,15 +429,9 @@ namespace RogueLike
             //Sets position
             map[randRow,0].Position.PlayerOccupy();
         }
-        // private int Log(int x)
-        // {
-        //     int a;
-        //     a = random.Next((AvailbleArea)/2);
-        //     return (int)( a * Math.Log(1.2 * (x + 1)) + 1);
-        // }
 
         /// <summary>
-        /// Logistic Function
+        /// Logistic mathematical Function
         /// </summary>
         /// <param name="x"></param>
         /// <param name="max">Function curve maximum value</param>
@@ -463,22 +476,5 @@ namespace RogueLike
         /// Sets and random integer for enemies movement
         /// </summary>
         private void SetEnemyMoveNum() => EnemyMoveNum = random.Next(0, 2);
-
-        /*    PDOE IR FORA <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-        /// <summary>
-        /// Used to reset players and exits tags for the start of a new level
-        /// </summary>
-        /// <param name="map">All game position</param>
-        /// <param name="level">Exit position</param>
-        public void EscapeLevel(Map[,] map)
-        {
-            map[player.Position.Row,
-                player.Position.Column].Position.PlayerFree(); 
-            map[player.Position.Row,
-                player.Position.Column].Position.ExitFree();
-            map[player.Position.Row,
-                player.Position.Column].Position.PlayerOccupy(); 
-        }
-        */
     }
 }

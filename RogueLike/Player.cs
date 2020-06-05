@@ -6,10 +6,11 @@ namespace RogueLike
     /// </summary>
     sealed public class Player : ObjectPosition
     {
-        //static internal int HP = (Game.rows * Game.columns) / 4;
-        static internal int HP = 250;
+        static internal int HP = (Game.rows * Game.columns) / 4;
+        // static internal int HP = 250;
         internal int    Movement        { get; private set; }
         internal bool   IsAlive         { get; private set; }
+        internal bool   HasLeft         { get; private set; }
         
 
         /// <summary>
@@ -56,19 +57,20 @@ namespace RogueLike
         /// <param name="print">Gets renderer</param>
         /// <returns>Returns true if the movement is possible 
         /// otherwise false</returns>
-        public bool Move(Map[,] map, char input, Renderer print)
+        public bool Move(Map[,] map, ConsoleKeyInfo input, Renderer print)
         {
             //Checks if the player can move
             bool canMove = false;
-
-            //Conditions used to check if 
+        
             //chosen Input goes into an occupied position
             try
             {
-                switch(input)
+
+                switch(input.Key)
                 {
                     //Moves Left
-                    case 'a':
+                    case ConsoleKey.A:
+                    case ConsoleKey.LeftArrow:
                         if (map[this.Position.Row,this.Position.Column-1].
                             Position.Walkable == false)
                                 canMove = false;
@@ -81,7 +83,8 @@ namespace RogueLike
                         break; 
 
                     //Moves Right
-                    case 'd':
+                    case ConsoleKey.D:
+                    case ConsoleKey.RightArrow:
                         if (map[this.Position.Row, this.Position.Column+1].
                             Position.Walkable == false)
                                 canMove = false;
@@ -93,7 +96,8 @@ namespace RogueLike
                         break;
                     
                     //Moves Upwards
-                    case 'w':
+                    case ConsoleKey.W:
+                    case ConsoleKey.UpArrow:
                         if (map[this.Position.Row-1, this.Position.Column].
                             Position.Walkable == false)
                                 canMove = false;     
@@ -105,7 +109,8 @@ namespace RogueLike
                         break;
 
                     //Moves Downwards
-                    case 's':
+                    case ConsoleKey.S:
+                    case ConsoleKey.DownArrow:
                         if (map[this.Position.Row+1, this.Position.Column].
                             Position.Walkable == false)
                             canMove = false;
@@ -129,7 +134,7 @@ namespace RogueLike
             {
                 Movement -= 1;
                 HP -= 1;
-                print.GetGameActions(input);
+                print.GetGameActions(input.KeyChar);
             }
             if (HP < 1) IsAlive = false;
             
@@ -147,10 +152,9 @@ namespace RogueLike
         /// <summary>
         /// Changes the player status to Dead
         /// </summary>
-        public void Die()
-        {
-            IsAlive = false;
-        }
+        public void Die() => IsAlive = false;
+
+        public void LeaveGame() => HasLeft = true;
 
     } 
 }

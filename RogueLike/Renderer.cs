@@ -220,12 +220,22 @@ namespace RogueLike
         }
 
         /// <summary>
-        /// Prints goodbye message
+        /// Prints goodbye message for when the player dies
         /// </summary>
         public void GoodBye()
         {
-            Console.WriteLine("\nBetter luck next time adventurer.");
+            Console.WriteLine("\nBetter luck next time, adventurer.");
         }
+
+        /// <summary>
+        /// Prints goodbye message for when the player leave the game
+        /// </summary>
+        public void LeftBye()
+        {
+            Console.WriteLine("\nSo long, adventurer.");
+        }
+
+        
 
 
         /// <summary>

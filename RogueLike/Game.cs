@@ -210,7 +210,10 @@ namespace RogueLike
                                 firstTurnCheck);
 
                         //Prints a goodbye message
-                        print.GoodBye();
+                        if (level.player.HasLeft == false)
+                            print.GoodBye();
+                        else
+                            print.LeftBye();
                         // Saves score
                         highScore.SaveScore(level.LevelNum);
                         Quit();

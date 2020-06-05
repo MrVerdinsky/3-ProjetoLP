@@ -67,19 +67,19 @@ namespace RogueLike
             // players input
             char playerInput;
             // Frees the player position
-            map[level.player.Position.Row, level.player.Position.Column].Position.
-                PlayerFree();
+            map[level.player.Position.Row, level.player.Position.Column].
+                Position.PlayerFree();
 
             // Gets player input
             playerInput = Console.ReadLine()[0];
 
             // Moves player to new free position    
             if(level.player.Move(map, playerInput, print))
-                map[level.player.Position.Row, level.player.Position.Column].Position.
-                PlayerFree();
+                map[level.player.Position.Row, level.player.Position.Column].
+                Position.PlayerFree();
                 // Occupies inserted position with player
-                map[level.player.Position.Row,level.player.Position.Column].Position.
-                    PlayerOccupy();
+                map[level.player.Position.Row,level.player.Position.Column].
+                Position.PlayerOccupy();
                 
             return map;
         }

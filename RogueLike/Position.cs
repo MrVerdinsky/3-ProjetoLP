@@ -11,7 +11,7 @@ namespace RogueLike
         internal bool Walkable      { get; set; } = true;
         internal bool HasPlayer     { get; set; } = false;
         internal bool HasEnemy      { get; set; } = false;
-        internal bool HasExit      { get; set; } = false;
+        internal bool HasExit       { get; set; } = false;
         internal bool HasPowerUp    { get; set; } = false;
         internal bool HasWall       { get; set; } = false;
         
@@ -33,7 +33,7 @@ namespace RogueLike
         public void PlayerFree()
         {
             HasPlayer    = false;
-            Empty       = true;
+            Empty        = true;
             Walkable     = true;
         }
 
@@ -102,9 +102,9 @@ namespace RogueLike
         /// </summary>
         public void ExitOccupy()
         {
-            Empty = false;
-            Walkable = true;
-            HasExit = true;
+            Empty       = false;
+            Walkable    = true;
+            HasExit     = true;
         }
 
         /// <summary>

@@ -3,6 +3,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 
 namespace RogueLike
 {
@@ -31,7 +32,8 @@ namespace RogueLike
         /// <param name="enemies">List of enemies</param>
         public void Map(Map[,] map, int rows, int columns, 
                             PowerUp[] powerUps,Enemy[] enemies,
-                            Player player, string turn, int level)
+                            Player player, string turn, int level,
+                            bool firstTurn)
         {            
             Console.OutputEncoding = Encoding.UTF8;
             
@@ -50,16 +52,17 @@ namespace RogueLike
             Console.Write($"|Moves Left: {player.Movement}"+
                             $"       Level: {level,-1}" +
                             "       |Arrow Keys - to move |\n");
-            Console.Write($"|Player HP : {player.HP,-5} - {turn,-6} Turn -  |   " 
-                           + " Escape - to leave|\n");
+            Console.Write($"|Player HP : {player.HP,-5} - {turn,-6} Turn -  |  " 
+                           + "  Escape - to leave|\n");
             Console.Write("|___________________________________|_____________" +
                             "________|\n\n");
 
 
             for (int i = 0; i < rows; i++)
-            {   
+            {    
+                // For first turn
+                if (firstTurn) Thread.Sleep(250);
                 // For FIRST row
-                
                 for (int j = 0; j < columns; j++)
                     Console.Write(" __ ");
                 Console.WriteLine();
@@ -207,6 +210,14 @@ namespace RogueLike
         }
 
         /// <summary>
+        /// Prints a dot
+        /// </summary>
+        public void Dot()
+        {
+            Console.Write('.');
+        }
+
+        /// <summary>
         /// Prints goodbye message
         /// </summary>
         public void GoodBye()
@@ -280,14 +291,12 @@ namespace RogueLike
         /// <summary>
         /// Prints Next level message 
         /// </summary>
-        /// <param name="escaped"></param>
-        public void GetGameActions(bool escaped)
+        public void GetGameActions()
         {
             if (actions.Count > 5)
                 actions.RemoveAt(0);
             
-            if (escaped)
-                actions.Add("\nYou fend off the dangers in the cave, and" + 
+            actions.Add("\nYou fend off the dangers in the cave, and" + 
                 " venture forth below...");
         }
         /// <summary>

@@ -22,7 +22,7 @@ namespace RogueLike
         {
             base.Position           = position;
             HP                      = (gameRows * gameColumns) / 4;
-            // HP                      = 100;
+            //HP                      = 100;
             IsAlive                 = true;
         }
 

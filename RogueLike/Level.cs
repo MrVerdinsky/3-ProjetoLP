@@ -428,6 +428,7 @@ namespace RogueLike
             return randomNum;
         }
 
+        /*    PDOE IR FORA <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         /// <summary>
         /// Used to reset players and exits tags for the start of a new level
         /// </summary>
@@ -442,5 +443,6 @@ namespace RogueLike
             map[player.Position.Row,
                 player.Position.Column].Position.PlayerOccupy(); 
         }
+        */
     }
 }

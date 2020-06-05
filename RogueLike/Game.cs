@@ -93,7 +93,6 @@ namespace RogueLike
                         print.PrintGameActions(); 
                         levelUp = false;
                         firstTurnCheck = true;
-                        level.player.AbandonAllHope();
                     } else  print.PrintGameActions(); 
 
                     // LEVEL GAME LOOP /////////////////////////////////////////

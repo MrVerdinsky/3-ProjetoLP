@@ -135,11 +135,7 @@ namespace RogueLike
                 {
                     loseHP = false;
                 }
-                else if(map[Position.Row,Position.Column]
-                    .Position.HasExit && HP == 1)
-                {
-                    loseHP = false;
-                }
+
                 
                 if (loseHP == true)
                 {   
@@ -168,13 +164,6 @@ namespace RogueLike
         public void Die()
         {
             IsAlive = false;
-        }
-
-        public void AbandonAllHope()
-        {
-            if (HP == 1)
-                IsAlive = false;
-                
         }
 
     } 

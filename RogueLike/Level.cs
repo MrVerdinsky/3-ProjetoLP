@@ -10,8 +10,6 @@ namespace RogueLike
     sealed public class Level
     {
         private int EnemyNum        { get; set; }
-        private int RowNum          { get; set; }
-        private int ColumnNum       { get; set; }
         private int PowerUpNum      { get; set; }
         public int LevelNum         { get; set; }
         private int AvailbleArea    { get; set; }
@@ -20,24 +18,21 @@ namespace RogueLike
         private Random random;
         public PowerUp[] PowerUps   { get; set; }
         public Player player        { get; set; }
-        public int Seed             { get; private set; }
-
+ 
         /// <summary>
         /// Creates Level
         /// </summary>
 
         /// <param name="firstColumnNum">totals of Columns</param>
         /// <param name="seed">Current Game's seed</param>
-        public Level(long seed)
+        public Level()
         {
-            RowNum          = Game.rows;
-            ColumnNum       = Game.columns;
-            Seed            = (int)seed;
+
             LevelNum        = 0;
             EnemyNum        = 0;
             ObstacleNum     = 0;
-            AvailbleArea    = RowNum * ColumnNum;
-            random          = new Random((int)(Seed));
+            AvailbleArea    = Game.rows * Game.columns;
+            random          = new Random(Game.Seed);
         }
 
         /// <summary>
@@ -69,7 +64,7 @@ namespace RogueLike
         /// <summary>
         /// Resets the area availble to create new level elements 
         /// </summary>
-        private void ResetAvailableArea() => AvailbleArea = RowNum * ColumnNum;
+        private void ResetAvailableArea() => AvailbleArea = Game.rows * Game.columns;
 
         /// <summary>
         /// Gets a Random number of power-ups
@@ -170,10 +165,10 @@ namespace RogueLike
                     bool reroll = false;
 
                     // Random row
-                    int randRow     = random.Next(RowNum);
+                    int randRow     = random.Next(Game.rows);
 
                     // Random column
-                    int randColumn  = random.Next(ColumnNum);
+                    int randColumn  = random.Next(Game.columns);
 
                     PowerUps[i]= new PowerUp(
                         new Position(randRow, randColumn), powerUpHeal); 
@@ -235,9 +230,9 @@ namespace RogueLike
             for(int i = 0; i < ObstacleNum; i++)
             {
                 // Random row
-                int randRow     = random.Next(RowNum);
+                int randRow     = random.Next(Game.rows);
                 // Random column
-                int randColumn  = random.Next(ColumnNum);
+                int randColumn  = random.Next(Game.columns);
 
                 // Checks if the randomized map position is empty
                 if (map[randRow,randColumn].Position.Empty)
@@ -281,9 +276,9 @@ namespace RogueLike
                     bool reroll = false;
                     string symbol = "|Na |";
                     // Random row
-                    int randRow         = random.Next(RowNum);
+                    int randRow         = random.Next(Game.rows);
                     // Random column
-                    int randColumn      = random.Next(ColumnNum);
+                    int randColumn      = random.Next(Game.columns);
                     // Random damage
                     int randomDamage    = GetEnemyType(EnemyNum);
                     if (randomDamage == 5)
@@ -385,16 +380,16 @@ namespace RogueLike
         private void GetExitPos(Map[,] map)
         {   
             //Creates a random number based on the row's total
-            int randRow = random.Next(RowNum);
+            int randRow = random.Next(Game.rows);
             
             //Continues Randomizing until an empty square is found
-            while (!(map[randRow, ColumnNum-1].Position.Empty))
+            while (!(map[randRow, Game.columns-1].Position.Empty))
             {
-                randRow = random.Next(RowNum);
+                randRow = random.Next(Game.rows);
             }
 
             //Sets position
-            map[randRow,ColumnNum-1].Position.ExitOccupy();
+            map[randRow,Game.columns-1].Position.ExitOccupy();
         }
 
         /// <summary>
@@ -403,13 +398,13 @@ namespace RogueLike
         /// <param name="map">Current level map</param>
         private void GetPlayerPos(Map[,] map)
         {
-            int randRow = random.Next(RowNum);
+            int randRow = random.Next(Game.rows);
             player = new Player(new Position(randRow, 0));
 
             //Continues Randomizing until an empty square is found
             while(!(map[randRow,0].Position.Empty))
             {
-                randRow = random.Next(RowNum);
+                randRow = random.Next(Game.rows);
                 player = new Player(new Position(randRow, 0));
             }
 
@@ -422,6 +417,14 @@ namespace RogueLike
         //     a = random.Next((AvailbleArea)/2);
         //     return (int)( a * Math.Log(1.2 * (x + 1)) + 1);
         // }
+
+        /// <summary>
+        /// Logistic Function
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="max">Function curve maximum value</param>
+        /// <param name="descending">Defines if value are descending</param>
+        /// <returns></returns>
         private int Logistic(int x, int max, bool descending = false)
         {
             int L;
@@ -434,16 +437,6 @@ namespace RogueLike
                  k  = 0.6f; 
             return (int)((L)/(1 + Math.Pow(Math.E, -k * (x - x0)))+1);
         }
-
-        // private int Logistic(int x, int max)
-        // {
-        //     x++;
-        //     float k = 0.14f;
-        //     float L = random.Next(max);
-        //     float x0  = L * 2;
-        //     int min = 1;   
-        //     return (int)(((-L)/ (1 + Math.Pow(Math.E, (-k * (x - x0))))) + L + min);
-        // }
         
         /// <summary>
         /// Gets weighted Random index from a weight list

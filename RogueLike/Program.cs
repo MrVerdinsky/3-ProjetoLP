@@ -18,7 +18,7 @@ namespace RogueLike
             // Gets the seed for random, based on system current time
             DateTime currentTime = DateTime.Now;
             //Variable used to save the current game's seed
-            long seed = currentTime.Ticks;
+            int seed = (int)(currentTime.Ticks);
 
             //Tries to start game and printing an error message if it fails
              /* try

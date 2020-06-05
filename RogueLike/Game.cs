@@ -10,6 +10,7 @@ namespace RogueLike
         // Game rows and game columns
         static public int rows;
         static public int columns;
+        static public int Seed;
         // Controls the game cycle
         bool gameOver;
         //Holds all positions of the game
@@ -21,16 +22,17 @@ namespace RogueLike
         /// <param name="rows">Number of Rows</param>
         /// <param name="columns">Number of Columns</param>
         /// <param name="seed">Seed of the game</param>
-        public Game(int gameRows, int gameColumns, long seed)
+        public Game(int gameRows, int gameColumns, int seed)
         {
-            rows = gameRows;
-            columns = gameColumns;
             // Instances / Variables
-            HighScoreManager highScore = new HighScoreManager();
-            Level level     = new Level(seed);
+            rows            = gameRows;
+            columns         = gameColumns;
+            Seed            = seed;
+            Level level     = new Level();
             Renderer print  = new Renderer();
             Input input     = new Input(); 
             map             = new Map[rows, columns];
+            HighScoreManager highScore = new HighScoreManager();
             
             string playerInput;
             string turn = "";

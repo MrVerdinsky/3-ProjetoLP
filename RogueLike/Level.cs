@@ -18,6 +18,7 @@ namespace RogueLike
         private Random random;
         public PowerUp[] PowerUps   { get; set; }
         public Player player        { get; set; }
+        public int EnemyMoveNum     { get; private set; }
  
         /// <summary>
         /// Creates Level
@@ -41,6 +42,8 @@ namespace RogueLike
         /// <param name="map">Current level map</param>
         public void CreateLevel(Map[,] map, int LevelNum)
         {
+            // Sets random enemy move integer
+            SetEnemyMoveNum();
             // Rests availble area
             ResetAvailableArea();
             // Sets Random Exit position
@@ -459,6 +462,11 @@ namespace RogueLike
             }
             return randomNum;
         }
+
+        /// <summary>
+        /// Sets and random integer for enemies movement
+        /// </summary>
+        private void SetEnemyMoveNum() => EnemyMoveNum = random.Next(0, 2);
 
         /*    PDOE IR FORA <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
         /// <summary>

@@ -68,7 +68,7 @@ namespace RogueLike
         /// <param name="player">Player's position</param>
         /// <param name="map">All map Positions</param>
         /// <returns>Returns a map position for the player</returns>
-        public void GetPosition(Level level , Map[,] map)
+        public void GetPosition(Level level , Map[,] map, Renderer print)
         {
             // players input
             char playerInput;

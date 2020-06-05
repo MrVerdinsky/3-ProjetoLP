@@ -62,7 +62,7 @@ namespace RogueLike
                 //Breaks the loop and quits the game
                 if(playerInput == "5") break;
 
-            } while (playerInput != "5" || playerInput != "1");
+            } while (true);
             ////////////////////////////////////////////////////////////////////
 
             // NEW GAME ////////////////////////////////////////////////////////
@@ -104,7 +104,7 @@ namespace RogueLike
                             print.NoMoves();
                             level.player.Die();
                         }    // Resets player's Movement per turn
-                        else level.player.MovementReset();                
+                         level.player.MovementReset();                
 
                         // Player's turn until he moves twice or dies///////////
                         while (level.player.Movement > 0 &&    
@@ -122,7 +122,7 @@ namespace RogueLike
                             firstTurnCheck = false;
                             
                             //Asks the user for input to move the player
-                            input.GetPosition(level, map);
+                            input.GetPosition(level, map, print);
 
                             //Checks if the player's in a square with a Power-Up
                             //and picks it up, printing a message on screen.

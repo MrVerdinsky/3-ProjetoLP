@@ -274,7 +274,7 @@ namespace RogueLike
             // Gives a temporary position to each enemy
             for (int i = 0; i < EnemyNum; i++)
             {
-                Enemies[i] = new Enemy(new Position(1,1), 5, "");
+                Enemies[i] = new Enemy(new Position(1,1), 5);
             }
 
             // Randomize all Enemies positions
@@ -285,21 +285,16 @@ namespace RogueLike
                     // Variable to check if it is suppose to "roll" the 
                     // positions again
                     bool reroll = false;
-                    string symbol = "|Na |";
+
                     // Random row
                     int randRow         = random.Next(Game.rows);
                     // Random column
                     int randColumn      = random.Next(Game.columns);
                     // Random damage
                     int randomDamage    = GetEnemyType();
-                    if (randomDamage == 5)
-                        symbol          = "|🐀|";
-
-                    else if (randomDamage == 10)
-                        symbol          = "|🐉|";
 
                     Enemies[i]          = new Enemy(
-                        new Position(randRow, randColumn), randomDamage, symbol);
+                        new Position(randRow, randColumn), randomDamage);
 
                         
                     for (int j = 0; j < i; j++)

@@ -14,11 +14,20 @@ namespace RogueLike
         /// </summary>
         /// <param name="position">Sets the enemy position</param>
         /// <param name="damage">Sets the enemy damage</param>
-        public Enemy (Position position, int damage, string symbol)
+        public Enemy (Position position, int damage)
         {
             base.Position   = position;
             Damage          = damage;
-            Symbol          = symbol;
+            SetSymbol();
+        }
+
+        /// <summary>
+        /// Sets the enemy symbol based on its Damage
+        /// </summary>
+        private void SetSymbol()
+        {
+            if (Damage == 5){Symbol = "🐀|";}
+            else if (Damage == 10){Symbol = "🐉|";};
         }
         
         /// <summary>

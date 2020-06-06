@@ -23,7 +23,7 @@ namespace RogueLike
             Position            = position;
             Heal                = heal;
             Picked              = false;
-            SetName();
+            SetSymbol();
         }
 
         /// <summary>
@@ -34,11 +34,11 @@ namespace RogueLike
             Picked = true;
         }
 
-        private void SetName()
+        private void SetSymbol()
         {
-            if (Heal == 4) Symbol = "|🍙|";
-            else if (Heal == 8) Symbol = "|🧀|";
-            else if (Heal == 16) Symbol = "|🍖|";
+            if (Heal == 4) Symbol = "🍙|";
+            else if (Heal == 8) Symbol = "🧀|";
+            else if (Heal == 16) Symbol = "🍖|";
         }
 
     }

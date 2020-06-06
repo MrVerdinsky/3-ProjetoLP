@@ -11,6 +11,7 @@ namespace RogueLike
         internal int    Movement        { get; private set; }
         internal bool   IsAlive         { get; private set; }
         internal bool   HasLeft         { get; private set; }
+        internal bool   Walked          { get; private set; }
         
 
         /// <summary>
@@ -21,6 +22,7 @@ namespace RogueLike
         {
             Position    = position;
             IsAlive     = true;
+            Walked      = false;
         }
 
         /// <summary>
@@ -131,14 +133,13 @@ namespace RogueLike
             }
             catch(IndexOutOfRangeException)
             {}
+            // If the player moves, adds the movement to actions list
             if (canMove)
             {
-                Movement -= 1;
-                HP -= 1;
+                Walked = true;
                 print.GetGameActions(input);
             }
-            if (HP < 1) IsAlive = false;
-            
+
             return canMove;
         }
 
@@ -151,10 +152,24 @@ namespace RogueLike
         }
 
         /// <summary>
+        /// Damages the player and spends one movement
+        /// </summary>
+        public void MovementDamage()
+        {
+            Movement            -= 1;
+            HP                  -= 1;
+            if (HP < 1) IsAlive = false;
+            Walked              = false;
+        }
+
+        /// <summary>
         /// Changes the player status to Dead
         /// </summary>
         public void Die() => IsAlive = false;
 
+        /// <summary>
+        /// If the user leaves the game
+        /// </summary>
         public void LeaveGame() => HasLeft = true;
 
     } 

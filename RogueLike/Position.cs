@@ -59,6 +59,14 @@ namespace RogueLike
         }
 
         /// <summary>
+        /// Removes the Exit position.
+        /// </summary>
+        public void ExitFree()
+        {
+            HasExit     = false;
+        }
+
+        /// <summary>
         /// Adds the Player position and declares it occupied and not walkable.
         /// </summary>
         public void PlayerOccupy()
@@ -89,6 +97,16 @@ namespace RogueLike
         }
 
         /// <summary>
+        /// Adds the Exit position and declares it occupied and walkable.
+        /// </summary>
+        public void ExitOccupy()
+        {
+            Empty       = false;
+            Walkable    = true;
+            HasExit     = true;
+        }
+
+        /// <summary>
         /// Adds the wall position and declares it occupied and walkable.
         /// </summary>
         public void WallOccupy(){
@@ -110,14 +128,6 @@ namespace RogueLike
 
         }
 
-        /// <summary>
-        /// Adds the Exit position and declares it occupied and walkable.
-        /// </summary>
-        public void ExitOccupy()
-        {
-            Empty       = false;
-            Walkable    = true;
-            HasExit     = true;
-        }
+
     }
 }

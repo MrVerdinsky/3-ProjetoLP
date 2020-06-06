@@ -133,12 +133,22 @@ namespace RogueLike
                                         level.player.PickPowerUp(map, powerUp);
                                         print.GetGameActions(powerUp);
                                     }
+                            
+                            if (level.player.Walked)
+                                level.player.MovementDamage();
+
                             // Checks if the player has reached the exit 
                             if (map[level.player.Position.Row, 
                                 level.player.Position.Column].Position.HasExit)
                             {
-                                levelUp = true;
-                                break;
+                                map[level.player.Position.Row, 
+                                    level.player.Position.Column].
+                                    Position.ExitFree();
+                                if (level.player.IsAlive)
+                                {
+                                    levelUp = true;
+                                    break;
+                                }
                             }
                             else
                             //Prints list of the game's actions

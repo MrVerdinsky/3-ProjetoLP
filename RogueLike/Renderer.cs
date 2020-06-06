@@ -69,9 +69,12 @@ namespace RogueLike
                         Console.Write($"🚧|");
 
                     // If the square has a player
-                    if (map[i,j].Position.HasPlayer)
+                    if (map[i,j].Position.HasPlayer && player.IsAlive)
                         Console.Write("🧙|");
-                    
+
+                    if (map[i,j].Position.HasPlayer && player.IsAlive == false)
+                        Console.Write("💀|");
+
                     // Prints all enemies in the list
                     if (map[i,j].Position.HasEnemy)
                         foreach (Enemy enemy in enemies)
@@ -235,13 +238,10 @@ namespace RogueLike
             Console.WriteLine("\nSo long, adventurer.");
         }
 
-        
-
-
         /// <summary>
         /// Gets userInput action, adds to actions list as player movement
         /// </summary>
-        /// <param name="str">String to check which turn is it</param>
+        /// <param name="input"> Gets player movement key</param>
         public void GetGameActions(ConsoleKeyInfo input)
         {
             // Removes first element when the list is size 5

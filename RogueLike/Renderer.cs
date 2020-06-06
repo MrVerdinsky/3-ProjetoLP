@@ -46,31 +46,31 @@ namespace RogueLike
             Console.Write("|___________________________________|_____________" +
                             "________|\n\n");
 
-
+            for (int j = 0; j < Game.columns; j++)
+                Console.Write(" __");
+                Console.WriteLine();
             for (int i = 0; i < Game.rows; i++)
             {    
                 // For first turn
                 if (firstTurn) Thread.Sleep(250);
-                // For FIRST row
-                for (int j = 0; j < Game.columns; j++)
-                    Console.Write(" __ ");
-                Console.WriteLine();
-        
+                
                 // For the OTHER rows
                 // A magia acontece aqui V
                 for (int j = 0; j < Game.columns; j++)
                 {
+                    if (j == 0)
+                        Console.Write($"|");
                     // If the square is empty   
                     if (map[i,j].Position.Empty)
-                        Console.Write($"|__|");
+                        Console.Write($"__|");
 
                     // If the square has a wall   
                     if (map[i,j].Position.HasWall)
-                        Console.Write($"|🚧|");
+                        Console.Write($"🚧|");
 
                     // If the square has a player
                     if (map[i,j].Position.HasPlayer)
-                        Console.Write("|⚔️|");
+                        Console.Write("⚔️|");
                     
                     // Prints all enemies in the list
                     if (map[i,j].Position.HasEnemy)
@@ -95,7 +95,7 @@ namespace RogueLike
                         }  
                     }
                     else if (map[i,j].Position.HasExit)
-                        Console.Write("|🎌|");
+                        Console.Write("🎌|");
                     
                 }
                 Console.WriteLine();

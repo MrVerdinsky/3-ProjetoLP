@@ -30,7 +30,7 @@ namespace RogueLike
             Console.WriteLine();
             Console.Write(" _________________________________________________" +
                             "________\n");
-            Console.Write("|⚔️- Player||🍙- Small Power-Up | 🚧" +
+            Console.Write("|🧙- Player||🍙- Small Power-Up | 🚧" +
                             "- Obstacle            |\n");
             Console.Write("|🐀- Minion||🧀- Medium Power-Up| 🎌" + 
                             "- Exit                |\n");
@@ -70,7 +70,7 @@ namespace RogueLike
 
                     // If the square has a player
                     if (map[i,j].Position.HasPlayer)
-                        Console.Write("|⚔️|");
+                        Console.Write("|🧙|");
                     
                     // Prints all enemies in the list
                     if (map[i,j].Position.HasEnemy)

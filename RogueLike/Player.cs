@@ -32,6 +32,7 @@ namespace RogueLike
             if (HP - enemy.Damage < 1)
                 IsAlive = false;
             HP -= enemy.Damage;  
+            if (HP < 0) HP = 0;
         }
 
         /// <summary>

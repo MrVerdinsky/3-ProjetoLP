@@ -4,7 +4,7 @@ namespace RogueLike
     /// <summary>
     /// Player class, created from ObjectPosition class
     /// </summary>
-    sealed public class Player : ObjectPosition
+    sealed public class Player : Position
     {
         static internal int HP = (Game.rows * Game.columns) / 4;
         // static internal int HP = 250;
@@ -18,9 +18,10 @@ namespace RogueLike
         /// Creates the player
         /// </summary>
         /// <param name="position">Gives a position to the player</param>
-        public Player (Position position)
+        public Player (int row, int column)
         {
-            Position    = position;
+            Row         = row;
+            Column      = Column;
             IsAlive     = true;
             Walked      = false;
         }
@@ -45,10 +46,10 @@ namespace RogueLike
         public void PickPowerUp(Map[,] map, PowerUp powerUp)
         {
                 HP += powerUp.Heal;
-                map[powerUp.Position.Row, powerUp.Position.Column].
-                    Position.PowerUpFree();
-                map[powerUp.Position.Row, powerUp.Position.Column].
-                    Position.PlayerOccupy();
+                map[powerUp.Row, powerUp.Column].
+                    PowerUpFree();
+                map[powerUp.Row, powerUp.Column].
+                    PlayerOccupy();
                 powerUp.PickUp();
         }
 
@@ -74,12 +75,12 @@ namespace RogueLike
                     //Moves Left
                     case ConsoleKey.A:
                     case ConsoleKey.LeftArrow:
-                        if (map[this.Position.Row,this.Position.Column-1].
-                            Position.Walkable == false)
+                        if (map[this.Row,this.Column-1].
+                            Walkable == false)
                                 canMove = false;
                         else
                         {
-                            this.Position.Column -= 1;
+                            this.Column -= 1;
                             canMove = true;
                             
                         }
@@ -88,12 +89,12 @@ namespace RogueLike
                     //Moves Right
                     case ConsoleKey.D:
                     case ConsoleKey.RightArrow:
-                        if (map[this.Position.Row, this.Position.Column+1].
-                            Position.Walkable == false)
+                        if (map[this.Row, this.Column+1].
+                            Walkable == false)
                                 canMove = false;
                         else
                         {
-                            this.Position.Column += 1;
+                            this.Column += 1;
                             canMove = true;
                         }                     
                         break;
@@ -101,12 +102,12 @@ namespace RogueLike
                     //Moves Upwards
                     case ConsoleKey.W:
                     case ConsoleKey.UpArrow:
-                        if (map[this.Position.Row-1, this.Position.Column].
-                            Position.Walkable == false)
+                        if (map[this.Row-1, this.Column].
+                            Walkable == false)
                                 canMove = false;     
                         else
                         {
-                            this.Position.Row -= 1;
+                            this.Row -= 1;
                             canMove = true; 
                         }   
                         break;
@@ -114,12 +115,12 @@ namespace RogueLike
                     //Moves Downwards
                     case ConsoleKey.S:
                     case ConsoleKey.DownArrow:
-                        if (map[this.Position.Row+1, this.Position.Column].
-                            Position.Walkable == false)
+                        if (map[this.Row+1, this.Column].
+                            Walkable == false)
                             canMove = false;
                         else
                         {
-                            this.Position.Row += 1;
+                            this.Row += 1;
                             canMove = true;
                         }
                         break;

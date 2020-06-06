@@ -4,7 +4,7 @@ namespace RogueLike
     /// <summary>
     /// Enemy class, created from ObjectPosition class
     /// </summary>
-    public class Enemy : ObjectPosition
+    public class Enemy : Position
     {
         internal int Damage     { get; private set; }
         internal string Symbol  { get; private set; }
@@ -14,9 +14,10 @@ namespace RogueLike
         /// </summary>
         /// <param name="position">Sets the enemy position</param>
         /// <param name="damage">Sets the enemy damage</param>
-        public Enemy (Position position, int damage)
+        public Enemy (int row, int column, int damage)
         {
-            base.Position   = position;
+            Row             = row;
+            Column          = column;
             Damage          = damage;
             SetSymbol();
         }
@@ -40,8 +41,8 @@ namespace RogueLike
         /// <param name="map">Map positions</param>
         public void Move(Player player, int random, Map[,] map)
         {
-            int distanceX = (player.Position.Column - this.Position.Column);
-            int distanceY = (player.Position.Row - this.Position.Row);
+            int distanceX = (player.Column - this.Column);
+            int distanceY = (player.Row - this.Row);
 
             // Number beetween 0 and 1
             int chance = random;  
@@ -52,14 +53,14 @@ namespace RogueLike
             Console.WriteLine(random);
 
             // One square range
-            if (this.Position.Row == player.Position.Row +1 &&
-                this.Position.Column == player.Position.Column ||
-                this.Position.Row == player.Position.Row -1 &&
-                this.Position.Column == player.Position.Column ||
-                this.Position.Column == player.Position.Column -1 &&
-                this.Position.Row == player.Position.Row ||
-                this.Position.Column == player.Position.Column +1 &&
-                this.Position.Row == player.Position.Row)
+            if (this.Row == player.Row +1 &&
+                this.Column == player.Column ||
+                this.Row == player.Row -1 &&
+                this.Column == player.Column ||
+                this.Column == player.Column -1 &&
+                this.Row == player.Row ||
+                this.Column == player.Column +1 &&
+                this.Row == player.Row)
                 { 
                 }
 
@@ -68,38 +69,38 @@ namespace RogueLike
             {   // Move Up
                 if (distanceY < 0)
                 {   // Up
-                    if (map[Position.Row-1,Position.Column].Position.Walkable
-                    && !map[Position.Row-1,Position.Column].Position.HasExit)
-                        this.Position.Row -= 1;
+                    if (map[Row-1,Column].Walkable
+                    && !map[Row-1,Column].IsExit)
+                        this.Row -= 1;
                     else
                     {
                         try
                         {   // Move left or right
-                            if (map[Position.Row,Position.Column+rMove].
-                                Position.Walkable
-                            && !map[Position.Row,Position.Column+rMove].
-                                Position.HasExit)
-                                this.Position.Column += rMove;
+                            if (map[Row,Column+rMove].
+                                Walkable
+                            && !map[Row,Column+rMove].
+                                IsExit)
+                                this.Column += rMove;
                         }
                         catch
                         {
                             try
                             {
-                                if (map[Position.Row,Position.Column-rMove].
-                                    Position.Walkable
-                                && !map[Position.Row,Position.Column-rMove].
-                                    Position.HasExit)
-                                    this.Position.Column -= rMove;
+                                if (map[Row,Column-rMove].
+                                    Walkable
+                                && !map[Row,Column-rMove].
+                                    IsExit)
+                                    this.Column -= rMove;
                             }
                             catch
                             {
                                 try
                                 {   // Bottom
-                                    if (map[Position.Row+1,Position.Column].
-                                        Position.Walkable
-                                    && !map[Position.Row+1,Position.Column].
-                                        Position.HasExit)
-                                        this.Position.Row += 1;
+                                    if (map[Row+1,Column].
+                                        Walkable
+                                    && !map[Row+1,Column].
+                                        IsExit)
+                                        this.Row += 1;
                                 }
                                 catch
                                 {     
@@ -111,38 +112,38 @@ namespace RogueLike
                 // Move Down
                 if (distanceY > 0) 
                 {   // Down
-                    if (map[Position.Row+1,Position.Column].Position.Walkable
-                    && !map[Position.Row+1,Position.Column].Position.HasExit)
-                        this.Position.Row += 1;
+                    if (map[Row+1,Column].Walkable
+                    && !map[Row+1,Column].IsExit)
+                        this.Row += 1;
                     else
                     {
                         try
                         {   // Move left or right
-                            if (map[Position.Row,Position.Column+rMove].
-                                Position.Walkable
-                            && !map[Position.Row,Position.Column+rMove].
-                                Position.HasExit)
-                                this.Position.Column += rMove;
+                            if (map[Row,Column+rMove].
+                                Walkable
+                            && !map[Row,Column+rMove].
+                                IsExit)
+                                this.Column += rMove;
                         }
                         catch
                         {
                             try
                             {
-                                if (map[Position.Row,Position.Column-rMove].
-                                    Position.Walkable
-                                && !map[Position.Row,Position.Column-rMove].
-                                    Position.HasExit)
-                                    this.Position.Column -= rMove;
+                                if (map[Row,Column-rMove].
+                                    Walkable
+                                && !map[Row,Column-rMove].
+                                    IsExit)
+                                    this.Column -= rMove;
                             }
                             catch
                             {
                                 try
                                 {   // Top
-                                    if (map[Position.Row-1,Position.Column].
-                                        Position.Walkable
-                                    && !map[Position.Row-1,Position.Column].
-                                        Position.HasExit)
-                                        this.Position.Row -= 1;
+                                    if (map[Row-1,Column].
+                                        Walkable
+                                    && !map[Row-1,Column].
+                                        IsExit)
+                                        this.Row -= 1;
                                 }
                                 catch
                                 {     
@@ -158,38 +159,38 @@ namespace RogueLike
             {   // Move Left
                 if (distanceX < 0)
                 {   // Left
-                    if (map[Position.Row,Position.Column-1].Position.Walkable
-                    && !map[Position.Row,Position.Column-1].Position.HasExit)
-                        this.Position.Column -= 1;
+                    if (map[Row,Column-1].Walkable
+                    && !map[Row,Column-1].IsExit)
+                        this.Column -= 1;
                     else
                     {
                         try
                         {   // Move top or down
-                            if (map[Position.Row+rMove,Position.Column].
-                                Position.Walkable
-                            && !map[Position.Row+rMove,Position.Column].
-                                Position.HasExit)
-                                this.Position.Row += rMove;
+                            if (map[Row+rMove,Column].
+                                Walkable
+                            && !map[Row+rMove,Column].
+                                IsExit)
+                                this.Row += rMove;
                         }
                         catch
                         {
                             try
                             {
-                                if (map[Position.Row-rMove,Position.Column].
-                                    Position.Walkable
-                                && !map[Position.Row-rMove,Position.Column].
-                                    Position.HasExit)
-                                    this.Position.Row -= rMove;
+                                if (map[Row-rMove,Column].
+                                    Walkable
+                                && !map[Row-rMove,Column].
+                                    IsExit)
+                                    this.Row -= rMove;
                             }
                             catch
                             {
                                 try
                                 {
-                                    if (map[Position.Row,Position.Column+1].
-                                        Position.Walkable
-                                    && !map[Position.Row,Position.Column+1].
-                                        Position.HasExit)
-                                        this.Position.Column += 1;
+                                    if (map[Row,Column+1].
+                                        Walkable
+                                    && !map[Row,Column+1].
+                                        IsExit)
+                                        this.Column += 1;
                                 }
                                 catch
                                 {     
@@ -201,38 +202,38 @@ namespace RogueLike
                 // Move Right
                 if (distanceX > 0) 
                 {   // Right
-                    if (map[Position.Row,Position.Column+1].Position.Walkable
-                    && !map[Position.Row,Position.Column+1].Position.HasExit)
-                        this.Position.Column += 1;
+                    if (map[Row,Column+1].Walkable
+                    && !map[Row,Column+1].IsExit)
+                        this.Column += 1;
                     else
                     {
                         try
                         {   // Move left or right
-                            if (map[Position.Row+rMove,Position.Column].
-                                Position.Walkable
-                            && !map[Position.Row+rMove,Position.Column].
-                                Position.HasExit)
-                                this.Position.Row += rMove;
+                            if (map[Row+rMove,Column].
+                                Walkable
+                            && !map[Row+rMove,Column].
+                                IsExit)
+                                this.Row += rMove;
                         }
                         catch
                         {
                             try
                             {
-                                if (map[Position.Row-rMove,Position.Column].
-                                    Position.Walkable
-                                && !map[Position.Row-rMove,Position.Column].
-                                    Position.HasExit)
-                                    this.Position.Row -= rMove;
+                                if (map[Row-rMove,Column].
+                                    Walkable
+                                && !map[Row-rMove,Column].
+                                    IsExit)
+                                    this.Row -= rMove;
                             }
                             catch
                             {
                                 try
                                 {
-                                    if (map[Position.Row,Position.Column-1].
-                                        Position.Walkable
-                                    && !map[Position.Row,Position.Column-1].
-                                        Position.HasExit)
-                                        this.Position.Column -= 1;
+                                    if (map[Row,Column-1].
+                                        Walkable
+                                    && !map[Row,Column-1].
+                                        IsExit)
+                                        this.Column -= 1;
                                 }
                                 catch
                                 {     
@@ -250,38 +251,38 @@ namespace RogueLike
                 {
                     if (chance == 0)
                     {   // Up
-                        if (map[Position.Row-1,Position.Column].
-                            Position.Walkable
-                        && !map[Position.Row-1,Position.Column].
-                            Position.HasExit)
-                            this.Position.Row -= 1; 
+                        if (map[Row-1,Column].
+                            Walkable
+                        && !map[Row-1,Column].
+                            IsExit)
+                            this.Row -= 1; 
                         else
                         {   // Left
-                            if (map[Position.Row,Position.Column-1].
-                                Position.Walkable
-                            && !map[Position.Row,Position.Column-1].
-                                Position.HasExit)
-                                this.Position.Column -= 1; 
+                            if (map[Row,Column-1].
+                                Walkable
+                            && !map[Row,Column-1].
+                                IsExit)
+                                this.Column -= 1; 
                             else
                             {
                                 try
                                 {   // Right
-                                    if (map[Position.Row,Position.Column+1].
-                                        Position.Walkable
-                                    && !map[Position.Row,Position.Column+1].
-                                        Position.HasExit)
-                                        this.Position.Column += 1;
+                                    if (map[Row,Column+1].
+                                        Walkable
+                                    && !map[Row,Column+1].
+                                        IsExit)
+                                        this.Column += 1;
                                 }
                                 catch
                                 {   
                                     try
                                     {
                                         // Bottom
-                                        if (map[Position.Row+1,Position.Column].
-                                            Position.Walkable
-                                        && !map[Position.Row+1,Position.Column].
-                                            Position.HasExit)
-                                            this.Position.Row += 1;
+                                        if (map[Row+1,Column].
+                                            Walkable
+                                        && !map[Row+1,Column].
+                                            IsExit)
+                                            this.Row += 1;
                                     }
                                     catch
                                     {
@@ -292,39 +293,39 @@ namespace RogueLike
                     }
                     if (chance == 1)
                     {   // Left
-                        if (map[Position.Row,Position.Column-1].
-                            Position.Walkable
-                        && !map[Position.Row,Position.Column-1].
-                            Position.HasExit)
-                            this.Position.Column -= 1; 
+                        if (map[Row,Column-1].
+                            Walkable
+                        && !map[Row,Column-1].
+                            IsExit)
+                            this.Column -= 1; 
                         else
                         {
                             // Up
-                            if (map[Position.Row-1,Position.Column].
-                                Position.Walkable
-                            && !map[Position.Row-1,Position.Column].
-                                Position.HasExit)
-                                this.Position.Row -= 1; 
+                            if (map[Row-1,Column].
+                                Walkable
+                            && !map[Row-1,Column].
+                                IsExit)
+                                this.Row -= 1; 
                             else
                             {
                                 try
                                 {   // Bottom
-                                    if (map[Position.Row+1,Position.Column].
-                                        Position.Walkable
-                                    && !map[Position.Row+1,Position.Column].
-                                        Position.HasExit)
-                                        this.Position.Row += 1;
+                                    if (map[Row+1,Column].
+                                        Walkable
+                                    && !map[Row+1,Column].
+                                        IsExit)
+                                        this.Row += 1;
                                 }
                                 catch
                                 {   
                                     try
                                     {
                                         // Right
-                                        if (map[Position.Row,Position.Column+1].
-                                            Position.Walkable
-                                        && !map[Position.Row,Position.Column+1].
-                                            Position.HasExit)
-                                            this.Position.Column += 1;
+                                        if (map[Row,Column+1].
+                                            Walkable
+                                        && !map[Row,Column+1].
+                                            IsExit)
+                                            this.Column += 1;
                                     }
                                     catch
                                     {
@@ -340,38 +341,38 @@ namespace RogueLike
                 {
                     if (chance == 0)
                     {   // Down
-                        if (map[Position.Row+1,Position.Column].
-                            Position.Walkable
-                        && !map[Position.Row+1,Position.Column].
-                            Position.HasExit)
-                            this.Position.Row += 1; 
+                        if (map[Row+1,Column].
+                            Walkable
+                        && !map[Row+1,Column].
+                            IsExit)
+                            this.Row += 1; 
                         else
                         {   // Left
-                            if (map[Position.Row,Position.Column-1].
-                                Position.Walkable
-                            && !map[Position.Row,Position.Column-1].
-                                Position.HasExit)
-                                this.Position.Column -= 1; 
+                            if (map[Row,Column-1].
+                                Walkable
+                            && !map[Row,Column-1].
+                                IsExit)
+                                this.Column -= 1; 
                             else
                             {
                                 try
                                 {   // Right
-                                    if (map[Position.Row,Position.Column+1].
-                                        Position.Walkable
-                                    && !map[Position.Row,Position.Column+1].
-                                        Position.HasExit)
-                                        this.Position.Column += 1;
+                                    if (map[Row,Column+1].
+                                        Walkable
+                                    && !map[Row,Column+1].
+                                        IsExit)
+                                        this.Column += 1;
                                 }
                                 catch
                                 {   
                                     try
                                     {
                                         // Up
-                                        if (map[Position.Row-1,Position.Column].
-                                            Position.Walkable
-                                        && !map[Position.Row-1,Position.Column].
-                                            Position.HasExit)
-                                            this.Position.Column -= 1;
+                                        if (map[Row-1,Column].
+                                            Walkable
+                                        && !map[Row-1,Column].
+                                            IsExit)
+                                            this.Column -= 1;
                                     }
                                     catch
                                     {
@@ -382,39 +383,39 @@ namespace RogueLike
                     }
                     if (chance == 1)
                     {   // Left
-                        if (map[Position.Row,Position.Column-1].
-                            Position.Walkable
-                        && !map[Position.Row,Position.Column-1].
-                            Position.HasExit)
-                            this.Position.Column -= 1; 
+                        if (map[Row,Column-1].
+                            Walkable
+                        && !map[Row,Column-1].
+                            IsExit)
+                            this.Column -= 1; 
                         else
                         {
                             // Down
-                            if (map[Position.Row+1,Position.Column].
-                                Position.Walkable
-                            && !map[Position.Row+1,Position.Column].
-                                Position.HasExit)
-                                this.Position.Row += 1; 
+                            if (map[Row+1,Column].
+                                Walkable
+                            && !map[Row+1,Column].
+                                IsExit)
+                                this.Row += 1; 
                             else
                             {
                                 try
                                 {   // Up
-                                    if (map[Position.Row-1,Position.Column].
-                                        Position.Walkable
-                                    && !map[Position.Row-1,Position.Column].
-                                        Position.HasExit)
-                                        this.Position.Row -= 1;
+                                    if (map[Row-1,Column].
+                                        Walkable
+                                    && !map[Row-1,Column].
+                                        IsExit)
+                                        this.Row -= 1;
                                 }
                                 catch
                                 {   
                                     try
                                     {
                                         // Right
-                                        if (map[Position.Row,Position.Column+1].
-                                            Position.Walkable
-                                        && !map[Position.Row,Position.Column+1].
-                                            Position.HasExit)
-                                            this.Position.Column += 1;
+                                        if (map[Row,Column+1].
+                                            Walkable
+                                        && !map[Row,Column+1].
+                                            IsExit)
+                                            this.Column += 1;
                                     }
                                     catch
                                     {
@@ -433,38 +434,38 @@ namespace RogueLike
                 {
                     if (chance == 0)
                     {   // Up
-                        if (map[Position.Row-1,Position.Column].
-                            Position.Walkable
-                        && !map[Position.Row-1,Position.Column].
-                            Position.HasExit)
-                            this.Position.Row -= 1; 
+                        if (map[Row-1,Column].
+                            Walkable
+                        && !map[Row-1,Column].
+                            IsExit)
+                            this.Row -= 1; 
                         else
                         {   // Right
-                            if (map[Position.Row,Position.Column+1].
-                                Position.Walkable
-                            && !map[Position.Row,Position.Column+1].
-                                Position.HasExit)
-                                this.Position.Column += 1; 
+                            if (map[Row,Column+1].
+                                Walkable
+                            && !map[Row,Column+1].
+                                IsExit)
+                                this.Column += 1; 
                             else
                             {
                                 try
                                 {   // Left
-                                    if (map[Position.Row,Position.Column-1].
-                                        Position.Walkable
-                                    && !map[Position.Row,Position.Column-1].
-                                        Position.HasExit)
-                                        this.Position.Column -= 1;
+                                    if (map[Row,Column-1].
+                                        Walkable
+                                    && !map[Row,Column-1].
+                                        IsExit)
+                                        this.Column -= 1;
                                 }
                                 catch
                                 {   
                                     try
                                     {
                                         // Bottom
-                                        if (map[Position.Row+1,Position.Column].
-                                            Position.Walkable
-                                        && !map[Position.Row+1,Position.Column].
-                                            Position.HasExit)
-                                            this.Position.Row += 1;
+                                        if (map[Row+1,Column].
+                                            Walkable
+                                        && !map[Row+1,Column].
+                                            IsExit)
+                                            this.Row += 1;
                                     }
                                     catch
                                     {
@@ -475,39 +476,39 @@ namespace RogueLike
                     }
                     if (chance == 1)
                     {   // Right
-                        if (map[Position.Row,Position.Column+1].
-                            Position.Walkable
-                        && !map[Position.Row,Position.Column+1].
-                            Position.HasExit)
-                            this.Position.Column += 1; 
+                        if (map[Row,Column+1].
+                            Walkable
+                        && !map[Row,Column+1].
+                            IsExit)
+                            this.Column += 1; 
                         else
                         {
                             // Up
-                            if (map[Position.Row-1,Position.Column].
-                                Position.Walkable
-                            && !map[Position.Row-1,Position.Column].
-                                Position.HasExit)
-                                this.Position.Row -= 1; 
+                            if (map[Row-1,Column].
+                                Walkable
+                            && !map[Row-1,Column].
+                                IsExit)
+                                this.Row -= 1; 
                             else
                             {
                                 try
                                 {   // Bottom
-                                    if (map[Position.Row+1,Position.Column].
-                                        Position.Walkable
-                                    && !map[Position.Row+1,Position.Column].
-                                        Position.HasExit)
-                                        this.Position.Row += 1;
+                                    if (map[Row+1,Column].
+                                        Walkable
+                                    && !map[Row+1,Column].
+                                        IsExit)
+                                        this.Row += 1;
                                 }
                                 catch
                                 {   
                                     try
                                     {
                                         // Left
-                                        if (map[Position.Row,Position.Column-1].
-                                            Position.Walkable
-                                        && !map[Position.Row,Position.Column-1].
-                                            Position.HasExit)
-                                            this.Position.Column -= 1;
+                                        if (map[Row,Column-1].
+                                            Walkable
+                                        && !map[Row,Column-1].
+                                            IsExit)
+                                            this.Column -= 1;
                                     }
                                     catch
                                     {
@@ -523,38 +524,38 @@ namespace RogueLike
                 {
                     if (chance == 0)
                     {   // Down
-                        if (map[Position.Row+1,Position.Column].
-                            Position.Walkable
-                        && !map[Position.Row+1,Position.Column].
-                            Position.HasExit)
-                            this.Position.Row += 1; 
+                        if (map[Row+1,Column].
+                            Walkable
+                        && !map[Row+1,Column].
+                            IsExit)
+                            this.Row += 1; 
                         else
                         {   // Right
-                            if (map[Position.Row,Position.Column+1].
-                                Position.Walkable
-                            && !map[Position.Row,Position.Column+1].
-                                Position.HasExit)
-                                this.Position.Column += 1; 
+                            if (map[Row,Column+1].
+                                Walkable
+                            && !map[Row,Column+1].
+                                IsExit)
+                                this.Column += 1; 
                             else
                             {
                                 try
                                 {   // Left
-                                    if (map[Position.Row,Position.Column-1].
-                                        Position.Walkable
-                                    && !map[Position.Row,Position.Column-1].
-                                        Position.HasExit)
-                                        this.Position.Column -= 1;
+                                    if (map[Row,Column-1].
+                                        Walkable
+                                    && !map[Row,Column-1].
+                                        IsExit)
+                                        this.Column -= 1;
                                 }
                                 catch
                                 {   
                                     try
                                     {
                                         // Up
-                                        if (map[Position.Row-1,Position.Column].
-                                            Position.Walkable
-                                        && !map[Position.Row-1,Position.Column].
-                                            Position.HasExit)
-                                            this.Position.Row -= 1;
+                                        if (map[Row-1,Column].
+                                            Walkable
+                                        && !map[Row-1,Column].
+                                            IsExit)
+                                            this.Row -= 1;
                                     }
                                     catch
                                     {
@@ -565,39 +566,39 @@ namespace RogueLike
                     }
                     if (chance == 1)
                     {   // Right
-                        if (map[Position.Row,Position.Column+1].
-                            Position.Walkable
-                        && !map[Position.Row,Position.Column+1].
-                            Position.HasExit)
-                            this.Position.Column += 1; 
+                        if (map[Row,Column+1].
+                            Walkable
+                        && !map[Row,Column+1].
+                            IsExit)
+                            this.Column += 1; 
                         else
                         {
                             // Down
-                            if (map[Position.Row+1,Position.Column].
-                                Position.Walkable
-                            && !map[Position.Row+1,Position.Column].
-                                Position.HasExit)
-                                this.Position.Row += 1; 
+                            if (map[Row+1,Column].
+                                Walkable
+                            && !map[Row+1,Column].
+                                IsExit)
+                                this.Row += 1; 
                             else
                             {
                                 try
                                 {   // Up
-                                    if (map[Position.Row+1,Position.Column].
-                                        Position.Walkable
-                                    && !map[Position.Row+1,Position.Column].
-                                        Position.HasExit)
-                                        this.Position.Row += 1;
+                                    if (map[Row+1,Column].
+                                        Walkable
+                                    && !map[Row+1,Column].
+                                        IsExit)
+                                        this.Row += 1;
                                 }
                                 catch
                                 {   
                                     try
                                     {
                                         // Left
-                                        if (map[Position.Row,Position.Column-1].
-                                            Position.Walkable
-                                        && !map[Position.Row,Position.Column-1].
-                                            Position.HasExit)
-                                            this.Position.Column -= 1;
+                                        if (map[Row,Column-1].
+                                            Walkable
+                                        && !map[Row,Column-1].
+                                            IsExit)
+                                            this.Column -= 1;
                                     }
                                     catch
                                     {

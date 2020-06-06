@@ -61,43 +61,43 @@ namespace RogueLike
                     if (j == 0)
                         Console.Write($"|");
                     // If the square is empty   
-                    if (map[i,j].Position.Empty)
+                    if (map[i,j].Empty)
                         Console.Write($"__|");
 
                     // If the square has a wall   
-                    if (map[i,j].Position.HasWall)
+                    if (map[i,j].IsWall)
                         Console.Write($"🚧|");
 
                     // If the square has a player
-                    if (map[i,j].Position.HasPlayer && player.IsAlive)
+                    if (map[i,j].IsPlayer && player.IsAlive)
                         Console.Write("🧙|");
 
-                    if (map[i,j].Position.HasPlayer && player.IsAlive == false)
+                    if (map[i,j].IsPlayer && player.IsAlive == false)
                         Console.Write("💀|");
 
                     // Prints all enemies in the list
-                    if (map[i,j].Position.HasEnemy)
+                    if (map[i,j].IsEnemy)
                         foreach (Enemy enemy in enemies)
                         {
-                            if(map[i,j].Position.Equals(enemy.Position))
+                            if(map[i,j].Row == enemy.Row && map[i,j].Column == enemy.Column)
                             {
                                 Console.Write(enemy.Symbol);
                             }
                         }
                     
                     //Prints all power Ups in the list
-                    else if (map[i,j].Position.HasPowerUp)
+                    else if (map[i,j].IsPowerUp)
                     {   
                         foreach (PowerUp powerUp in powerUps)
                         {
-                            if ((map[i,j].Position.Equals(powerUp.Position)) &&
+                            if ((map[i,j].Row == powerUp.Row && map[i,j].Column == powerUp.Column) &&
                                 powerUp.Picked == false)
                             {
                                 Console.Write(powerUp.Symbol);
                             }
                         }  
                     }
-                    else if (map[i,j].Position.HasExit)
+                    else if (map[i,j].IsExit)
                         Console.Write("🎌|");
                     
                 }

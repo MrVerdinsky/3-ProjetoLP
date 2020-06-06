@@ -1,14 +1,15 @@
 namespace RogueLike
 {
-    sealed public class Map : ObjectPosition
+    sealed public class Map : Position
     {
         /// <summary>
         /// Creates game's map
         /// </summary>
         /// <param name="position">All squares position's</param>
-        public Map(Position position)
+        public Map(int row, int column)
         {
-            Position = position;
+            Row     = row;
+            Column  = column;
         }
     }
 }

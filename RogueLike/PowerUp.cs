@@ -6,7 +6,7 @@ namespace RogueLike
     /// <summary>
     /// PowerUp class
     /// </summary>
-    sealed public class PowerUp : ObjectPosition
+    sealed public class PowerUp : Position
     {
         internal int          Heal      { get; private set; }
         internal bool         Picked    { get; private set; }
@@ -17,9 +17,10 @@ namespace RogueLike
         /// </summary>
         /// <param name="position">Position of the PowerUp</param>
         /// <param name="heal">Heal amount</param>
-        public PowerUp(Position position, int heal)
+        public PowerUp(int row, int column, int heal)
         {
-            Position            = position;
+            Row                 = row;
+            Column              = column;
             Heal                = heal;
             Picked              = false;
             SetSymbol();

@@ -164,7 +164,7 @@ namespace RogueLike
             // Gives a temporary position to each enemy
             for (int i = 0; i < PowerUpNum; i++)
             {
-                PowerUps[i] = new PowerUp(new Position(1,1), 4);
+                PowerUps[i] = new PowerUp(1, 1, 4);
             }
             // Randomize all power ups positions
             if (!(PowerUps == null) || !(PowerUps.Length == 0))
@@ -182,18 +182,15 @@ namespace RogueLike
                     // Random column
                     int randColumn  = random.Next(Game.columns);
 
-                    PowerUps[i]= new PowerUp(
-                        new Position(randRow, randColumn), powerUpHeal); 
+                    PowerUps[i]= new PowerUp(randRow, randColumn , powerUpHeal); 
 
                         
                     for (int j = 0; j < i; j++)
                     {
                         // Checks if the randomized position is occupied and 
                         //it is different from another power ups positions
-                        if ((PowerUps[i].Position.Equals(PowerUps[j].
-                            Position)) ||
-                            (!(map[PowerUps[i].Position.Row, PowerUps[i].
-                            Position.Column].Position.Empty)))
+                        if ((PowerUps[i].Row == PowerUps[j].Row && PowerUps[i].Column == PowerUps[j].Column) ||
+                            (!(map[PowerUps[i].Row, PowerUps[i].Column].Empty)))
                         {
                             // "Reroll" of the positions is necessary
                             reroll = true;
@@ -207,9 +204,9 @@ namespace RogueLike
                     // only one power up
                     //Check is the randomized position is occupied
                     if (!(map[
-                        PowerUps[i].Position.Row, 
-                        PowerUps[i].Position.Column].
-                        Position.Empty))
+                        PowerUps[i].Row, 
+                        PowerUps[i].Column].
+                        Empty))
                     {
                         // "Reroll" of the positions is necessary
                         reroll = true;
@@ -227,8 +224,7 @@ namespace RogueLike
             // with them
             foreach (PowerUp powerUp in PowerUps)
             {
-                map[powerUp.Position.Row, powerUp.Position.Column].Position.
-                PowerUpOccupy();
+                map[powerUp.Row, powerUp.Column].PowerUpOccupy();
             }
         }
 
@@ -246,10 +242,10 @@ namespace RogueLike
                 int randColumn  = random.Next(Game.columns);
 
                 // Checks if the randomized map position is empty
-                if (map[randRow,randColumn].Position.Empty)
+                if (map[randRow,randColumn].Empty)
                 {
                     // Occupied the map position with an obstacle
-                   map[randRow,randColumn].Position.WallOccupy(); 
+                   map[randRow,randColumn].WallOccupy(); 
                 }
                 // In case the position is occupied
                 else
@@ -274,7 +270,7 @@ namespace RogueLike
             // Gives a temporary position to each enemy
             for (int i = 0; i < EnemyNum; i++)
             {
-                Enemies[i] = new Enemy(new Position(1,1), 5);
+                Enemies[i] = new Enemy(1, 1, 5);
             }
 
             // Randomize all Enemies positions
@@ -293,18 +289,17 @@ namespace RogueLike
                     // Random damage
                     int randomDamage    = GetEnemyType();
 
-                    Enemies[i]          = new Enemy(
-                        new Position(randRow, randColumn), randomDamage);
+                    Enemies[i]          = new Enemy(randRow, randColumn,
+                         randomDamage);
 
                         
                     for (int j = 0; j < i; j++)
                     {
                         // Checks if the randomized position is occupied and 
                         //it is different from another Enemies positions
-                        if ((Enemies[i].Position.Equals(Enemies[j].
-                            Position)) ||
-                            (!(map[Enemies[i].Position.Row, Enemies[i].
-                            Position.Column].Position.Empty)))
+                        if ((Enemies[i].Row == Enemies[j]. Row && Enemies[i].Column == Enemies[j]. Column) ||
+                            (!(map[Enemies[i].Row, Enemies[i].
+                            Column].Empty)))
                         {
                             // "Reroll" of the positions is necessary
                             reroll = true;
@@ -318,9 +313,9 @@ namespace RogueLike
                     // only one enemy
                     //Check is the randomized position is occupied
                     if (!(map[
-                        Enemies[i].Position.Row, 
-                        Enemies[i].Position.Column].
-                        Position.Empty))
+                        Enemies[i].Row, 
+                        Enemies[i].Column].
+                        Empty))
                     {
                         // "Reroll" of the positions is necessary
                         reroll = true;
@@ -339,7 +334,7 @@ namespace RogueLike
             // with them
             foreach (Enemy enemy in Enemies)
             {
-                map[enemy.Position.Row, enemy.Position.Column].Position.
+                map[enemy.Row, enemy.Column].
                 EnemyOccupy();
             }
         }
@@ -396,13 +391,13 @@ namespace RogueLike
             int randRow = random.Next(Game.rows);
             
             //Continues Randomizing until an empty square is found
-            while (!(map[randRow, Game.columns-1].Position.Empty))
+            while (!(map[randRow, Game.columns-1].Empty))
             {
                 randRow = random.Next(Game.rows);
             }
 
             //Sets position
-            map[randRow,Game.columns-1].Position.ExitOccupy();
+            map[randRow,Game.columns-1].ExitOccupy();
         }
 
         /// <summary>
@@ -412,17 +407,17 @@ namespace RogueLike
         private void GetPlayerPos(Map[,] map)
         {
             int randRow = random.Next(Game.rows);
-            player = new Player(new Position(randRow, 0));
+            player = new Player(randRow, 0);
 
             //Continues Randomizing until an empty square is found
-            while(!(map[randRow,0].Position.Empty))
+            while(!(map[randRow,0].Empty))
             {
                 randRow = random.Next(Game.rows);
-                player = new Player(new Position(randRow, 0));
+                player = new Player(randRow, 0);
             }
 
             //Sets position
-            map[randRow,0].Position.PlayerOccupy();
+            map[randRow,0].PlayerOccupy();
         }
 
         /// <summary>

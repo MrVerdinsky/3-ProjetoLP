@@ -103,8 +103,9 @@ namespace RogueLike
                         if (NoRemainingMoves(level.player)){
                             print.NoMoves();
                             level.player.Die();
-                        }    // Resets player's Movement per turn
-                         level.player.MovementReset();                
+                        }    
+                        // Resets player's Movement per turn
+                        level.player.MovementReset();                
 
                         // Player's turn until he moves twice or dies///////////
                         while (level.player.Movement > 0 &&    
@@ -138,12 +139,12 @@ namespace RogueLike
                                 level.player.MovementDamage();
 
                             // Checks if the player has reached the exit 
-                            if (map[level.player.Position.Row, 
-                                level.player.Position.Column].Position.HasExit)
+                            if (map[level.player.Row, 
+                                level.player.Column].IsExit)
                             {
-                                map[level.player.Position.Row, 
-                                    level.player.Position.Column].
-                                    Position.ExitFree();
+                                map[level.player.Row, 
+                                    level.player.Column].
+                                    ExitFree();
                                 if (level.player.IsAlive)
                                 {
                                     levelUp = true;
@@ -173,17 +174,17 @@ namespace RogueLike
 
                                 // Checks if the player is in a square with a 
                                 //Power-Up and blocks the square
-                                if (map[enemy.Position.Row, 
-                                    enemy.Position.Column].Position.HasPowerUp)
+                                if (map[enemy.Row, 
+                                    enemy.Column].IsPowerUp)
                                 {
-                                    map[enemy.Position.Row, 
-                                    enemy.Position.Column].
-                                    Position.EnemyFree(false);
+                                    map[enemy.Row, 
+                                    enemy.Column].
+                                    EnemyFree(false);
                                 }
                                 else
                                 {   // If the enemy moves to an empty position
-                                    map[enemy.Position.Row, enemy.
-                                    Position.Column].Position.EnemyFree(); 
+                                    map[enemy.Row, enemy.
+                                    Column].EnemyFree(); 
                                 }
 
                                 //Delays the game for the Enemys movement
@@ -193,8 +194,8 @@ namespace RogueLike
                                 // and prints and prints it
                                 enemy.Move(level.player, level.EnemyMoveNum, 
                                             map);
-                                map[enemy.Position.Row, enemy.Position.Column].
-                                    Position.EnemyOccupy();
+                                map[enemy.Row, enemy.Column].
+                                    EnemyOccupy();
                                 print.Map(map, level.PowerUps, level.Enemies,
                                         level.player, turn, level.LevelNum,
                                         firstTurnCheck);
@@ -241,17 +242,17 @@ namespace RogueLike
         /// <param name="en">Character2 Position</param>
         /// <returns>Returns true if the distance is 1 square around
         ///  otherwise false</returns>
-        private bool DamagePosition(ObjectPosition p1, ObjectPosition en)
+        private bool DamagePosition(Position p1, Position en)
         {
             bool occupied = false;
-                if (p1.Position.Row == en.Position.Row -1 &&
-                    p1.Position.Column == en.Position.Column ||
-                    p1.Position.Row == en.Position.Row +1 &&
-                    p1.Position.Column == en.Position.Column ||
-                    p1.Position.Column == en.Position.Column -1 &&
-                    p1.Position.Row == en.Position.Row ||
-                    p1.Position.Column == en.Position.Column +1 &&
-                    p1.Position.Row == en.Position.Row)
+                if (p1.Row == en.Row -1 &&
+                    p1.Column == en.Column ||
+                    p1.Row == en.Row +1 &&
+                    p1.Column == en.Column ||
+                    p1.Column == en.Column -1 &&
+                    p1.Row == en.Row ||
+                    p1.Column == en.Column +1 &&
+                    p1.Row == en.Row)
                     occupied = true;
             return occupied;
         }
@@ -263,11 +264,11 @@ namespace RogueLike
         /// <param name="powerUp">PowerUp position</param>
         /// <returns>True if both positions are the same 
         /// otherwise false</returns>
-        private bool PowerUpPosition(ObjectPosition p1, PowerUp powerUp)
+        private bool PowerUpPosition(Position p1, PowerUp powerUp)
         {
             bool occupied = false;
-                if (p1.Position.Row == powerUp.Position.Row &&
-                    p1.Position.Column == powerUp.Position.Column)
+                if (p1.Row == powerUp.Row &&
+                    p1.Column == powerUp.Column)
                     occupied = true;
             return occupied;
         }
@@ -279,7 +280,7 @@ namespace RogueLike
         {
             for (int i = 0; i < Game.rows; i++) 
                 for (int j = 0; j < Game.columns; j++)
-                    map[i,j] = new Map (new Position(i,j));
+                    map[i,j] = new Map(i,j);
         }
 
         /// <summary>
@@ -294,23 +295,23 @@ namespace RogueLike
 
             try
             {   // Checks north
-                if (map[player.Position.Row - 1, player.Position.Column].
-                    Position.Walkable == false) count++;               
+                if (map[player.Row - 1, player.Column].
+                    Walkable == false) count++;               
             } catch {count++;};
             try
             {   // Checks south
-                if (map[player.Position.Row + 1, player.Position.Column].
-                    Position.Walkable == false) count++;               
+                if (map[player.Row + 1, player.Column].
+                    Walkable == false) count++;               
             } catch {count++;};
             try
             {   // Checks east
-                if (map[player.Position.Row, player.Position.Column + 1].
-                    Position.Walkable == false) count++;               
+                if (map[player.Row, player.Column + 1].
+                    Walkable == false) count++;               
             } catch {count++;};
             try
             {   // Checks Column
-                if (map[player.Position.Row, player.Position.Column - 1].
-                    Position.Walkable == false) count++;               
+                if (map[player.Row, player.Column - 1].
+                    Walkable == false) count++;               
             } catch {count++;};
             // If count == 4, it's gameover
             if (count == 4) lose = true;

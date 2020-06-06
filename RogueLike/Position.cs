@@ -3,36 +3,25 @@ namespace RogueLike
     /// <summary>
     /// Position for every element in the game
     /// </summary>
-    sealed public class Position
+    public class Position
     {
-        internal int Row        { get; set; }
-        internal int Column     { get; set; }
+        public int Row        { get; set; }
+        public int Column     { get; set; }
         internal bool Empty         { get; set; } = true;
         internal bool Walkable      { get; set; } = true;
-        internal bool HasPlayer     { get; set; } = false;
-        internal bool HasEnemy      { get; set; } = false;
-        internal bool HasExit       { get; set; } = false;
-        internal bool HasPowerUp    { get; set; } = false;
-        internal bool HasWall       { get; set; } = false;
+        internal bool IsPlayer     { get; set; } = false;
+        internal bool IsEnemy      { get; set; } = false;
+        internal bool IsExit       { get; set; } = false;
+        internal bool IsPowerUp    { get; set; } = false;
+        internal bool IsWall       { get; set; } = false;
         
-
-        /// <summary>
-        /// Creates a position
-        /// </summary>
-        /// <param name="row">Number of row</param>
-        /// <param name="column">Number of column</param>
-        public Position(int row, int column)
-        {
-            Row     = row;
-            Column  = column;
-        }
 
         /// <summary>
         /// Removes the player position and declares it empty and walkable
         /// </summary>
         public void PlayerFree()
         {
-            HasPlayer    = false;
+            IsPlayer    = false;
             Empty        = true;
             Walkable     = true;
         }
@@ -43,7 +32,7 @@ namespace RogueLike
         /// <param name="makeEmpty">Chages postion to walkable</param>
         public void EnemyFree(bool makeEmpty = true)
         {
-            HasEnemy    = false;
+            IsEnemy    = false;
             Empty       = makeEmpty;
             Walkable    = true;
         }
@@ -53,7 +42,7 @@ namespace RogueLike
         /// </summary>
         public void PowerUpFree()
         {
-            HasPowerUp  = false;
+            IsPowerUp  = false;
             Empty       = true;
             Walkable    = true;
         }
@@ -63,7 +52,7 @@ namespace RogueLike
         /// </summary>
         public void ExitFree()
         {
-            HasExit     = false;
+            IsExit     = false;
         }
 
         /// <summary>
@@ -71,7 +60,7 @@ namespace RogueLike
         /// </summary>
         public void PlayerOccupy()
         {
-            HasPlayer   = true;
+            IsPlayer   = true;
             Empty       = false;
             Walkable    = false;
         }
@@ -81,7 +70,7 @@ namespace RogueLike
         /// </summary>
         public void EnemyOccupy()
         {
-            HasEnemy    = true;
+            IsEnemy    = true;
             Empty       = false;
             Walkable    = false;
         }
@@ -91,7 +80,7 @@ namespace RogueLike
         /// </summary>
         public void PowerUpOccupy()
         {
-            HasPowerUp  = true;
+            IsPowerUp  = true;
             Empty       = false;
             Walkable    = true;
         }
@@ -103,14 +92,14 @@ namespace RogueLike
         {
             Empty       = false;
             Walkable    = true;
-            HasExit     = true;
+            IsExit     = true;
         }
 
         /// <summary>
         /// Adds the wall position and declares it occupied and walkable.
         /// </summary>
         public void WallOccupy(){
-            HasWall     = true;
+            IsWall     = true;
             Empty       = false;
             Walkable    = false;
         }

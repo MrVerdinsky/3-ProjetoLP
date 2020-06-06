@@ -41,8 +41,8 @@ distintas. Optámos por dividir classes como por exemplo a `Renderer` da `Input`
 para uma melhor organização. Através da `Position`, controlamos todos os
 aspetos relativos à posição de qualquer elemento, utilizando a `Level` para
 gerar procedimentalmente estes mesmos elementos. Utilizamos a classe base
-`ObjectPosition`, que serve de base para as sub-classes `Enemy`, `Player` e
-`Map`, sendo que todas partilham da variável de posição.
+`Position`, que serve de base para as sub-classes `Enemy`, `Player`, `PowerUp`,
+e `Map`,  sendo que todas partilham da variável de posição.
 
 ### Algoritmos não triviais
 

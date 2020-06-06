@@ -100,7 +100,8 @@ namespace RogueLike
                     while (levelUp == false && level.player.IsAlive)
                     {
                         // If player has not moves left, it's gameover
-                        if (NoRemainingMoves(level.player)){
+                        if (NoRemainingMoves(level.player))
+                        {
                             print.NoMoves();
                             level.player.Die();
                         }    
@@ -139,11 +140,10 @@ namespace RogueLike
                                 level.player.MovementDamage();
 
                             // Checks if the player has reached the exit 
-                            if (map[level.player.Row, 
-                                level.player.Column].IsExit)
+                            if (map[level.player.Row,level.player.Column].
+                                IsExit)
                             {
-                                map[level.player.Row, 
-                                    level.player.Column].
+                                map[level.player.Row,level.player.Column].
                                     ExitFree();
                                 if (level.player.IsAlive)
                                 {
@@ -174,8 +174,7 @@ namespace RogueLike
 
                                 // Checks if the player is in a square with a 
                                 //Power-Up and blocks the square
-                                if (map[enemy.Row, 
-                                    enemy.Column].IsPowerUp)
+                                if (map[enemy.Row,enemy.Column].IsPowerUp)
                                 {
                                     map[enemy.Row, 
                                     enemy.Column].
@@ -183,8 +182,7 @@ namespace RogueLike
                                 }
                                 else
                                 {   // If the enemy moves to an empty position
-                                    map[enemy.Row, enemy.
-                                    Column].EnemyFree(); 
+                                    map[enemy.Row, enemy.Column].EnemyFree(); 
                                 }
 
                                 //Delays the game for the Enemys movement
@@ -194,8 +192,7 @@ namespace RogueLike
                                 // and prints and prints it
                                 enemy.Move(level.player, level.EnemyMoveNum, 
                                             map);
-                                map[enemy.Row, enemy.Column].
-                                    EnemyOccupy();
+                                map[enemy.Row, enemy.Column].EnemyOccupy();
                                 print.Map(map, level.PowerUps, level.Enemies,
                                         level.player, turn, level.LevelNum,
                                         firstTurnCheck);
@@ -236,39 +233,34 @@ namespace RogueLike
         }
 
         /// <summary>
-        /// Compares character position with another character position
+        /// Compares a position with another position
         /// </summary>
-        /// <param name="p1">Character1 Position</param>
-        /// <param name="en">Character2 Position</param>
+        /// <param name="p1">Position 1</param>
+        /// <param name="en">Position 2</param>
         /// <returns>Returns true if the distance is 1 square around
         ///  otherwise false</returns>
         private bool DamagePosition(Position p1, Position en)
         {
             bool occupied = false;
-                if (p1.Row == en.Row -1 &&
-                    p1.Column == en.Column ||
-                    p1.Row == en.Row +1 &&
-                    p1.Column == en.Column ||
-                    p1.Column == en.Column -1 &&
-                    p1.Row == en.Row ||
-                    p1.Column == en.Column +1 &&
-                    p1.Row == en.Row)
+                if (p1.Row == en.Row -1 && p1.Column == en.Column ||
+                    p1.Row == en.Row +1 && p1.Column == en.Column ||
+                    p1.Column == en.Column -1 && p1.Row == en.Row ||
+                    p1.Column == en.Column +1 && p1.Row == en.Row)
                     occupied = true;
             return occupied;
         }
 
         /// <summary>
-        /// Compares ObjectPosition position with powerUp position
+        /// Compares p1 position with powerUp position
         /// </summary>
-        /// <param name="p1">ObjectPosition position</param>
+        /// <param name="p1">Position position</param>
         /// <param name="powerUp">PowerUp position</param>
         /// <returns>True if both positions are the same 
         /// otherwise false</returns>
         private bool PowerUpPosition(Position p1, PowerUp powerUp)
         {
             bool occupied = false;
-                if (p1.Row == powerUp.Row &&
-                    p1.Column == powerUp.Column)
+                if (p1.Row == powerUp.Row &&p1.Column == powerUp.Column)
                     occupied = true;
             return occupied;
         }
@@ -292,26 +284,26 @@ namespace RogueLike
         {
             int  count = 0;
             bool lose  = false;
-
+            // Raises count if the player can't move
             try
             {   // Checks north
-                if (map[player.Row - 1, player.Column].
-                    Walkable == false) count++;               
+                if (map[player.Row - 1, player.Column].Walkable == false) 
+                    count++;               
             } catch {count++;};
             try
             {   // Checks south
-                if (map[player.Row + 1, player.Column].
-                    Walkable == false) count++;               
+                if (map[player.Row + 1, player.Column].Walkable == false) 
+                    count++;               
             } catch {count++;};
             try
             {   // Checks east
-                if (map[player.Row, player.Column + 1].
-                    Walkable == false) count++;               
+                if (map[player.Row, player.Column + 1].Walkable == false) 
+                    count++;               
             } catch {count++;};
             try
             {   // Checks Column
-                if (map[player.Row, player.Column - 1].
-                    Walkable == false) count++;               
+                if (map[player.Row, player.Column - 1].Walkable == false) 
+                count++;               
             } catch {count++;};
             // If count == 4, it's gameover
             if (count == 4) lose = true;
@@ -324,15 +316,10 @@ namespace RogueLike
         /// </summary>
         /// <param name="level">Gets level number</param>
         /// <param name="print">Gets Renderer class to print</param>
-        /// <param name="rows">Gets game's number of rows</param>
-        /// <param name="columns">Gets game's number of columns</param>
         private void LevelUp(Level level, Renderer print)
         {
             //Adds 1 to the level number
             level.LevelNum++;
-            
-            //Resets the tags in the player and exit position
-            //level.EscapeLevel(map);
 
             //Prints a message to the screen once player exits.
             print.GetGameActions();

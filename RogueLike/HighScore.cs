@@ -5,7 +5,7 @@ namespace RogueLike
     /// <summary>
     /// Class to create high score table
     /// </summary>
-    public class HighScore : IComparable<HighScore>
+    sealed public class HighScore : IComparable<HighScore>
     {
         public string Name { get; }
         public int Score { get; }
@@ -19,6 +19,7 @@ namespace RogueLike
             Name    = name;
             Score   = score;
         }
+        
         /// <summary>
         /// Compares 2 HighScores
         /// </summary>

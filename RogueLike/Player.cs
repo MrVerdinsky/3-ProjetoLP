@@ -13,11 +13,11 @@ namespace RogueLike
         internal bool   HasLeft         { get; private set; }
         internal bool   Walked          { get; private set; }
         
-
         /// <summary>
         /// Creates the player
         /// </summary>
-        /// <param name="position">Gives a position to the player</param>
+        /// <param name="row">Sets a player row</param>
+        /// <param name="column">Sets a player column</param>
         public Player (int row, int column)
         {
             Row         = row;
@@ -46,10 +46,8 @@ namespace RogueLike
         public void PickPowerUp(Map[,] map, PowerUp powerUp)
         {
                 HP += powerUp.Heal;
-                map[powerUp.Row, powerUp.Column].
-                    PowerUpFree();
-                map[powerUp.Row, powerUp.Column].
-                    PlayerOccupy();
+                map[powerUp.Row, powerUp.Column].PowerUpFree();
+                map[powerUp.Row, powerUp.Column].PlayerOccupy();
                 powerUp.PickUp();
         }
 
@@ -75,8 +73,7 @@ namespace RogueLike
                     //Moves Left
                     case ConsoleKey.A:
                     case ConsoleKey.LeftArrow:
-                        if (map[this.Row,this.Column-1].
-                            Walkable == false)
+                        if (map[this.Row,this.Column-1].Walkable == false)
                                 canMove = false;
                         else
                         {
@@ -89,8 +86,7 @@ namespace RogueLike
                     //Moves Right
                     case ConsoleKey.D:
                     case ConsoleKey.RightArrow:
-                        if (map[this.Row, this.Column+1].
-                            Walkable == false)
+                        if (map[this.Row, this.Column+1].Walkable == false)
                                 canMove = false;
                         else
                         {
@@ -102,8 +98,7 @@ namespace RogueLike
                     //Moves Upwards
                     case ConsoleKey.W:
                     case ConsoleKey.UpArrow:
-                        if (map[this.Row-1, this.Column].
-                            Walkable == false)
+                        if (map[this.Row-1, this.Column].Walkable == false)
                                 canMove = false;     
                         else
                         {
@@ -115,8 +110,7 @@ namespace RogueLike
                     //Moves Downwards
                     case ConsoleKey.S:
                     case ConsoleKey.DownArrow:
-                        if (map[this.Row+1, this.Column].
-                            Walkable == false)
+                        if (map[this.Row+1, this.Column].Walkable == false)
                             canMove = false;
                         else
                         {

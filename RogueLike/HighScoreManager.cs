@@ -8,7 +8,7 @@ namespace RogueLike
     /// <summary>
     /// Creates, saves or prints high score tables
     /// </summary>
-    public class HighScoreManager
+    sealed public class HighScoreManager
     {
         List<HighScore> scores;
 
@@ -155,7 +155,8 @@ namespace RogueLike
                     Console.WriteLine($" {name,-12}{score,+3}");
                 }
                 Console.WriteLine("_________________");
-            }
+                scoreR.Close();
+            } 
             else print.NoHighScores();
         }
     }

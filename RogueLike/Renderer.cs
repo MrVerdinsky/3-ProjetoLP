@@ -20,7 +20,6 @@ namespace RogueLike
             actions = new List<string>();
         }
         
-
         public void Map(Map[,] map, PowerUp[] powerUps,Enemy[] enemies,
                         Player player, string turn, int level, bool firstTurn)
         {            
@@ -79,7 +78,8 @@ namespace RogueLike
                     if (map[i,j].IsEnemy)
                         foreach (Enemy enemy in enemies)
                         {
-                            if(map[i,j].Row == enemy.Row && map[i,j].Column == enemy.Column)
+                            if(map[i,j].Row == enemy.Row &&
+                                map[i,j].Column == enemy.Column)
                             {
                                 Console.Write(enemy.Symbol);
                             }
@@ -90,7 +90,8 @@ namespace RogueLike
                     {   
                         foreach (PowerUp powerUp in powerUps)
                         {
-                            if ((map[i,j].Row == powerUp.Row && map[i,j].Column == powerUp.Column) &&
+                            if ((map[i,j].Row == powerUp.Row && 
+                                map[i,j].Column == powerUp.Column) &&
                                 powerUp.Picked == false)
                             {
                                 Console.Write(powerUp.Symbol);
@@ -151,10 +152,7 @@ namespace RogueLike
         /// <summary>
         /// Prints a blank line
         /// </summary>
-        public void BlankLine()
-        {
-            Console.WriteLine();
-        }
+        public void BlankLine() => Console.WriteLine();
 
         /// <summary>
         /// Prints no moves message
@@ -167,18 +165,12 @@ namespace RogueLike
         /// <summary>
         /// Prints Menu Options Input Error
         /// </summary>
-        public void PrintInputError()
-        {
-            Console.WriteLine("Option Unkown");
-        }
+        public void PrintInputError() => Console.WriteLine("Option Unkown");
         
         /// <summary>
         /// Prints a message before exiting the game
         /// </summary>
-        public void PrintExitMsg()
-        {
-            Console.WriteLine("Thanks for playing.");
-        }
+        public void PrintExitMsg() => Console.WriteLine("Thanks for playing.");
 
         /// <summary>
         /// Prints a message to shorten the name
@@ -207,6 +199,9 @@ namespace RogueLike
                     "\nThere are no high scores for this level yet :<");
         }
 
+        /// <summary>
+        /// Prints message to insert high score
+        /// </summary>
         public void InsertHighScore()
         {
             Console.WriteLine(
@@ -269,10 +264,6 @@ namespace RogueLike
                 default:    
                     break;
             }
-            // if (input == 'w') actions.Add("\nYou walk North.");
-            // else if (input == 's') actions.Add("\nYou walk South.");
-            // else if (input == 'd') actions.Add("\nYou walk East.");
-            // else if (input == 'a') actions.Add("\nYou walk West.");
         }
 
         /// <summary>
@@ -281,10 +272,6 @@ namespace RogueLike
         /// <param name="pu">Power up picked</param>
         public void GetGameActions(PowerUp pu)
         {
-            // Removes first element when the list is size 5
-            if (actions.Count > 5)
-                actions.RemoveAt(0);
-
             if (pu.Heal == 4)
             {
                 actions.Add($"\nYou found an untouched rice cake and healed " +
@@ -299,16 +286,13 @@ namespace RogueLike
                 actions.Add($"\nYou found a huge piece of meat and " +
                     $"ate it. You heal yourself for {pu.Heal} HP!! ");
         }
+
         /// <summary>
         /// Gets enemy damage and adds a message to actions list
         /// </summary>
         /// <param name="enemy">Gets damage from this enemy</param>
         public void GetGameActions(Enemy enemy)
         {
-            // Removes first element when the list is size 5
-            if (actions.Count > 5)
-                actions.RemoveAt(0);
-
             if (enemy.Damage == 5)
             {
                 actions.Add("\nA small Rat attacked you and damaged you " +
@@ -326,12 +310,10 @@ namespace RogueLike
         /// </summary>
         public void GetGameActions()
         {
-            if (actions.Count > 5)
-                actions.RemoveAt(0);
-            
             actions.Add("\nYou fend off the dangers in the cave, and" + 
                 " venture forth below...");
         }
+
         /// <summary>
         /// Prints actions list
         /// </summary>
@@ -341,7 +323,7 @@ namespace RogueLike
                 actions.Add("\nAs you enter the Troll Lord cave, you start " +
                     $"walking.");
 
-            // Removes first element when the list is size 5
+            // Removes first element when the list has more than 5 elements
             if (actions.Count > 5)
                 actions.RemoveAt(0);
 

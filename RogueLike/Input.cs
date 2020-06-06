@@ -6,22 +6,13 @@ namespace RogueLike
     /// </summary>
     sealed public class Input
     {
-        private Renderer print;
-        
-        /// <summary>
-        /// Class Constructor
-        /// </summary>
-        public Input()
-        {
-            print = new Renderer();
-        }
-
         /// <summary>
         /// Creates options menu
         /// </summary>
         /// <returns>Returns player's option</returns>
         public string MenuOptions()
         {
+            Renderer print = new Renderer();
             HighScoreManager highScore = new HighScoreManager();
             string playerInput;
 
@@ -65,9 +56,9 @@ namespace RogueLike
         /// <summary>
         /// Gets a map with all positions updated
         /// </summary>
-        /// <param name="player">Player's position</param>
-        /// <param name="map">All map Positions</param>
-        /// <returns>Returns a map position for the player</returns>
+        /// <param name="level">Gets level to get the player</param>
+        /// <param name="map">Gets map to get a position</param>
+        /// <param name="print">Gets renderer</param>
         public void GetPosition(Level level , Map[,] map, Renderer print)
         {
             // players input
@@ -86,15 +77,15 @@ namespace RogueLike
                 level.player.LeaveGame();
                 return;
             }
- 
 
             // Moves player to new free position    
             if(level.player.Move(map, playerInput, print))
                 map[level.player.Row, level.player.Column].
                 PlayerFree();
-                // Occupies inserted position with player
-                map[level.player.Row,level.player.Column].
-                PlayerOccupy();
+
+            // Occupies inserted position with player
+            map[level.player.Row,level.player.Column].
+            PlayerOccupy();
                 
         }
 
@@ -104,10 +95,12 @@ namespace RogueLike
         /// <returns>User name</returns>
         public String InsertName()
         {
+            Renderer print = new Renderer();
             string trim = "";
             bool leave = false;
             while (leave == false)
-            {
+            {   // Removes spaces from the string and accepts a
+                // string length shorter than 12 characters   
                 string name = Console.ReadLine();
                 trim = name.Trim();
                 trim = trim.Replace( " ", "_");

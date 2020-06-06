@@ -4,7 +4,7 @@ namespace RogueLike
     /// <summary>
     /// Enemy class, created from ObjectPosition class
     /// </summary>
-    public class Enemy : Position
+    sealed public class Enemy : Position
     {
         internal int Damage     { get; private set; }
         internal string Symbol  { get; private set; }
@@ -12,7 +12,8 @@ namespace RogueLike
         /// <summary>
         /// Creates an Enemy
         /// </summary>
-        /// <param name="position">Sets the enemy position</param>
+        /// <param name="row">Sets the enemy row</param>
+        /// <param name="column">Sets the enemy column</param>
         /// <param name="damage">Sets the enemy damage</param>
         public Enemy (int row, int column, int damage)
         {
@@ -69,37 +70,30 @@ namespace RogueLike
             {   // Move Up
                 if (distanceY < 0)
                 {   // Up
-                    if (map[Row-1,Column].Walkable
-                    && !map[Row-1,Column].IsExit)
+                    if (map[Row-1,Column].Walkable&& !map[Row-1,Column].IsExit)
                         this.Row -= 1;
                     else
                     {
                         try
                         {   // Move left or right
-                            if (map[Row,Column+rMove].
-                                Walkable
-                            && !map[Row,Column+rMove].
-                                IsExit)
+                            if (map[Row,Column+rMove].Walkable 
+                            && !map[Row,Column+rMove]. IsExit)
                                 this.Column += rMove;
                         }
                         catch
                         {
                             try
                             {
-                                if (map[Row,Column-rMove].
-                                    Walkable
-                                && !map[Row,Column-rMove].
-                                    IsExit)
+                                if (map[Row,Column-rMove].Walkable
+                                && !map[Row,Column-rMove].IsExit)
                                     this.Column -= rMove;
                             }
                             catch
                             {
                                 try
                                 {   // Bottom
-                                    if (map[Row+1,Column].
-                                        Walkable
-                                    && !map[Row+1,Column].
-                                        IsExit)
+                                    if (map[Row+1,Column].Walkable
+                                    && !map[Row+1,Column].IsExit)
                                         this.Row += 1;
                                 }
                                 catch
@@ -119,30 +113,24 @@ namespace RogueLike
                     {
                         try
                         {   // Move left or right
-                            if (map[Row,Column+rMove].
-                                Walkable
-                            && !map[Row,Column+rMove].
-                                IsExit)
+                            if (map[Row,Column+rMove].Walkable
+                            && !map[Row,Column+rMove].IsExit)
                                 this.Column += rMove;
                         }
                         catch
                         {
                             try
                             {
-                                if (map[Row,Column-rMove].
-                                    Walkable
-                                && !map[Row,Column-rMove].
-                                    IsExit)
+                                if (map[Row,Column-rMove].Walkable
+                                && !map[Row,Column-rMove].IsExit)
                                     this.Column -= rMove;
                             }
                             catch
                             {
                                 try
                                 {   // Top
-                                    if (map[Row-1,Column].
-                                        Walkable
-                                    && !map[Row-1,Column].
-                                        IsExit)
+                                    if (map[Row-1,Column].Walkable
+                                    && !map[Row-1,Column].IsExit)
                                         this.Row -= 1;
                                 }
                                 catch
@@ -159,37 +147,30 @@ namespace RogueLike
             {   // Move Left
                 if (distanceX < 0)
                 {   // Left
-                    if (map[Row,Column-1].Walkable
-                    && !map[Row,Column-1].IsExit)
+                    if (map[Row,Column-1].Walkable && !map[Row,Column-1].IsExit)
                         this.Column -= 1;
                     else
                     {
                         try
                         {   // Move top or down
-                            if (map[Row+rMove,Column].
-                                Walkable
-                            && !map[Row+rMove,Column].
-                                IsExit)
+                            if (map[Row+rMove,Column].Walkable
+                            && !map[Row+rMove,Column].IsExit)
                                 this.Row += rMove;
                         }
                         catch
                         {
                             try
                             {
-                                if (map[Row-rMove,Column].
-                                    Walkable
-                                && !map[Row-rMove,Column].
-                                    IsExit)
+                                if (map[Row-rMove,Column].Walkable
+                                && !map[Row-rMove,Column].IsExit)
                                     this.Row -= rMove;
                             }
                             catch
                             {
                                 try
                                 {
-                                    if (map[Row,Column+1].
-                                        Walkable
-                                    && !map[Row,Column+1].
-                                        IsExit)
+                                    if (map[Row,Column+1].Walkable
+                                    && !map[Row,Column+1].IsExit)
                                         this.Column += 1;
                                 }
                                 catch
@@ -202,37 +183,30 @@ namespace RogueLike
                 // Move Right
                 if (distanceX > 0) 
                 {   // Right
-                    if (map[Row,Column+1].Walkable
-                    && !map[Row,Column+1].IsExit)
+                    if (map[Row,Column+1].Walkable && !map[Row,Column+1].IsExit)
                         this.Column += 1;
                     else
                     {
                         try
                         {   // Move left or right
-                            if (map[Row+rMove,Column].
-                                Walkable
-                            && !map[Row+rMove,Column].
-                                IsExit)
+                            if (map[Row+rMove,Column].Walkable
+                            && !map[Row+rMove,Column].IsExit)
                                 this.Row += rMove;
                         }
                         catch
                         {
                             try
                             {
-                                if (map[Row-rMove,Column].
-                                    Walkable
-                                && !map[Row-rMove,Column].
-                                    IsExit)
+                                if (map[Row-rMove,Column].Walkable
+                                && !map[Row-rMove,Column].IsExit)
                                     this.Row -= rMove;
                             }
                             catch
                             {
                                 try
                                 {
-                                    if (map[Row,Column-1].
-                                        Walkable
-                                    && !map[Row,Column-1].
-                                        IsExit)
+                                    if (map[Row,Column-1].Walkable
+                                    && !map[Row,Column-1].IsExit)
                                         this.Column -= 1;
                                 }
                                 catch
@@ -251,26 +225,20 @@ namespace RogueLike
                 {
                     if (chance == 0)
                     {   // Up
-                        if (map[Row-1,Column].
-                            Walkable
-                        && !map[Row-1,Column].
-                            IsExit)
+                        if (map[Row-1,Column].Walkable
+                        && !map[Row-1,Column].IsExit)
                             this.Row -= 1; 
                         else
                         {   // Left
-                            if (map[Row,Column-1].
-                                Walkable
-                            && !map[Row,Column-1].
-                                IsExit)
+                            if (map[Row,Column-1].Walkable
+                            && !map[Row,Column-1].IsExit)
                                 this.Column -= 1; 
                             else
                             {
                                 try
                                 {   // Right
-                                    if (map[Row,Column+1].
-                                        Walkable
-                                    && !map[Row,Column+1].
-                                        IsExit)
+                                    if (map[Row,Column+1].Walkable
+                                    && !map[Row,Column+1].IsExit)
                                         this.Column += 1;
                                 }
                                 catch
@@ -278,10 +246,8 @@ namespace RogueLike
                                     try
                                     {
                                         // Bottom
-                                        if (map[Row+1,Column].
-                                            Walkable
-                                        && !map[Row+1,Column].
-                                            IsExit)
+                                        if (map[Row+1,Column].Walkable
+                                        && !map[Row+1,Column].IsExit)
                                             this.Row += 1;
                                     }
                                     catch
@@ -293,27 +259,21 @@ namespace RogueLike
                     }
                     if (chance == 1)
                     {   // Left
-                        if (map[Row,Column-1].
-                            Walkable
-                        && !map[Row,Column-1].
-                            IsExit)
+                        if (map[Row,Column-1].Walkable
+                        && !map[Row,Column-1].IsExit)
                             this.Column -= 1; 
                         else
                         {
                             // Up
-                            if (map[Row-1,Column].
-                                Walkable
-                            && !map[Row-1,Column].
-                                IsExit)
+                            if (map[Row-1,Column].Walkable
+                            && !map[Row-1,Column].IsExit)
                                 this.Row -= 1; 
                             else
                             {
                                 try
                                 {   // Bottom
-                                    if (map[Row+1,Column].
-                                        Walkable
-                                    && !map[Row+1,Column].
-                                        IsExit)
+                                    if (map[Row+1,Column].Walkable
+                                    && !map[Row+1,Column].IsExit)
                                         this.Row += 1;
                                 }
                                 catch
@@ -321,10 +281,8 @@ namespace RogueLike
                                     try
                                     {
                                         // Right
-                                        if (map[Row,Column+1].
-                                            Walkable
-                                        && !map[Row,Column+1].
-                                            IsExit)
+                                        if (map[Row,Column+1].Walkable
+                                        && !map[Row,Column+1].IsExit)
                                             this.Column += 1;
                                     }
                                     catch
@@ -341,26 +299,20 @@ namespace RogueLike
                 {
                     if (chance == 0)
                     {   // Down
-                        if (map[Row+1,Column].
-                            Walkable
-                        && !map[Row+1,Column].
-                            IsExit)
+                        if (map[Row+1,Column].Walkable
+                        && !map[Row+1,Column].IsExit)
                             this.Row += 1; 
                         else
                         {   // Left
-                            if (map[Row,Column-1].
-                                Walkable
-                            && !map[Row,Column-1].
-                                IsExit)
+                            if (map[Row,Column-1].Walkable
+                            && !map[Row,Column-1].IsExit)
                                 this.Column -= 1; 
                             else
                             {
                                 try
                                 {   // Right
-                                    if (map[Row,Column+1].
-                                        Walkable
-                                    && !map[Row,Column+1].
-                                        IsExit)
+                                    if (map[Row,Column+1].Walkable
+                                    && !map[Row,Column+1].IsExit)
                                         this.Column += 1;
                                 }
                                 catch
@@ -368,10 +320,8 @@ namespace RogueLike
                                     try
                                     {
                                         // Up
-                                        if (map[Row-1,Column].
-                                            Walkable
-                                        && !map[Row-1,Column].
-                                            IsExit)
+                                        if (map[Row-1,Column].Walkable
+                                        && !map[Row-1,Column].IsExit)
                                             this.Column -= 1;
                                     }
                                     catch
@@ -383,27 +333,21 @@ namespace RogueLike
                     }
                     if (chance == 1)
                     {   // Left
-                        if (map[Row,Column-1].
-                            Walkable
-                        && !map[Row,Column-1].
-                            IsExit)
+                        if (map[Row,Column-1].Walkable
+                        && !map[Row,Column-1].IsExit)
                             this.Column -= 1; 
                         else
                         {
                             // Down
-                            if (map[Row+1,Column].
-                                Walkable
-                            && !map[Row+1,Column].
-                                IsExit)
+                            if (map[Row+1,Column].Walkable
+                            && !map[Row+1,Column].IsExit)
                                 this.Row += 1; 
                             else
                             {
                                 try
                                 {   // Up
-                                    if (map[Row-1,Column].
-                                        Walkable
-                                    && !map[Row-1,Column].
-                                        IsExit)
+                                    if (map[Row-1,Column].Walkable
+                                    && !map[Row-1,Column].IsExit)
                                         this.Row -= 1;
                                 }
                                 catch
@@ -411,10 +355,8 @@ namespace RogueLike
                                     try
                                     {
                                         // Right
-                                        if (map[Row,Column+1].
-                                            Walkable
-                                        && !map[Row,Column+1].
-                                            IsExit)
+                                        if (map[Row,Column+1].Walkable
+                                        && !map[Row,Column+1].IsExit)
                                             this.Column += 1;
                                     }
                                     catch
@@ -434,26 +376,20 @@ namespace RogueLike
                 {
                     if (chance == 0)
                     {   // Up
-                        if (map[Row-1,Column].
-                            Walkable
-                        && !map[Row-1,Column].
-                            IsExit)
+                        if (map[Row-1,Column].Walkable
+                        && !map[Row-1,Column].IsExit)
                             this.Row -= 1; 
                         else
                         {   // Right
-                            if (map[Row,Column+1].
-                                Walkable
-                            && !map[Row,Column+1].
-                                IsExit)
+                            if (map[Row,Column+1].Walkable
+                            && !map[Row,Column+1].IsExit)
                                 this.Column += 1; 
                             else
                             {
                                 try
                                 {   // Left
-                                    if (map[Row,Column-1].
-                                        Walkable
-                                    && !map[Row,Column-1].
-                                        IsExit)
+                                    if (map[Row,Column-1].Walkable
+                                    && !map[Row,Column-1].IsExit)
                                         this.Column -= 1;
                                 }
                                 catch
@@ -461,10 +397,8 @@ namespace RogueLike
                                     try
                                     {
                                         // Bottom
-                                        if (map[Row+1,Column].
-                                            Walkable
-                                        && !map[Row+1,Column].
-                                            IsExit)
+                                        if (map[Row+1,Column].Walkable
+                                        && !map[Row+1,Column].IsExit)
                                             this.Row += 1;
                                     }
                                     catch
@@ -476,27 +410,21 @@ namespace RogueLike
                     }
                     if (chance == 1)
                     {   // Right
-                        if (map[Row,Column+1].
-                            Walkable
-                        && !map[Row,Column+1].
-                            IsExit)
+                        if (map[Row,Column+1].Walkable
+                        && !map[Row,Column+1].IsExit)
                             this.Column += 1; 
                         else
                         {
                             // Up
-                            if (map[Row-1,Column].
-                                Walkable
-                            && !map[Row-1,Column].
-                                IsExit)
+                            if (map[Row-1,Column].Walkable
+                            && !map[Row-1,Column].IsExit)
                                 this.Row -= 1; 
                             else
                             {
                                 try
                                 {   // Bottom
-                                    if (map[Row+1,Column].
-                                        Walkable
-                                    && !map[Row+1,Column].
-                                        IsExit)
+                                    if (map[Row+1,Column].Walkable
+                                    && !map[Row+1,Column].IsExit)
                                         this.Row += 1;
                                 }
                                 catch
@@ -504,10 +432,8 @@ namespace RogueLike
                                     try
                                     {
                                         // Left
-                                        if (map[Row,Column-1].
-                                            Walkable
-                                        && !map[Row,Column-1].
-                                            IsExit)
+                                        if (map[Row,Column-1].Walkable
+                                        && !map[Row,Column-1].IsExit)
                                             this.Column -= 1;
                                     }
                                     catch
@@ -524,26 +450,20 @@ namespace RogueLike
                 {
                     if (chance == 0)
                     {   // Down
-                        if (map[Row+1,Column].
-                            Walkable
-                        && !map[Row+1,Column].
-                            IsExit)
+                        if (map[Row+1,Column].Walkable
+                        && !map[Row+1,Column].IsExit)
                             this.Row += 1; 
                         else
                         {   // Right
-                            if (map[Row,Column+1].
-                                Walkable
-                            && !map[Row,Column+1].
-                                IsExit)
+                            if (map[Row,Column+1].Walkable
+                            && !map[Row,Column+1].IsExit)
                                 this.Column += 1; 
                             else
                             {
                                 try
                                 {   // Left
-                                    if (map[Row,Column-1].
-                                        Walkable
-                                    && !map[Row,Column-1].
-                                        IsExit)
+                                    if (map[Row,Column-1].Walkable
+                                    && !map[Row,Column-1].IsExit)
                                         this.Column -= 1;
                                 }
                                 catch
@@ -551,10 +471,8 @@ namespace RogueLike
                                     try
                                     {
                                         // Up
-                                        if (map[Row-1,Column].
-                                            Walkable
-                                        && !map[Row-1,Column].
-                                            IsExit)
+                                        if (map[Row-1,Column].Walkable
+                                        && !map[Row-1,Column].IsExit)
                                             this.Row -= 1;
                                     }
                                     catch
@@ -566,27 +484,21 @@ namespace RogueLike
                     }
                     if (chance == 1)
                     {   // Right
-                        if (map[Row,Column+1].
-                            Walkable
-                        && !map[Row,Column+1].
-                            IsExit)
+                        if (map[Row,Column+1].Walkable
+                        && !map[Row,Column+1].IsExit)
                             this.Column += 1; 
                         else
                         {
                             // Down
-                            if (map[Row+1,Column].
-                                Walkable
-                            && !map[Row+1,Column].
-                                IsExit)
+                            if (map[Row+1,Column].Walkable
+                            && !map[Row+1,Column].IsExit)
                                 this.Row += 1; 
                             else
                             {
                                 try
                                 {   // Up
-                                    if (map[Row+1,Column].
-                                        Walkable
-                                    && !map[Row+1,Column].
-                                        IsExit)
+                                    if (map[Row+1,Column].Walkable
+                                    && !map[Row+1,Column].IsExit)
                                         this.Row += 1;
                                 }
                                 catch
@@ -594,10 +506,8 @@ namespace RogueLike
                                     try
                                     {
                                         // Left
-                                        if (map[Row,Column-1].
-                                            Walkable
-                                        && !map[Row,Column-1].
-                                            IsExit)
+                                        if (map[Row,Column-1].Walkable
+                                        && !map[Row,Column-1].IsExit)
                                             this.Column -= 1;
                                     }
                                     catch

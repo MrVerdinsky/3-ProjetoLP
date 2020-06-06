@@ -102,7 +102,6 @@ namespace RogueLike
         /// <param name="LevelNum">Level's Number</param>
         private void GetEnemyNum(int LevelNum)
         {
-            
             // Temporary enemy number
             int tempEnemyNum = 0;
 
@@ -128,8 +127,6 @@ namespace RogueLike
         /// <param name="LevelNum">Level's Number</param>
         private void GetObstacleNum(int LevelNum)
         {
-
-            
             // temporary obstacle number
             int tempObsNum = 0;
 
@@ -149,7 +146,6 @@ namespace RogueLike
             }
             ObstacleNum = tempObsNum;
             AvailbleArea -= maxObsNum;
-
         }
 
         /// <summary>
@@ -189,7 +185,8 @@ namespace RogueLike
                     {
                         // Checks if the randomized position is occupied and 
                         //it is different from another power ups positions
-                        if ((PowerUps[i].Row == PowerUps[j].Row && PowerUps[i].Column == PowerUps[j].Column) ||
+                        if ((PowerUps[i].Row == PowerUps[j].Row &&
+                            PowerUps[i].Column == PowerUps[j].Column) ||
                             (!(map[PowerUps[i].Row, PowerUps[i].Column].Empty)))
                         {
                             // "Reroll" of the positions is necessary
@@ -220,7 +217,7 @@ namespace RogueLike
                         continue;
                 }    
             }
-            // Goes through the whole PowerUps list and occupies the map positions
+            // Goes through PowerUps list and occupies the map positions
             // with them
             foreach (PowerUp powerUp in PowerUps)
             {
@@ -297,9 +294,9 @@ namespace RogueLike
                     {
                         // Checks if the randomized position is occupied and 
                         //it is different from another Enemies positions
-                        if ((Enemies[i].Row == Enemies[j]. Row && Enemies[i].Column == Enemies[j]. Column) ||
-                            (!(map[Enemies[i].Row, Enemies[i].
-                            Column].Empty)))
+                        if ((Enemies[i].Row == Enemies[j]. Row &&
+                            Enemies[i].Column == Enemies[j]. Column) ||
+                            (!(map[Enemies[i].Row, Enemies[i].Column].Empty)))
                         {
                             // "Reroll" of the positions is necessary
                             reroll = true;
@@ -312,10 +309,7 @@ namespace RogueLike
                     // This verification is for cases when the enemy list has 
                     // only one enemy
                     //Check is the randomized position is occupied
-                    if (!(map[
-                        Enemies[i].Row, 
-                        Enemies[i].Column].
-                        Empty))
+                    if (!(map[Enemies[i].Row,Enemies[i].Column].Empty))
                     {
                         // "Reroll" of the positions is necessary
                         reroll = true;
@@ -423,7 +417,7 @@ namespace RogueLike
         /// <summary>
         /// Logistic mathematical Function
         /// </summary>
-        /// <param name="x"></param>
+        /// <param name="x">Gets an integer</param>
         /// <param name="max">Function curve maximum value</param>
         /// <param name="descending">Defines if value are descending</param>
         /// <returns></returns>

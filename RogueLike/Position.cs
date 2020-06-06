@@ -49,7 +49,7 @@ namespace RogueLike
 
         /// <summary>
         /// Removes the Exit position.
-        /// </summary>
+            /// </summary>
         public void ExitFree()
         {
             IsExit     = false;

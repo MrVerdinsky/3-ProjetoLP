@@ -15,7 +15,8 @@ namespace RogueLike
         /// <summary>
         /// Creates a PowerUp
         /// </summary>
-        /// <param name="position">Position of the PowerUp</param>
+        /// <param name="row">Sets a row the powerUp</param>
+        /// <param name="column">Sets a column position for the powerUp</param>
         /// <param name="heal">Heal amount</param>
         public PowerUp(int row, int column, int heal)
         {

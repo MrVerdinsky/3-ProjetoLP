@@ -242,16 +242,37 @@ namespace RogueLike
         /// Gets userInput action, adds to actions list as player movement
         /// </summary>
         /// <param name="str">String to check which turn is it</param>
-        public void GetGameActions(char input)
+        public void GetGameActions(ConsoleKeyInfo input)
         {
             // Removes first element when the list is size 5
             if (actions.Count > 5)
                 actions.RemoveAt(0);
 
-            if (input == 'w') actions.Add("\nYou walk North.");
-            else if (input == 's') actions.Add("\nYou walk South.");
-            else if (input == 'd') actions.Add("\nYou walk East.");
-            else if (input == 'a') actions.Add("\nYou walk West.");
+            switch (input.Key)
+            {
+                case ConsoleKey.W:
+                case ConsoleKey.UpArrow:
+                    actions.Add("\nYou walk North.");
+                    break;
+                case ConsoleKey.S:
+                case ConsoleKey.DownArrow:
+                    actions.Add("\nYou walk South.");
+                    break;
+                case ConsoleKey.D:
+                case ConsoleKey.RightArrow:
+                    actions.Add("\nYou walk East.");
+                    break;
+                case ConsoleKey.A:
+                case ConsoleKey.LeftArrow:
+                    actions.Add("\nYou walk West.");
+                    break;
+                default:    
+                    break;
+            }
+            // if (input == 'w') actions.Add("\nYou walk North.");
+            // else if (input == 's') actions.Add("\nYou walk South.");
+            // else if (input == 'd') actions.Add("\nYou walk East.");
+            // else if (input == 'a') actions.Add("\nYou walk West.");
         }
 
         /// <summary>

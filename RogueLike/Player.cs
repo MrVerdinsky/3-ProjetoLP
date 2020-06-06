@@ -135,7 +135,7 @@ namespace RogueLike
             {
                 Movement -= 1;
                 HP -= 1;
-                print.GetGameActions(input.KeyChar);
+                print.GetGameActions(input);
             }
             if (HP < 1) IsAlive = false;
             

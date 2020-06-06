@@ -293,10 +293,10 @@ namespace RogueLike
                     // Random damage
                     int randomDamage    = GetEnemyType();
                     if (randomDamage == 5)
-                        symbol          = "|\u265F |";
+                        symbol          = "|🐀|";
 
                     else if (randomDamage == 10)
-                        symbol          = "|\u265A |";
+                        symbol          = "|🐉|";
 
                     Enemies[i]          = new Enemy(
                         new Position(randRow, randColumn), randomDamage, symbol);

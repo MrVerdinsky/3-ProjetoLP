@@ -144,7 +144,7 @@ namespace RogueLike
                 "HighScores.txt");
 
                 Console.WriteLine("\n** HIGH SCORE **");
-                Console.WriteLine($"     {Game.rows} x {Game.columns}");
+                Console.WriteLine($"  🙌 {Game.rows} x {Game.columns} 🙌 ");
                 Console.WriteLine("_________________");
                 while ((s = scoreR.ReadLine()) != null)
                 {

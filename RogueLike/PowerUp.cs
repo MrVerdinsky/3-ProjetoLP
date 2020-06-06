@@ -36,10 +36,9 @@ namespace RogueLike
 
         private void SetName()
         {
-            if (Heal == 4) Symbol = "|\u2749 |";
-            else if (Heal == 8) Symbol = "|\u273E |";
-            else if (Heal == 16) Symbol = "|\u2740 |";
-
+            if (Heal == 4) Symbol = "|🍙|";
+            else if (Heal == 8) Symbol = "|🧀|";
+            else if (Heal == 16) Symbol = "|🍖|";
         }
 
     }

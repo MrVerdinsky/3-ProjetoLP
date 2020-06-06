@@ -30,11 +30,11 @@ namespace RogueLike
             Console.WriteLine();
             Console.Write(" _________________________________________________" +
                             "________\n");
-            Console.Write("|\u2654 - Player||\u2749 - Small Power-Up | \u2716" +
-                            " - Obstacle            |\n");
-            Console.Write("|\u265F - Minion||\u273E - Medium Power-Up| \u2FA8" + 
+            Console.Write("|⚔️- Player||🍙- Small Power-Up | 🚧" +
+                            "- Obstacle            |\n");
+            Console.Write("|🐀- Minion||🧀- Medium Power-Up| 🎌" + 
                             "- Exit                |\n");
-            Console.Write("|\u265A - Boss  ||\u2740 - Large Power-Up |   ____" +
+            Console.Write("|🐉- Boss  ||🍖- Large Power-Up |   ____" +
                             "__________________|\n");
             Console.Write("|                                   |A/W/S/D or   " +
                             "  *KEYS*|\n");
@@ -66,11 +66,11 @@ namespace RogueLike
 
                     // If the square has a wall   
                     if (map[i,j].Position.HasWall)
-                        Console.Write($"|\u2716 |");
+                        Console.Write($"|🚧|");
 
                     // If the square has a player
                     if (map[i,j].Position.HasPlayer)
-                        Console.Write("|\u2654 |");
+                        Console.Write("|⚔️|");
                     
                     // Prints all enemies in the list
                     if (map[i,j].Position.HasEnemy)
@@ -95,7 +95,7 @@ namespace RogueLike
                         }  
                     }
                     else if (map[i,j].Position.HasExit)
-                        Console.Write("|\u2FA8|");
+                        Console.Write("|🎌|");
                     
                 }
                 Console.WriteLine();
@@ -266,16 +266,16 @@ namespace RogueLike
 
             if (pu.Heal == 4)
             {
-                actions.Add($"\nHurray, you ate a piece of cheese and healed " +
+                actions.Add($"\nYou found an untouched rice cake and healed " +
                     $"yourself for {pu.Heal} HP!!");
             }
             else if (pu.Heal == 8)
             {
-                actions.Add($"\nYou found a Broiled coyote heart with basil " +
-                    $"and healed yourself for {pu.Heal} HP!! ");
+                actions.Add($"\nHurray, you ate a piece of cheese and healed " +
+                    $"yourself for {pu.Heal} HP!!");
             }
             else
-                actions.Add($"\nYou killed a snake with your bare hands and " +
+                actions.Add($"\nYou found a huge piece of meat and " +
                     $"ate it. You heal yourself for {pu.Heal} HP!! ");
         }
         /// <summary>
@@ -290,12 +290,12 @@ namespace RogueLike
 
             if (enemy.Damage == 5)
             {
-                actions.Add("\nA small goblin attacked you and damaged you " +
+                actions.Add("\nA small Rat attacked you and damaged you " +
                     $"for {enemy.Damage} hp !!");
             }
             else
             {
-                actions.Add("\nA Giant Troll attacked you and damaged you " +
+                actions.Add("\nA Giant Dragon attacked you and damaged you " +
                     $"for {enemy.Damage} hp !!");
             }  
         }

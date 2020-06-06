@@ -6,9 +6,8 @@ namespace RogueLike
     /// <summary>
     /// PowerUp class
     /// </summary>
-    sealed public class PowerUp
+    sealed public class PowerUp : ObjectPosition
     {
-        internal Position     Position  { get; private set; }
         internal int          Heal      { get; private set; }
         internal bool         Picked    { get; private set; }
         internal string       Symbol      { get; private set; }

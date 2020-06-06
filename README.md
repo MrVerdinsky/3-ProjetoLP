@@ -22,6 +22,7 @@
 |Add Enemy Collision|Procedural generation - PowerUps|Add Enemy Movement|
 |Add Sprites|Procedural generation - PowerUps|Add Game Actions Information|
 |Add Next Level|Override Equals on `Position`|Add `HighScoreManager`|
+|Bug Fix|Bug Fix|Bug Fix|
 
 ## Repositório git
 
@@ -48,11 +49,11 @@ e `Map`,  sendo que todas partilham da variável de posição.
 
 A abordagem para controlar todas as posições, foi através de "tags", em que
 para cada elemento que criamos no jogo, ativamos a variável que define
-que tipo de elemento vai ser, por exemplo, para o jogador, `HasPlayer = true`.
+que tipo de elemento vai ser, por exemplo, para o jogador, `IsPlayer = true`.
 Através de métodos criados na `Position`, nomeadamente `PlayerOccupy` ou
 `PlayerFree`, etc., controlamos todas as posições do jogo, definindo assim,
-quais as posições ocupadas, ou em que é possível andar, ou que contém algum
-elemento.
+quais as posições ocupadas, ou quais posições em que é possível andar, ou quais
+as posições que contém algum elemento.
 
 Para a movimentação do inimigo, começamos por verificar a distância entre um
 inimigo e o jogador. Após isto, verificamos se o inimigo se pode mover para a

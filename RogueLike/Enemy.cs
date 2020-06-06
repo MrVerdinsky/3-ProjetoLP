@@ -77,7 +77,7 @@ namespace RogueLike
                         try
                         {   // Move left or right
                             if (map[Row,Column+rMove].Walkable 
-                            && !map[Row,Column+rMove]. IsExit)
+                            && !map[Row,Column+rMove].IsExit)
                                 this.Column += rMove;
                         }
                         catch

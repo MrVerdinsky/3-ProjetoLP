@@ -29,10 +29,10 @@ namespace RogueLike
         /// <summary>
         /// Removes the enemy's position from the map
         /// </summary>
-        /// <param name="makeEmpty">Chages postion to walkable</param>
+        /// <param name="makeEmpty">Changes postion to walkable</param>
         public void EnemyFree(bool makeEmpty = true)
         {
-            IsEnemy    = false;
+            IsEnemy     = false;
             Empty       = makeEmpty;
             Walkable    = true;
         }
@@ -42,7 +42,7 @@ namespace RogueLike
         /// </summary>
         public void PowerUpFree()
         {
-            IsPowerUp  = false;
+            IsPowerUp   = false;
             Empty       = true;
             Walkable    = true;
         }
@@ -60,7 +60,7 @@ namespace RogueLike
         /// </summary>
         public void PlayerOccupy()
         {
-            IsPlayer   = true;
+            IsPlayer    = true;
             Empty       = false;
             Walkable    = false;
         }
@@ -70,7 +70,7 @@ namespace RogueLike
         /// </summary>
         public void EnemyOccupy()
         {
-            IsEnemy    = true;
+            IsEnemy     = true;
             Empty       = false;
             Walkable    = false;
         }
@@ -80,7 +80,7 @@ namespace RogueLike
         /// </summary>
         public void PowerUpOccupy()
         {
-            IsPowerUp  = true;
+            IsPowerUp   = true;
             Empty       = false;
             Walkable    = true;
         }
@@ -92,14 +92,15 @@ namespace RogueLike
         {
             Empty       = false;
             Walkable    = true;
-            IsExit     = true;
+            IsExit      = true;
         }
 
         /// <summary>
         /// Adds the wall position and declares it occupied and walkable.
         /// </summary>
-        public void WallOccupy(){
-            IsWall     = true;
+        public void WallOccupy()
+        {
+            IsWall      = true;
             Empty       = false;
             Walkable    = false;
         }

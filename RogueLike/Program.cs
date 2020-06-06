@@ -21,8 +21,8 @@ namespace RogueLike
             int seed = (int)(currentTime.Ticks);
 
             //Tries to start game and printing an error message if it fails
-             /* try
-            {  */  
+            try
+            { 
                 //Checks if the player wrote columns first
                if (args[0] == "-c" && args[2] == "-r")
                 {
@@ -42,12 +42,12 @@ namespace RogueLike
                         Convert.ToInt16(args[3]),
                         seed);
                 } 
-             /* } */
+            }
             //Prints an Error message if the user inputs the wrong parameters 
-            /* catch (IndexOutOfRangeException)
+            catch (IndexOutOfRangeException)
             {
                 print.IntroErrorMessage();
-            } */
+            }
                
 
         }

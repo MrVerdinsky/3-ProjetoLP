@@ -144,7 +144,7 @@ namespace RogueLike
                                 IsExit)
                             {
                                 map[level.player.Row,level.player.Column].
-                                    ExitFree();
+                                    Free("exit");
                                 if (level.player.IsAlive)
                                 {
                                     levelUp = true;
@@ -178,11 +178,11 @@ namespace RogueLike
                                 {
                                     map[enemy.Row, 
                                     enemy.Column].
-                                    EnemyFree(false);
+                                    Free("enemy_power_up");
                                 }
                                 else
                                 {   // If the enemy moves to an empty position
-                                    map[enemy.Row, enemy.Column].EnemyFree(); 
+                                    map[enemy.Row, enemy.Column].Free("enemy"); 
                                 }
 
                                 //Delays the game for the Enemys movement
@@ -192,7 +192,7 @@ namespace RogueLike
                                 // and prints and prints it
                                 enemy.Move(level.player, level.EnemyMoveNum, 
                                             map);
-                                map[enemy.Row, enemy.Column].EnemyOccupy();
+                                map[enemy.Row, enemy.Column].Occupy("enemy");
                                 print.Map(map, level.PowerUps, level.Enemies,
                                         level.player, turn, level.LevelNum,
                                         firstTurnCheck);

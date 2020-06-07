@@ -65,7 +65,7 @@ namespace RogueLike
             ConsoleKeyInfo playerInput;
             // Frees the player position
             map[level.player.Row, level.player.Column].
-                PlayerFree();
+                Free("player");
 
             // Gets player input
             playerInput = Console.ReadKey();
@@ -81,11 +81,11 @@ namespace RogueLike
             // Moves player to new free position    
             if(level.player.Move(map, playerInput, print))
                 map[level.player.Row, level.player.Column].
-                PlayerFree();
+                Free("player");
 
             // Occupies inserted position with player
             map[level.player.Row,level.player.Column].
-            PlayerOccupy();
+            Occupy("player");
                 
         }
 

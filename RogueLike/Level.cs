@@ -221,7 +221,7 @@ namespace RogueLike
             // with them
             foreach (PowerUp powerUp in PowerUps)
             {
-                map[powerUp.Row, powerUp.Column].PowerUpOccupy();
+                map[powerUp.Row, powerUp.Column].Occupy("power_up");
             }
         }
 
@@ -242,7 +242,7 @@ namespace RogueLike
                 if (map[randRow,randColumn].Empty)
                 {
                     // Occupied the map position with an obstacle
-                   map[randRow,randColumn].WallOccupy(); 
+                   map[randRow,randColumn].Occupy("wall"); 
                 }
                 // In case the position is occupied
                 else
@@ -329,7 +329,7 @@ namespace RogueLike
             foreach (Enemy enemy in Enemies)
             {
                 map[enemy.Row, enemy.Column].
-                EnemyOccupy();
+                Occupy("enemy");
             }
         }
 
@@ -391,7 +391,7 @@ namespace RogueLike
             }
 
             //Sets position
-            map[randRow,Game.columns-1].ExitOccupy();
+            map[randRow,Game.columns-1].Occupy("exit");
         }
 
         /// <summary>
@@ -411,7 +411,7 @@ namespace RogueLike
             }
 
             //Sets position
-            map[randRow,0].PlayerOccupy();
+            map[randRow,0].Occupy("player");
         }
 
         /// <summary>

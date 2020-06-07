@@ -45,8 +45,8 @@ namespace RogueLike
         public void PickPowerUp(Map[,] map, PowerUp powerUp)
         {
                 HP += powerUp.Heal;
-                map[powerUp.Row, powerUp.Column].PowerUpFree();
-                map[powerUp.Row, powerUp.Column].PlayerOccupy();
+                map[powerUp.Row, powerUp.Column].Free("power_up");
+                map[powerUp.Row, powerUp.Column].Occupy("player");
                 powerUp.PickUp();
         }
 

@@ -50,10 +50,10 @@ e `Map`,  sendo que todas partilham da variável de posição.
 A abordagem para controlar todas as posições, foi através de "tags", em que
 para cada elemento que criamos no jogo, ativamos a variável que define
 que tipo de elemento vai ser, por exemplo, para o jogador, `IsPlayer = true`.
-Através de métodos criados na `Position`, nomeadamente `PlayerOccupy` ou
-`PlayerFree`, etc., controlamos todas as posições do jogo, definindo assim,
-quais as posições ocupadas, ou quais posições em que é possível andar, ou quais
-as posições que contém algum elemento.
+Através de métodos criados na `Map`, nomeadamente `Occupy()` e`Free()`, 
+controlamos todas as posições do jogo, definindo assim, quais as posições 
+ocupadas, ou quais posições em que é possível andar, ou quais as posições que 
+contém algum elemento.
 
 Para a movimentação do inimigo, começamos por verificar a distância entre um
 inimigo e o jogador. Após isto, verificamos se o inimigo se pode mover para a
@@ -81,4 +81,9 @@ eliminar erros ao verificar posições fora do mapa.
 
 - ["Criação de funções"](
   https://www.desmos.com/calculator/za0q7ec8yy)
+
+> Criação do método para realizar *random weightned choices*
+
+- ["Weighted random generation in Python "](
+  https://eli.thegreenplace.net/2010/01/22/weighted-random-generation-in-python)
   

@@ -14,17 +14,5 @@ namespace RogueLike
         internal bool IsExit       { get; set; } = false;
         internal bool IsPowerUp    { get; set; } = false;
         internal bool IsWall       { get; set; } = false;
-        
-        public override int GetHashCode()
-        {
-            return Row.GetHashCode() ^ Column.GetHashCode();
-        }
-        public override bool Equals(object obj)
-        {
-            Position other = obj as Position;
-            if (other == null) return false;
-            return Row == other.Row && Column == other.Column;
-
-        }
     }
 }

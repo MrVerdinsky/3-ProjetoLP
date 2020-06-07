@@ -24,7 +24,7 @@ namespace RogueLike
         /// Compares 2 HighScores
         /// </summary>
         /// <param name="otherScore">High score to compare</param>
-        /// <returns></returns>
+        /// <returns>Higher, lower or equal number</returns>
         public int CompareTo(HighScore otherScore)
         {
             if (otherScore == null) return - 1;

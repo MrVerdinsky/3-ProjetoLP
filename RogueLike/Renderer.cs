@@ -8,19 +8,19 @@ namespace RogueLike
     /// <summary>
     /// Renders every element of the game to the consolo
     /// </summary>
-    sealed public class Renderer
+    sealed internal class Renderer
     {
         List<string> actions;
 
         /// <summary>
         /// Renderer Constructor
         /// </summary>
-        public Renderer()
+        internal Renderer()
         {
             actions = new List<string>();
         }
         
-        public void Map(Map[,] map, PowerUp[] powerUps,Enemy[] enemies,
+        internal void Map(Map[,] map, PowerUp[] powerUps,Enemy[] enemies,
                         Player player, string turn, int level, bool firstTurn)
         {            
             Console.OutputEncoding = Encoding.UTF8;
@@ -110,7 +110,7 @@ namespace RogueLike
         /// <summary>
         /// Prints the Main Menu Options
         /// </summary>
-        public void PrintMenu()
+        internal void PrintMenu()
         {
             Console.WriteLine("1. New game");
             Console.WriteLine("2. High scores");
@@ -122,7 +122,7 @@ namespace RogueLike
         /// <summary>
         /// Prints Game Developers
         /// </summary>
-        public void PrintCredits()
+        internal void PrintCredits()
         {
             Console.WriteLine("\n __________________");
             Console.WriteLine("|Developed by:     |");
@@ -135,7 +135,7 @@ namespace RogueLike
         /// <summary>
         /// Prints the Title Text
         /// </summary>
-        public void Introduction()
+        internal void Introduction()
         {
             Console.WriteLine();
             Console.WriteLine(@"_____  ___   ___            ___  __         __"+
@@ -152,12 +152,12 @@ namespace RogueLike
         /// <summary>
         /// Prints a blank line
         /// </summary>
-        public void BlankLine() => Console.WriteLine();
+        internal void BlankLine() => Console.WriteLine();
 
         /// <summary>
         /// Prints no moves message
         /// </summary>
-        public void NoMoves()
+        internal void NoMoves()
         {
             Console.WriteLine("\nYou feel weak and powerless. You can't move.");
         }
@@ -165,17 +165,17 @@ namespace RogueLike
         /// <summary>
         /// Prints Menu Options Input Error
         /// </summary>
-        public void PrintInputError() => Console.WriteLine("Option Unkown");
+        internal void PrintInputError() => Console.WriteLine("Option Unkown");
         
         /// <summary>
         /// Prints a message before exiting the game
         /// </summary>
-        public void PrintExitMsg() => Console.WriteLine("Thanks for playing.");
+        internal void PrintExitMsg() => Console.WriteLine("Thanks for playing.");
 
         /// <summary>
         /// Prints a message to shorten the name
         /// </summary>
-        public void InsertShorterName()
+        internal void InsertShorterName()
         {
             Console.WriteLine("\nPlease insert a shorter name.");
         }
@@ -183,7 +183,7 @@ namespace RogueLike
         /// <summary>
         /// Prints an error message when theres an error starting the game
         /// </summary>
-        public void IntroErrorMessage()
+        internal void IntroErrorMessage()
         {
             Console.WriteLine("\nIn order to start the game, please enter" +
                 " your choices as it shows in the next example:\n" +
@@ -193,7 +193,7 @@ namespace RogueLike
         /// <summary>
         /// Prints no high scores message
         /// </summary>
-        public void NoHighScores()
+        internal void NoHighScores()
         {
             Console.WriteLine(
                     "\nThere are no high scores for this level yet :<");
@@ -202,7 +202,7 @@ namespace RogueLike
         /// <summary>
         /// Prints message to insert high score
         /// </summary>
-        public void InsertHighScore()
+        internal void InsertHighScore()
         {
             Console.WriteLine(
                     "\nCongratulations mighty warrior, you are now in the" +
@@ -212,7 +212,7 @@ namespace RogueLike
         /// <summary>
         /// Prints a dot
         /// </summary>
-        public void Dot()
+        internal void Dot()
         {
             Console.Write('.');
         }
@@ -220,7 +220,7 @@ namespace RogueLike
         /// <summary>
         /// Prints goodbye message for when the player dies
         /// </summary>
-        public void GoodBye()
+        internal void GoodBye()
         {
             Console.WriteLine("\nBetter luck next time, adventurer.");
         }
@@ -228,7 +228,7 @@ namespace RogueLike
         /// <summary>
         /// Prints goodbye message for when the player leave the game
         /// </summary>
-        public void LeftBye()
+        internal void LeftBye()
         {
             Console.WriteLine("\nSo long, adventurer.");
         }
@@ -237,7 +237,7 @@ namespace RogueLike
         /// Gets userInput action, adds to actions list as player movement
         /// </summary>
         /// <param name="input"> Gets player movement key</param>
-        public void GetGameActions(ConsoleKeyInfo input)
+        internal void GetGameActions(ConsoleKeyInfo input)
         {
             // Removes first element when the list is size 5
             if (actions.Count > 5)
@@ -270,7 +270,7 @@ namespace RogueLike
         /// Gets power up and adds a message to actions list
         /// </summary>
         /// <param name="pu">Power up picked</param>
-        public void GetGameActions(PowerUp pu)
+        internal void GetGameActions(PowerUp pu)
         {
             if (pu.Heal == 4)
             {
@@ -291,7 +291,7 @@ namespace RogueLike
         /// Gets enemy damage and adds a message to actions list
         /// </summary>
         /// <param name="enemy">Gets damage from this enemy</param>
-        public void GetGameActions(Enemy enemy)
+        internal void GetGameActions(Enemy enemy)
         {
             if (enemy.Damage == 5)
             {
@@ -308,7 +308,7 @@ namespace RogueLike
         /// <summary>
         /// Prints Next level message 
         /// </summary>
-        public void GetGameActions()
+        internal void GetGameActions()
         {
             actions.Add("\nYou fend off the dangers in the cave, and" + 
                 " venture forth below...");
@@ -317,7 +317,7 @@ namespace RogueLike
         /// <summary>
         /// Prints actions list
         /// </summary>
-        public void PrintGameActions()
+        internal void PrintGameActions()
         {
             if (actions.Count == 0)
                 actions.Add("\nAs you enter the Troll Lord cave, you start " +
@@ -340,7 +340,7 @@ namespace RogueLike
         /// <summary>
         /// Prints the game's rules and controls
         /// </summary>
-        public void PrintInstructions()
+        internal void PrintInstructions()
         {
             Console.WriteLine(" ______________________________________________"+
             "___________________________");

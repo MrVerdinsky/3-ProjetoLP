@@ -3,10 +3,10 @@ namespace RogueLike
     /// <summary>
     /// Position for every element in the game
     /// </summary>
-    public class Position
+    internal class Position
     {
-        public int Row        { get; set; }
-        public int Column     { get; set; }
+        internal int Row        { get; set; }
+        internal int Column     { get; set; }
         internal bool Empty         { get; set; } = true;
         internal bool Walkable      { get; set; } = true;
         internal bool IsPlayer     { get; set; } = false;

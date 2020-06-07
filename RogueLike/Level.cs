@@ -7,23 +7,23 @@ namespace RogueLike
     /// <summary>
     /// Creates levels and its elements
     /// </summary>
-    sealed public class Level
+    sealed internal class Level
     {
         private int EnemyNum        { get; set; }
         private int PowerUpNum      { get; set; }
-        public int LevelNum         { get; set; }
+        internal int LevelNum         { get; set; }
         private int AvailbleArea    { get; set; }
         private int ObstacleNum     { get; set; }
-        public Enemy[] Enemies      { get; set; }
+        internal Enemy[] Enemies      { get; set; }
         private Random random;
-        public PowerUp[] PowerUps   { get; set; }
-        public Player player        { get; set; }
-        public int EnemyMoveNum     { get; private set; }
+        internal PowerUp[] PowerUps   { get; set; }
+        internal Player player        { get; set; }
+        internal int EnemyMoveNum     { get; private set; }
  
         /// <summary>
         /// Creates Level
         /// </summary>
-        public Level()
+        internal Level()
         {
             LevelNum        = 0;
             EnemyNum        = 0;
@@ -36,7 +36,7 @@ namespace RogueLike
         /// Gets all level paramaters
         /// </summary>
         /// <param name="map">Current level map</param>
-        public void CreateLevel(Map[,] map, int LevelNum)
+        internal void CreateLevel(Map[,] map, int LevelNum)
         {
             // Sets random enemy move integer
             SetEnemyMoveNum();
@@ -457,6 +457,6 @@ namespace RogueLike
         /// <summary>
         /// Sets and random integer for enemies movement
         /// </summary>
-        public void SetEnemyMoveNum() => EnemyMoveNum = random.Next(0, 2);
+        internal void SetEnemyMoveNum() => EnemyMoveNum = random.Next(0, 2);
     }
 }

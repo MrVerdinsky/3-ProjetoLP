@@ -8,14 +8,14 @@ namespace RogueLike
     /// <summary>
     /// Creates, saves or prints high score tables
     /// </summary>
-    sealed public class HighScoreManager
+    sealed internal class HighScoreManager
     {
         List<HighScore> scores;
 
         /// <summary>
         /// HighScoreManager constructor
         /// </summary>
-        public HighScoreManager()
+        internal HighScoreManager()
         {
             scores = new List<HighScore>();
             System.IO.Directory.CreateDirectory(@"RogueLike\Scores");
@@ -25,7 +25,7 @@ namespace RogueLike
         /// Saves scores to a new file or a file that already exists
         /// </summary>
         /// <param name="level">Level Number</param>
-        public void SaveScore(int levelScore)
+        internal void SaveScore(int levelScore)
         {
             if (File.Exists(
             $@"RogueLike\Scores\{Game.rows}_x_{Game.columns}_HighScores.txt"))
@@ -41,7 +41,7 @@ namespace RogueLike
         /// Saves a file with level information
         /// </summary>
         /// <param name="levelScore">Number of level</param>
-        public void SaveFile(int levelScore)
+        internal void SaveFile(int levelScore)
         {
             Input input         = new Input();
             Renderer print      = new Renderer();
@@ -105,7 +105,7 @@ namespace RogueLike
         /// <summary>
         /// Creates a file with unknown names
         /// </summary>
-        public void CreateFile()
+        internal void CreateFile()
         {
             int count = 0;
             StreamWriter scoreW = new StreamWriter(
@@ -130,7 +130,7 @@ namespace RogueLike
         /// <summary>
         /// Prints high score
         /// </summary>
-        public void PrintScore()
+        internal void PrintScore()
         {
             Renderer print = new Renderer();
 

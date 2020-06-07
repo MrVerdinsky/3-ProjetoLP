@@ -5,16 +5,16 @@ namespace RogueLike
     /// <summary>
     /// Runs the game loop
     /// </summary>
-    sealed public class Game
+    sealed internal class Game
     {
         // Game rows and game columns
-        static public int rows;
-        static public int columns;
-        static public int Seed;
+        static internal int rows;
+        static internal int columns;
+        static internal int Seed;
         // Controls the game cycle
-        bool gameOver;
+        private bool gameOver;
         //Holds all positions of the game
-        Map[,] map;
+        private Map[,] map;
     
         /// <summary>
         /// Controls main game loop
@@ -22,7 +22,7 @@ namespace RogueLike
         /// <param name="rows">Number of Rows</param>
         /// <param name="columns">Number of Columns</param>
         /// <param name="seed">Seed of the game</param>
-        public Game(int gameRows, int gameColumns, int seed)
+        internal Game(int gameRows, int gameColumns, int seed)
         {
             // Instances / Variables
             rows            = gameRows;
@@ -99,7 +99,7 @@ namespace RogueLike
                     // LEVEL GAME LOOP /////////////////////////////////////////
                     while (levelUp == false && level.player.IsAlive)
                     {
-                        // If player has not moves left, it's gameover
+                        // If player has no moves left, it's gameover
                         if (NoRemainingMoves(level.player))
                         {
                             print.NoMoves();

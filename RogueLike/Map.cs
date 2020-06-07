@@ -1,12 +1,12 @@
 namespace RogueLike
 {
-    sealed public class Map : Position
+    sealed internal class Map : Position
     {
         /// <summary>
         /// Creates game's map
         /// </summary>
         /// <param name="position">All squares position's</param>
-        public Map(int row, int column)
+        internal Map(int row, int column)
         {
             Row     = row;
             Column  = column;
@@ -17,7 +17,7 @@ namespace RogueLike
         /// </summary>
         /// <param name="element">Game element with which is intended to 
         /// occupy the position.</param>
-        public void Occupy(string element)
+        internal void Occupy(string element)
         {
             switch (element)
             {
@@ -56,7 +56,7 @@ namespace RogueLike
         /// </summary>
         /// <param name="element">Game element that is supposed to
         /// take out of the position</param>
-        public void Free(string element)
+        internal void Free(string element)
         {
             switch (element)
             {

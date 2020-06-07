@@ -6,7 +6,7 @@ namespace RogueLike
     /// <summary>
     /// PowerUp class
     /// </summary>
-    sealed public class PowerUp : Position
+    sealed internal class PowerUp : Position
     {
         internal int          Heal      { get; private set; }
         internal bool         Picked    { get; private set; }
@@ -18,7 +18,7 @@ namespace RogueLike
         /// <param name="row">Sets a row the powerUp</param>
         /// <param name="column">Sets a column position for the powerUp</param>
         /// <param name="heal">Heal amount</param>
-        public PowerUp(int row, int column, int heal)
+        internal PowerUp(int row, int column, int heal)
         {
             Row                 = row;
             Column              = column;
@@ -30,7 +30,7 @@ namespace RogueLike
         /// <summary>
         /// Sets picked to true
         /// </summary>
-        public void PickUp()
+        internal void PickUp()
         {
             Picked = true;
         }

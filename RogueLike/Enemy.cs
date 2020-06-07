@@ -4,7 +4,7 @@ namespace RogueLike
     /// <summary>
     /// Enemy class, created from ObjectPosition class
     /// </summary>
-    sealed public class Enemy : Position
+    sealed internal class Enemy : Position
     {
         internal int Damage     { get; private set; }
         internal string Symbol  { get; private set; }
@@ -15,7 +15,7 @@ namespace RogueLike
         /// <param name="row">Sets the enemy row</param>
         /// <param name="column">Sets the enemy column</param>
         /// <param name="damage">Sets the enemy damage</param>
-        public Enemy (int row, int column, int damage)
+        internal Enemy (int row, int column, int damage)
         {
             Row             = row;
             Column          = column;
@@ -40,7 +40,7 @@ namespace RogueLike
         /// <param name="player">Player position</param>
         /// <param name="random">Random umber to move the enemy</param>
         /// <param name="map">Map positions</param>
-        public void Move(Player player, int random, Map[,] map)
+        internal void Move(Player player, int random, Map[,] map)
         {
             int distanceX = (player.Column - this.Column);
             int distanceY = (player.Row - this.Row);

@@ -4,13 +4,13 @@ namespace RogueLike
     /// <summary>
     /// Responsible for every user input on the console
     /// </summary>
-    sealed public class Input
+    sealed internal class Input
     {
         /// <summary>
         /// Creates options menu
         /// </summary>
         /// <returns>Returns player's option</returns>
-        public string MenuOptions()
+        internal string MenuOptions()
         {
             Renderer print = new Renderer();
             HighScoreManager highScore = new HighScoreManager();
@@ -59,7 +59,7 @@ namespace RogueLike
         /// <param name="level">Gets level to get the player</param>
         /// <param name="map">Gets map to get a position</param>
         /// <param name="print">Gets renderer</param>
-        public void GetPosition(Level level , Map[,] map, Renderer print)
+        internal void GetPosition(Level level , Map[,] map, Renderer print)
         {
             // players input
             ConsoleKeyInfo playerInput;
@@ -93,7 +93,7 @@ namespace RogueLike
         /// Asks for user name for high score
         /// </summary>
         /// <returns>User name</returns>
-        public String InsertName()
+        internal String InsertName()
         {
             Renderer print = new Renderer();
             string trim = "";

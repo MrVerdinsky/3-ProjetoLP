@@ -4,7 +4,7 @@ namespace RogueLike
     /// <summary>
     /// Player class, created from ObjectPosition class
     /// </summary>
-    sealed public class Player : Position
+    sealed internal class Player : Position
     {
         static internal int HP = (Game.rows * Game.columns) / 4;
         internal int    Movement        { get; private set; }
@@ -17,7 +17,7 @@ namespace RogueLike
         /// </summary>
         /// <param name="row">Sets a player row</param>
         /// <param name="column">Sets a player column</param>
-        public Player (int row, int column)
+        internal Player (int row, int column)
         {
             Row         = row;
             Column      = Column;
@@ -29,7 +29,7 @@ namespace RogueLike
         /// Player loses HP equal to Enemies damage
         /// </summary>
         /// <param name="enemy">To get damage value from enemy</param>
-        public void TakeDamage(Enemy enemy)
+        internal void TakeDamage(Enemy enemy)
         {
             if (HP - enemy.Damage < 1)
                 IsAlive = false;
@@ -42,7 +42,7 @@ namespace RogueLike
         /// </summary>
         /// <param name="map">Gets map for position</param>
         /// <param name="powerUp">Gets powerup heal power</param>
-        public void PickPowerUp(Map[,] map, PowerUp powerUp)
+        internal void PickPowerUp(Map[,] map, PowerUp powerUp)
         {
                 HP += powerUp.Heal;
                 map[powerUp.Row, powerUp.Column].Free("power_up");
@@ -58,7 +58,7 @@ namespace RogueLike
         /// <param name="print">Gets renderer</param>
         /// <returns>Returns true if the movement is possible 
         /// otherwise false</returns>
-        public bool Move(Map[,] map, ConsoleKeyInfo input, Renderer print)
+        internal bool Move(Map[,] map, ConsoleKeyInfo input, Renderer print)
         {
             //Checks if the player can move
             bool canMove = false;
@@ -140,7 +140,7 @@ namespace RogueLike
         /// <summary>
         /// Resets the number of times the player can move in a turn
         /// </summary>
-        public void MovementReset()
+        internal void MovementReset()
         {
             Movement = 2;
         }
@@ -148,7 +148,7 @@ namespace RogueLike
         /// <summary>
         /// Damages the player and spends one movement
         /// </summary>
-        public void MovementDamage()
+        internal void MovementDamage()
         {
             Movement            -= 1;
             HP                  -= 1;
@@ -159,12 +159,12 @@ namespace RogueLike
         /// <summary>
         /// Changes the player status to Dead
         /// </summary>
-        public void Die() => IsAlive = false;
+        internal void Die() => IsAlive = false;
 
         /// <summary>
         /// If the user leaves the game
         /// </summary>
-        public void LeaveGame() => HasLeft = true;
+        internal void LeaveGame() => HasLeft = true;
 
     } 
 }

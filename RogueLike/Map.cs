@@ -92,5 +92,16 @@ namespace RogueLike
                     break;
             }
         }
+        public override int GetHashCode()
+        {
+            return base.Row.GetHashCode() ^ base.Column.GetHashCode();
+        }
+        public override bool Equals(object obj)
+        {
+            Position other = obj as Position;
+            if (other == null) return false;
+            return base.Row == other.Row && base.Column == other.Column;
+
+        }
     }
 }

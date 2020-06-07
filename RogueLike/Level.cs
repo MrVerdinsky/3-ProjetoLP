@@ -185,9 +185,8 @@ namespace RogueLike
                     {
                         // Checks if the randomized position is occupied and 
                         //it is different from another power ups positions
-                        if ((PowerUps[i].Row == PowerUps[j].Row &&
-                            PowerUps[i].Column == PowerUps[j].Column) ||
-                            (!(map[PowerUps[i].Row, PowerUps[i].Column].Empty)))
+                        if ((PowerUps[i].Equals(PowerUps[j])) ||
+                            !(map[PowerUps[i].Row, PowerUps[i].Column].Empty))
                         {
                             // "Reroll" of the positions is necessary
                             reroll = true;
@@ -294,8 +293,7 @@ namespace RogueLike
                     {
                         // Checks if the randomized position is occupied and 
                         //it is different from another Enemies positions
-                        if ((Enemies[i].Row == Enemies[j]. Row &&
-                            Enemies[i].Column == Enemies[j]. Column) ||
+                        if ( Enemies[i].Equals(Enemies[j]) ||
                             (!(map[Enemies[i].Row, Enemies[i].Column].Empty)))
                         {
                             // "Reroll" of the positions is necessary

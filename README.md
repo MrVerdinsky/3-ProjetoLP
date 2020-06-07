@@ -22,7 +22,7 @@
 |Add Enemy Collision|Procedural generation - PowerUps|Add Enemy Movement|
 |Add Sprites|Procedural generation - PowerUps|Add Game Actions Information|
 |Add Next Level|Override Equals on `Position`|Add `HighScoreManager`|
-|Bug Fix|Bug Fix|Bug Fix|
+|Bug Fix|Program run try-catch|Bug Fix|
 
 ## Repositório git
 

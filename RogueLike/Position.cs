@@ -14,5 +14,28 @@ namespace RogueLike
         internal bool IsExit       { get; set; } = false;
         internal bool IsPowerUp    { get; set; } = false;
         internal bool IsWall       { get; set; } = false;
+
+        /// <summary>
+        /// Gets the position hash code based on its Row and Column values
+        /// </summary>
+        /// <returns></returns>
+        public override int GetHashCode()
+        {
+            return Row.GetHashCode() ^ Column.GetHashCode();
+        }
+
+        /// <summary>
+        /// Determines whether two Position instances are equal or not.
+        /// </summary>
+        /// <param name="obj">The Position to compare with the 
+        /// current Position.</param>
+        /// <returns></returns>
+        public override bool Equals(object obj)
+        {
+            Position other = obj as Position;
+            if (other == null) return false;
+            return Row == other.Row && Column == other.Column;
+
+        }
     }
 }

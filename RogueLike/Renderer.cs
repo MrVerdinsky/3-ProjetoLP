@@ -200,6 +200,44 @@ namespace RogueLike
         }
 
         /// <summary>
+        /// Prints message asking if the user want the save the game
+        /// </summary>
+        internal void GetSaveIntention()
+        {
+            Console.Write(
+                "\nDo you want to save your progress so far?"+
+                "\nPress 'y' for Yes and 'n' for No: ");
+        }
+        internal void SaveBeforeLeave()
+        {
+            Console.Write(
+                "\nDo you want to save your progress before you leave?"+
+                "\nPress 'y' for Yes and 'n' for No: ");   
+        }
+
+        /// <summary>
+        /// Print error message as result of a invalid given file name
+        /// </summary>
+        internal void InvalidFileName()
+        {
+            Console.WriteLine(
+                "\nPlease choose a valid file name."+
+                "\nTry runing the program as the example bellow:"+
+                "\ndotnet run -p RogueLike/ -- -l <file name>.sav\n"
+            );
+        }
+
+        /// <summary>
+        /// Prints message asking for the save file name
+        /// </summary>
+        internal void InsertFileName()
+        {
+            Console.Write(
+                "\nPlease insert a name for your save file: "
+            );
+        }
+
+        /// <summary>
         /// Prints message to insert high score
         /// </summary>
         internal void InsertHighScore()

@@ -15,26 +15,50 @@ namespace RogueLike
         private bool gameOver;
         //Holds all positions of the game
         private Map[,] map;
-    
+        private Level level;
+        private bool LoadedGame = false;
+        private Save save = new Save();
         /// <summary>
-        /// Controls main game loop
+        /// Set the game properties to the given paramaters
         /// </summary>
         /// <param name="rows">Number of Rows</param>
         /// <param name="columns">Number of Columns</param>
         /// <param name="seed">Seed of the game</param>
         internal Game(int gameRows, int gameColumns, int seed)
         {
-            // Instances / Variables
             rows            = gameRows;
             columns         = gameColumns;
             Seed            = seed;
-            Level level     = new Level();
+            level           = new Level();
+        }
+        /// <summary>
+        /// Set the game properties to the values loaded from the save file
+        /// </summary>
+        /// <param name="fileName">Save file name</param>
+        internal Game(string fileName)
+        {
+            
+            level = new Level();
+            save.LoadSave(level, fileName);
+            LoadedGame = true;
+            // Calls loading save method
+
+        }
+
+        /// <summary>
+        /// Executes the main gameloop
+        /// </summary>
+        internal void RunGame()
+        {
+            // Instances / Variables
+
+            // Level level     = new Level();
             Renderer print  = new Renderer();
             Input input     = new Input(); 
             map             = new Map[rows, columns];
             HighScoreManager highScore = new HighScoreManager();
             
-            string playerInput;
+            string playerInput = "";
             string turn = "";
             bool firstTurnCheck = true;
 
@@ -44,50 +68,48 @@ namespace RogueLike
             ////////////////////////////////////////////////////////////////////
             // MAIN MENU ///////////////////////////////////////////////////////
             // Runs Menu Loop until user inputs 1 or 5
-            do
-            {  
-                //Prints the Title Card
-                print.Introduction();
+            if (!LoadedGame)
+            {
+                do
+                {  
+                    //Prints the Title Card
+                    print.Introduction();
 
-                //Prints a blank line
-                print.BlankLine();
-                
-                // Prints Initial Menu
-                print.PrintMenu();
-                
-                // Gets user Input
-                playerInput = input.MenuOptions();
-                if(playerInput == "1") break;
-                
-                //Breaks the loop and quits the game
-                if(playerInput == "5") break;
+                    //Prints a blank line
+                    print.BlankLine();
+                    
+                    // Prints Initial Menu
+                    print.PrintMenu();
+                    
+                    // Gets user Input
+                    playerInput = input.MenuOptions();
+                    if(playerInput == "1") break;
+                    
+                    //Breaks the loop and quits the game
+                    if(playerInput == "5") break;
 
-            } while (true);
+                } while (true);
+            }
             ////////////////////////////////////////////////////////////////////
 
             // NEW GAME ////////////////////////////////////////////////////////
             // Run Game after player inputs 1
-            if (playerInput == "1")
+            if (playerInput == "1" || LoadedGame == true)
             {
+                // if (LoadedGame)
+                
+
                 //Creates all squares and pieces of the game
                 CreateMap();
-
                 // Generates the map and its elements
-                level.CreateLevel(map, level.LevelNum);
-
+                level.CreateLevel(map);
+ 
                 // MAIN GAME LOOP //////////////////////////////////////////////
                 while (gameOver == false)
                 {
                     // ON LEVEL UP /////////////////////////////////////////////
                     if (levelUp)
                     { 
-                        // Prints "loading" bar
-                        print.BlankLine();
-                        for (int i = 0; i < 58; i++)
-                        {
-                            Thread.Sleep(25);
-                            print.Dot();
-                        }
                         print.BlankLine();
                         // Creates new level elements
                         LevelUp(level, print);
@@ -163,7 +185,7 @@ namespace RogueLike
                         {   // Prints the map, moves enemy, prints the map
                             foreach (Enemy enemy in level.Enemies)
                             {
-                                level.SetEnemyMoveNum();
+                                // level.SetEnemyMoveNum();
                                 //Used to print Enemy in the game's screen
                                 turn = "Enemy";
 
@@ -190,7 +212,7 @@ namespace RogueLike
 
                                 // Moves the enemy, occupies the position 
                                 // and prints and prints it
-                                enemy.Move(level.player, level.EnemyMoveNum, 
+                                enemy.Move(level.player, 1, 
                                             map);
                                 map[enemy.Row, enemy.Column].Occupy("enemy");
                                 print.Map(map, level.PowerUps, level.Enemies,
@@ -229,8 +251,8 @@ namespace RogueLike
                     }
                 }
             }
-        
-        }
+    
+    }
 
         /// <summary>
         /// Compares a position with another position
@@ -326,8 +348,15 @@ namespace RogueLike
 
             //Redraws the game's map and Sets new positions for
             // the player and exit
+            save.GetSave(level.LevelNum, "continue");
             CreateMap();
-            level.CreateLevel(map, level.LevelNum);
+            // Prints "loading" bar
+            level.CreateLevel(map);
+            for (int i = 0; i < 58; i++)
+            {
+                Thread.Sleep(25);
+                print.Dot();
+            }
         }
 
         /// <summary>

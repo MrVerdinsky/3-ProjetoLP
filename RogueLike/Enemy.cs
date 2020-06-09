@@ -51,17 +51,11 @@ namespace RogueLike
             int rMove;
             rMove = chance == 1 ? +1: -1;
 
-            Console.WriteLine(random);
-
             // One square range
-            if (this.Row == player.Row +1 &&
-                this.Column == player.Column ||
-                this.Row == player.Row -1 &&
-                this.Column == player.Column ||
-                this.Column == player.Column -1 &&
-                this.Row == player.Row ||
-                this.Column == player.Column +1 &&
-                this.Row == player.Row)
+            if (this.Row == player.Row +1 && this.Column == player.Column ||
+                this.Row == player.Row -1 && this.Column == player.Column ||
+                this.Column == player.Column -1 && this.Row == player.Row ||
+                this.Column == player.Column +1 && this.Row == player.Row)
                 { 
                 }
 

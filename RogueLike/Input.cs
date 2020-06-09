@@ -61,6 +61,7 @@ namespace RogueLike
         /// <param name="print">Gets renderer</param>
         internal void GetPosition(Level level , Map[,] map, Renderer print)
         {
+            Save save = new Save();
             // players input
             ConsoleKeyInfo playerInput;
             // Frees the player position
@@ -73,6 +74,7 @@ namespace RogueLike
             // Checks if the player pressed the ESC key and quits the game
             if (playerInput.Key == ConsoleKey.Escape)
             {
+                save.GetSave(level.LevelNum, "quit");
                 level.player.Die();
                 level.player.LeaveGame();
                 return;
@@ -104,10 +106,41 @@ namespace RogueLike
                 string name = Console.ReadLine();
                 trim = name.Trim();
                 trim = trim.Replace( " ", "_");
+                trim = trim.Replace(".", "");
                 if (trim.Length < 12 && trim.Length > 0) leave = true;
                 else print.InsertShorterName();
             }
             return trim;
         }
+        internal string InsertFileName()
+        {
+            Renderer print = new Renderer();
+            string trim = "";
+            bool leave = false;
+            while (leave == false)
+            {   // Removes spaces from the string and accepts a
+                // string length shorter than 12 characters   
+                string name = Console.ReadLine();
+                trim = name.Trim();
+                trim = trim.Replace( " ", "_");
+                trim = trim.Replace(".", "");
+                if (trim.Length < 12 && trim.Length > 0) leave = true;
+                else print.InsertShorterName();
+            }
+            return trim;
+        }
+    
+        /// <summary>
+        /// Gets the player's intention of saving the game progress or not
+        /// </summary>
+        /// <returns></returns>
+        internal string GetSaveIntention() 
+        {
+            string input;
+            input = Convert.ToString(Console.ReadKey().KeyChar);
+            return input;
+        }
+
+
     }
 }

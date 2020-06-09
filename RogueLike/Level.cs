@@ -9,16 +9,18 @@ namespace RogueLike
     /// </summary>
     sealed internal class Level
     {
-        private int EnemyNum        { get; set; }
-        private int PowerUpNum      { get; set; }
-        internal int LevelNum         { get; set; }
-        private int AvailbleArea    { get; set; }
-        private int ObstacleNum     { get; set; }
-        internal Enemy[] Enemies      { get; set; }
+        private int EnemyNum            { get; set; }
+        private int PowerUpNum          { get; set; }
+        internal int LevelNum           { get; set; }
+        private int AvailbleArea        { get; set; }
+        private int ObstacleNum         { get; set; }
+        public int NextCalls           { get; set; }
+        public int NextDoubleCalls     { get; set; }
+        internal Enemy[] Enemies        { get; set; }
         private Random random;
-        internal PowerUp[] PowerUps   { get; set; }
-        internal Player player        { get; set; }
-        internal int EnemyMoveNum     { get; private set; }
+        internal PowerUp[] PowerUps     { get; set; }
+        internal Player player          { get; set; }
+        internal int EnemyMoveNum       { get; private set; }
  
         /// <summary>
         /// Creates Level
@@ -31,34 +33,35 @@ namespace RogueLike
             AvailbleArea    = Game.rows * Game.columns;
             random          = new Random(Game.Seed);
         }
-
+    
         /// <summary>
         /// Gets all level paramaters
         /// </summary>
         /// <param name="map">Current level map</param>
-        internal void CreateLevel(Map[,] map, int LevelNum)
+        internal void CreateLevel(Map[,] map)
         {
             // Sets random enemy move integer
             SetEnemyMoveNum();
             // Rests availble area
             ResetAvailableArea();
+            // Gets Random number of Enemies
+            GetEnemyNum();
+            // Gets Random number of obstacles
+            GetObstacleNum();
+            // Gets Random number of power-ups
+            GetPowerUpNum();
             // Sets Random Exit position
             GetExitPos(map);
             // Sets Random player position
             GetPlayerPos(map);
-            // Gets Random number of Enemies
-            GetEnemyNum(LevelNum);
             // Sets Enemies to their positions
             GetEnemyPos(map);
-            // Gets Random number of obstacles
-            GetObstacleNum(LevelNum);
             // Sets obstacles to their position
             GetObsPos(map);
-            // Gets Random number of power-ups
-            GetPowerUpNum(LevelNum);
             // Sets obstacles to their power-ups
             GetPowerUpPos(map);            
-        }
+        }   
+
 
         /// <summary>
         /// Resets the area availble to create new level elements 
@@ -70,7 +73,7 @@ namespace RogueLike
         /// Gets a Random number of Power-Ups
         /// </summary>
         /// <param name="LevelNum">Level's Number</param>
-        private void GetPowerUpNum(int LevelNum)
+        private void GetPowerUpNum()
         {
             // Temporary number of power ups
             int tempPowerUpNum = 0;
@@ -100,7 +103,7 @@ namespace RogueLike
         /// Gets a Random number of Enemies
         /// </summary>
         /// <param name="LevelNum">Level's Number</param>
-        private void GetEnemyNum(int LevelNum)
+        private void GetEnemyNum()
         {
             // Temporary enemy number
             int tempEnemyNum = 0;
@@ -125,7 +128,7 @@ namespace RogueLike
         /// Get a Random number os obstacles
         /// </summary>
         /// <param name="LevelNum">Level's Number</param>
-        private void GetObstacleNum(int LevelNum)
+        private void GetObstacleNum()
         {
             // temporary obstacle number
             int tempObsNum = 0;
@@ -174,10 +177,9 @@ namespace RogueLike
 
                     // Random row
                     int randRow     = random.Next(Game.rows);
-
                     // Random column
                     int randColumn  = random.Next(Game.columns);
-
+                    NextCalls += 2;
                     PowerUps[i]= new PowerUp(randRow, randColumn , powerUpHeal); 
 
                         
@@ -236,7 +238,7 @@ namespace RogueLike
                 int randRow     = random.Next(Game.rows);
                 // Random column
                 int randColumn  = random.Next(Game.columns);
-
+                NextCalls += 2;
                 // Checks if the randomized map position is empty
                 if (map[randRow,randColumn].Empty)
                 {
@@ -282,6 +284,7 @@ namespace RogueLike
                     int randRow         = random.Next(Game.rows);
                     // Random column
                     int randColumn      = random.Next(Game.columns);
+                    NextCalls += 2;
                     // Random damage
                     int randomDamage    = GetEnemyType();
 
@@ -381,11 +384,12 @@ namespace RogueLike
         {   
             //Creates a random number based on the row's total
             int randRow = random.Next(Game.rows);
-            
+            NextCalls ++;
             //Continues Randomizing until an empty square is found
             while (!(map[randRow, Game.columns-1].Empty))
             {
                 randRow = random.Next(Game.rows);
+                NextCalls ++;
             }
 
             //Sets position
@@ -399,12 +403,14 @@ namespace RogueLike
         private void GetPlayerPos(Map[,] map)
         {
             int randRow = random.Next(Game.rows);
+            NextCalls ++;
             player = new Player(randRow, 0);
 
             //Continues Randomizing until an empty square is found
             while(!(map[randRow,0].Empty))
             {
                 randRow = random.Next(Game.rows);
+                NextCalls ++;
                 player = new Player(randRow, 0);
             }
 
@@ -424,6 +430,7 @@ namespace RogueLike
             int L;
             float k ;
             L = random.Next((max)/2);
+            NextCalls ++;
             float x0 = 5f;
             if (descending)
                  k = -0.6f; 
@@ -457,6 +464,10 @@ namespace RogueLike
         /// <summary>
         /// Sets and random integer for enemies movement
         /// </summary>
-        internal void SetEnemyMoveNum() => EnemyMoveNum = random.Next(0, 2);
+        internal void SetEnemyMoveNum()
+        {
+            EnemyMoveNum = random.Next(0, 2);
+            NextCalls ++;
+        }
     }
 }

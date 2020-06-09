@@ -24,7 +24,14 @@ namespace RogueLike
             IsAlive     = true;
             Walked      = false;
         }
-
+        internal Player (int row, int column, int hp)
+        {
+            HP          = hp;
+            Row         = row;
+            Column      = Column;
+            IsAlive     = true;
+            Walked      = false;
+        }
         /// <summary>
         /// Player loses HP equal to Enemies damage
         /// </summary>

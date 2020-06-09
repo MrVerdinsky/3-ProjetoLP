@@ -20,7 +20,8 @@ namespace RogueLike
             //Variable used to save the current game's seed
             int seed = (int)(currentTime.Ticks);
 
-            // Checks if the argument attend the minimal length needed 
+            // Checks if the given arguments attend the minimal length needed 
+            // to execute the game with its respective row and column values
             if (args.Length == 4)
             {
                 int input1 = 0;
@@ -44,13 +45,26 @@ namespace RogueLike
                 {
                     Game game = new Game(
                         input2, input1, seed);
+                    game.RunGame();
                 }
                 //Checks if the player wrote rows first
                 if (args[0] == "-r" && args[2] == "-c")
                 {
                     Game game = new Game(
                         input1, input2, seed);
+                    game.RunGame();
                 } 
+            }
+            // Checks if the given arguments attend the minimal length needed
+            // to load the saved game
+            else if(args.Length == 2)
+            {
+                if (args[0] == "-l")
+                {
+                    Console.WriteLine($"name: {args[1]}");
+                    Game game = new Game(args[1]);
+                    game.RunGame();
+                }
             }
             // Prints the message if the input format doesn't attend
             // the correct format

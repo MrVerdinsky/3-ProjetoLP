@@ -18,11 +18,11 @@
 |Add Initial Game Input|Add Movement Input|Add `Map` / `Render` / `Player`|
 |Add Main Menu / Menu Input|Add Procedural Generation|Add GameLoop|
 |Add Enemy Render|Procedural Generation - Enemies|Add Enemy Damage Collision|
-|Add PowerUp Render|Procedural Generation - Enemies|Add PickUp Collision|
-|Add Enemy Collision|Procedural generation - PowerUps|Add Enemy Movement|
-|Add Sprites|Procedural generation - PowerUps|Add Game Actions Information|
-|Add Next Level|Override Equals on `Position`|Add `HighScoreManager`|
-|Bug Fix|Program run try-catch|Bug Fix|
+|Add PowerUp Render|Procedural generation - PowerUps|Add PickUp Collision|
+|Add Enemy Collision|Override Equals on `Position`|Add Enemy Movement|
+|Add Sprites|Program run try-catch|Add Game Actions Information|
+|Add Next Level|Implement saving system|Add `HighScoreManager`|
+|Bug Fix|Bug Fix|Bug Fix|
 
 ## Repositório git
 

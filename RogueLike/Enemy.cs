@@ -1,8 +1,7 @@
-using System;
 namespace RogueLike
 {
     /// <summary>
-    /// Enemy class, created from ObjectPosition class
+    /// Enemy class, created from Position class
     /// </summary>
     sealed internal class Enemy : Position
     {

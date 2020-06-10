@@ -1,8 +1,8 @@
-using System; //tESTING
+using System;
 namespace RogueLike
 { 
     /// <summary>
-    /// Player class, created from ObjectPosition class
+    /// Player class, created from Position class
     /// </summary>
     sealed internal class Player : Position
     {

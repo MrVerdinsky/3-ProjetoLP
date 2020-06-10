@@ -3,7 +3,7 @@ using System;
 namespace RogueLike
 { 
     /// <summary>
-    /// Class to create high score table
+    /// Creates high score table
     /// </summary>
     sealed internal class HighScore : IComparable<HighScore>
     {

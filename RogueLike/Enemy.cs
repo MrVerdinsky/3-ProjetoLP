@@ -23,7 +23,7 @@ namespace RogueLike
         }
 
         /// <summary>
-        /// Sets the enemy symbol based on its Damage
+        /// Sets the enemy symbol to be printed based on its Damage
         /// </summary>
         private void SetSymbol()
         {

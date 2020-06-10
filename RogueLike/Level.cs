@@ -357,7 +357,7 @@ namespace RogueLike
         /// <summary>
         /// Gets a weightned random choice of enemy type
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Enemy damage</returns>
         private int GetEnemyType()
         {
             // Enemy index

@@ -1,5 +1,8 @@
 namespace RogueLike
 {
+    /// <summary>
+    /// Holds map positions properties
+    /// </summary>
     sealed internal class Map : Position
     {
         /// <summary>

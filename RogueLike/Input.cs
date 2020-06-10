@@ -134,14 +134,13 @@ namespace RogueLike
         /// <summary>
         /// Gets the player's intention of saving the game progress or not
         /// </summary>
-        /// <returns></returns>
+        /// <returns>User key input</returns>
         internal string GetSaveIntention() 
         {
             string input;
             input = Convert.ToString(Console.ReadKey().KeyChar);
             return input;
         }
-
 
     }
 }

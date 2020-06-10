@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-
 namespace RogueLike
 {
     /// <summary>
@@ -34,7 +31,9 @@ namespace RogueLike
         {
             Picked = true;
         }
-
+        /// <summary>
+        /// Defines the power up symbol to be printed based on its Heal value
+        /// </summary>
         private void SetSymbol()
         {
             if (Heal == 4) Symbol = "🍙|";

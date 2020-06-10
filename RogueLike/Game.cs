@@ -3,7 +3,7 @@ using System.Threading;
 namespace RogueLike
 {
     /// <summary>
-    /// Runs the game loop
+    /// Responsible for the game events
     /// </summary>
     sealed internal class Game
     {
@@ -339,7 +339,7 @@ namespace RogueLike
         }
 
         /// <summary>
-        /// Passes to the next level after reaching the exit
+        /// Goes to the next level after reaching the exit
         /// </summary>
         /// <param name="level">Gets level number</param>
         /// <param name="print">Gets Renderer class to print</param>

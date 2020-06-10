@@ -18,7 +18,7 @@ namespace RogueLike
         /// <summary>
         /// Gets the position hash code based on its Row and Column values
         /// </summary>
-        /// <returns></returns>
+        /// <returns>A hash code for the current position</returns>
         public override int GetHashCode()
         {
             return Row.GetHashCode() ^ Column.GetHashCode();
@@ -29,7 +29,8 @@ namespace RogueLike
         /// </summary>
         /// <param name="obj">The Position to compare with the 
         /// current Position.</param>
-        /// <returns></returns>
+        /// <returns>true if the specified object is equal to the current 
+        /// object; otherwise, false</returns>
         public override bool Equals(object obj)
         {
             Position other = obj as Position;

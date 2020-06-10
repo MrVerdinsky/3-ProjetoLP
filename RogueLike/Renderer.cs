@@ -200,7 +200,7 @@ namespace RogueLike
         }
 
         /// <summary>
-        /// Prints message asking if the user want the save the game
+        /// Prints message asking if the player wants to save the game
         /// </summary>
         internal void GetSaveIntention()
         {
@@ -208,11 +208,27 @@ namespace RogueLike
                 "\nDo you want to save your progress so far?"+
                 "\nPress 'y' for Yes and 'n' for No: ");
         }
+        /// <summary>
+        /// Prints message asking if the player wants to save the game before
+        /// leaving
+        /// </summary>
         internal void SaveBeforeLeave()
         {
             Console.Write(
                 "\nDo you want to save your progress before you leave?"+
                 "\nPress 'y' for Yes and 'n' for No: ");   
+        }
+        /// <summary>
+        /// Print a welcome back message when the game is loaded from a save
+        /// file
+        /// </summary>
+        internal void WelcomeBack()
+        {
+            Console.WriteLine(" _________________________________________________________");
+            Console.WriteLine("|                                                         |");
+            Console.WriteLine(
+                              "|             ⚔️ Welcome back, adventurer! ⚔️             |"); 
+            Console.WriteLine("|_________________________________________________________|");
         }
 
         /// <summary>

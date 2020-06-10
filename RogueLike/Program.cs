@@ -61,7 +61,6 @@ namespace RogueLike
             {
                 if (args[0] == "-l")
                 {
-                    Console.WriteLine($"name: {args[1]}");
                     Game game = new Game(args[1]);
                     game.RunGame();
                 }

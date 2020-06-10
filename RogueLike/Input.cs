@@ -77,6 +77,7 @@ namespace RogueLike
                 save.GetSave(level.LevelNum, "quit");
                 level.player.Die();
                 level.player.LeaveGame();
+                Game.ForceExit = true;
                 return;
             }
 

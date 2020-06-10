@@ -11,6 +11,7 @@ namespace RogueLike
         static internal int rows;
         static internal int columns;
         static internal int Seed;
+        static internal bool ForceExit;
         // Controls the game cycle
         private bool gameOver;
         //Holds all positions of the game
@@ -26,6 +27,7 @@ namespace RogueLike
         /// <param name="seed">Seed of the game</param>
         internal Game(int gameRows, int gameColumns, int seed)
         {
+            ForceExit       = false;
             rows            = gameRows;
             columns         = gameColumns;
             Seed            = seed;
@@ -37,7 +39,7 @@ namespace RogueLike
         /// <param name="fileName">Save file name</param>
         internal Game(string fileName)
         {
-            
+            ForceExit = false;
             level = new Level();
             save.LoadSave(level, fileName);
             LoadedGame = true;
@@ -90,6 +92,8 @@ namespace RogueLike
 
                 } while (true);
             }
+            else
+                print.WelcomeBack();
             ////////////////////////////////////////////////////////////////////
 
             // NEW GAME ////////////////////////////////////////////////////////
@@ -246,7 +250,8 @@ namespace RogueLike
                         else
                             print.LeftBye();
                         // Saves score
-                        highScore.SaveScore(level.LevelNum);
+                        if (!(ForceExit))
+                            highScore.SaveScore(level.LevelNum);
                         Quit();
                     }
                 }

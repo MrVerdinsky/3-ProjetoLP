@@ -23,6 +23,7 @@
 |Add Sprites|Program run try-catch|Add Game Actions Information|
 |Add Next Level|Implement saving system|Add `HighScoreManager`|
 |Bug Fix|Bug Fix|Bug Fix|
+||Add `Save`||
 
 ## Repositório git
 

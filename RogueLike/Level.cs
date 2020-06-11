@@ -9,10 +9,37 @@ namespace RogueLike
     /// </summary>
     sealed internal class Level
     {
+        /// <summary>
+        /// Auto-implemented property that represents number of 
+        /// enemies per level.
+        /// </summary>
+        /// <value>Gets/Sets the value for the int EnemyNum</value>
         private int EnemyNum            { get; set; }
+
+        /// <summary>
+        /// Auto-implemented property that represents number of 
+        /// PowerUps per level.
+        /// </summary>
+        /// <value>Gets/Sets the value for the int PowerUpNum</value>
         private int PowerUpNum          { get; set; }
+
+        /// <summary>
+        /// Auto-implemented property that represents the level's number
+        /// </summary>
+        /// <value>Gets/Sets the value for the int LevelNum</value>
         internal int LevelNum           { get; set; }
-        private int AvailbleArea        { get; set; }
+
+        /// <summary>
+        /// Auto-implemented property that represents the level's playable area
+        /// </summary>
+        /// <value>Gets/Sets the value for the int AvailableArea</value>
+        private int AvailableArea        { get; set; }
+
+        /// <summary>
+        /// Auto-implemented property that represents the number of obstacles
+        /// per level.
+        /// </summary>
+        /// <value>Gets/Sets the value for the int ObstacleNum</value>
         private int ObstacleNum         { get; set; }
         public int NextCalls           { get; set; }
         public int NextDoubleCalls     { get; set; }
@@ -30,7 +57,7 @@ namespace RogueLike
             LevelNum        = 0;
             EnemyNum        = 0;
             ObstacleNum     = 0;
-            AvailbleArea    = Game.rows * Game.columns;
+            AvailableArea    = Game.rows * Game.columns;
             random          = new Random(Game.Seed);
         }
     
@@ -67,7 +94,7 @@ namespace RogueLike
         /// Resets the area availble to create new level elements 
         /// </summary>
         private void ResetAvailableArea() => 
-            AvailbleArea = Game.rows * Game.columns;
+            AvailableArea = Game.rows * Game.columns;
 
         /// <summary>
         /// Gets a Random number of Power-Ups
@@ -78,7 +105,7 @@ namespace RogueLike
             // Temporary number of power ups
             int tempPowerUpNum = 0;
             // Max number of power ups, based on available area
-            int maxPUNum = AvailbleArea/2;
+            int maxPUNum = AvailableArea/2;
  
             // Loop that runs while the Random generated number of power ups
             // is grater then the maximum amount of power ups allowed
@@ -96,7 +123,7 @@ namespace RogueLike
             PowerUpNum = tempPowerUpNum;
 
             // Decrements the availble area based on the number of power ups
-            AvailbleArea -= PowerUpNum;
+            AvailableArea -= PowerUpNum;
         }
 
         /// <summary>
@@ -109,7 +136,7 @@ namespace RogueLike
             int tempEnemyNum = 0;
 
             // Max enemy number
-            int maxEnemyNum =  AvailbleArea/2;
+            int maxEnemyNum =  AvailableArea/2;
             // Loop that runs while the Random generated number of Enemies
             // is grater then the maximum amount of Enemies allowed
             // or if it is equal or smaller then 0
@@ -121,7 +148,7 @@ namespace RogueLike
                 tempEnemyNum = Logistic(LevelNum, maxEnemyNum);
             }
             EnemyNum = tempEnemyNum;
-            AvailbleArea -= EnemyNum;
+            AvailableArea -= EnemyNum;
         }
 
         /// <summary>
@@ -134,7 +161,7 @@ namespace RogueLike
             int tempObsNum = 0;
 
             // Max obstacle number
-            int maxObsNum = AvailbleArea/2 - 1;
+            int maxObsNum = AvailableArea/2 - 1;
 
             // Loop the runs while the Random generated number of obstacles
             // is grater then the maximum amount of obstacles allowed
@@ -148,7 +175,7 @@ namespace RogueLike
 
             }
             ObstacleNum = tempObsNum;
-            AvailbleArea -= maxObsNum;
+            AvailableArea -= maxObsNum;
         }
 
         /// <summary>

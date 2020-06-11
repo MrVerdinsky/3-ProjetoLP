@@ -9,7 +9,16 @@ namespace RogueLike
     /// </summary>
     internal class Save
     {
+        /// <summary>
+        /// Auto-implemented property that represents levels number
+        /// </summary>
+        /// <value>Gets/Sets the value for the int Level</value>
         private int     Level           { get; set; }
+
+        /// <summary>
+        /// Auto-implemented property that represents the save file name
+        /// </summary>
+        /// <value>Gets/Sets the value for the string FileName</value>
         private string  FileName        { get; set; }
 
         /// <summary>

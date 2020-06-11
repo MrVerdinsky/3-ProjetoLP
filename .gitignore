@@ -11,6 +11,9 @@
 *.sln.docstates
 Scores*
 Saves*
+Doxyfile*
+trollcave.png*
+RogueLike/README.md*
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

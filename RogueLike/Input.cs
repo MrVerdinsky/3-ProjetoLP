@@ -113,6 +113,11 @@ namespace RogueLike
             }
             return trim;
         }
+
+        /// <summary>
+        /// Asks the user to input name for the highscore table
+        /// </summary>
+        /// <returns>Returns user's chosen highsore sname</returns>
         internal string InsertFileName()
         {
             Renderer print = new Renderer();

@@ -23,6 +23,7 @@
 |Add Sprites|Program run try-catch|Add Game Actions Information|
 |Add Next Level|Implement saving system|Add `HighScoreManager`|
 |Bug Fix|Bug Fix|Bug Fix|
+||Add `Save`||
 
 ## Repositório git
 
@@ -64,6 +65,7 @@ encontra um obstáculo. Utilizamos vários *try-catch* durante o código para
 eliminar erros ao verificar posições fora do mapa.
 
 ### Diagrama UML
+![Diagrama](diagrama_uml.png)
 
 ### Trocas de ideias/referências
 

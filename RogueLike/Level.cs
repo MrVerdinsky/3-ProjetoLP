@@ -14,8 +14,6 @@ namespace RogueLike
         internal int LevelNum           { get; set; }
         private int AvailbleArea        { get; set; }
         private int ObstacleNum         { get; set; }
-        public int NextCalls           { get; set; }
-        public int NextDoubleCalls     { get; set; }
         internal Enemy[] Enemies        { get; set; }
         private Random random;
         internal PowerUp[] PowerUps     { get; set; }
@@ -23,7 +21,7 @@ namespace RogueLike
         internal int EnemyMoveNum       { get; private set; }
  
         /// <summary>
-        /// Creates Level
+        /// Initializes level elements at  their default values
         /// </summary>
         internal Level()
         {
@@ -179,7 +177,6 @@ namespace RogueLike
                     int randRow     = random.Next(Game.rows);
                     // Random column
                     int randColumn  = random.Next(Game.columns);
-                    NextCalls += 2;
                     PowerUps[i]= new PowerUp(randRow, randColumn , powerUpHeal); 
 
                         
@@ -238,7 +235,6 @@ namespace RogueLike
                 int randRow     = random.Next(Game.rows);
                 // Random column
                 int randColumn  = random.Next(Game.columns);
-                NextCalls += 2;
                 // Checks if the randomized map position is empty
                 if (map[randRow,randColumn].Empty)
                 {
@@ -284,7 +280,6 @@ namespace RogueLike
                     int randRow         = random.Next(Game.rows);
                     // Random column
                     int randColumn      = random.Next(Game.columns);
-                    NextCalls += 2;
                     // Random damage
                     int randomDamage    = GetEnemyType();
 
@@ -384,12 +379,10 @@ namespace RogueLike
         {   
             //Creates a random number based on the row's total
             int randRow = random.Next(Game.rows);
-            NextCalls ++;
             //Continues Randomizing until an empty square is found
             while (!(map[randRow, Game.columns-1].Empty))
             {
                 randRow = random.Next(Game.rows);
-                NextCalls ++;
             }
 
             //Sets position
@@ -403,14 +396,12 @@ namespace RogueLike
         private void GetPlayerPos(Map[,] map)
         {
             int randRow = random.Next(Game.rows);
-            NextCalls ++;
             player = new Player(randRow, 0);
 
             //Continues Randomizing until an empty square is found
             while(!(map[randRow,0].Empty))
             {
                 randRow = random.Next(Game.rows);
-                NextCalls ++;
                 player = new Player(randRow, 0);
             }
 
@@ -419,18 +410,17 @@ namespace RogueLike
         }
 
         /// <summary>
-        /// Logistic mathematical Function
+        /// Logistic mathematical function with random variation
         /// </summary>
         /// <param name="x">Gets an integer</param>
         /// <param name="max">Function curve maximum value</param>
         /// <param name="descending">Defines if value are descending</param>
-        /// <returns></returns>
+        /// <returns>Result of the Logistic operation</returns>
         private int Logistic(int x, int max, bool descending = false)
         {
             int L;
             float k ;
             L = random.Next((max)/2);
-            NextCalls ++;
             float x0 = 5f;
             if (descending)
                  k = -0.6f; 
@@ -443,8 +433,7 @@ namespace RogueLike
         /// Gets weighted Random index from a weight list
         /// </summary>
         /// <param name="weights">List of weights</param>
-        /// <returns>Returns the probability value for a specific item on the 
-        /// list</returns>
+        /// <returns>Index based on the given weights</returns>
         private int RandomWeight(List <float> weights)
         {
             float rnd = (float)(random.NextDouble() * weights.Sum());
@@ -464,10 +453,6 @@ namespace RogueLike
         /// <summary>
         /// Sets and random integer for enemies movement
         /// </summary>
-        internal void SetEnemyMoveNum()
-        {
-            EnemyMoveNum = random.Next(0, 2);
-            NextCalls ++;
-        }
+        internal void SetEnemyMoveNum() => EnemyMoveNum = random.Next(0, 2);
     }
 }

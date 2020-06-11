@@ -24,6 +24,8 @@ namespace RogueLike
         /// <summary>
         /// Gets the necessary information to write a save file
         /// </summary>
+        /// <param name="level">Level information</param>
+        /// <param name="intention">Player's input for the save function</param>
         public void GetSave(int level, string intention)
         {
             Input input = new Input();
@@ -47,6 +49,8 @@ namespace RogueLike
         /// <summary>
         /// Loads a save file
         /// </summary>
+        /// <param name="level">Level information</param>
+        /// <param name="fileName">Savefile's name</param>
         public void LoadSave(Level level, string fileName)
         {
         

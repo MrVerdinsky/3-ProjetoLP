@@ -5,7 +5,16 @@ namespace RogueLike
     /// </summary>
     sealed internal class Enemy : Position
     {
+        /// <summary>
+        /// Auto-implemented property that creates the enemies damage
+        /// </summary>
+        /// <value>Enemies Damage</value>
         internal int Damage     { get; private set; }
+
+        /// <summary>
+        /// Auto-implemented property that creates the enemies symbol
+        /// </summary>
+        /// <value>Enemies Icon</value>
         internal string Symbol  { get; private set; }
 
         /// <summary>

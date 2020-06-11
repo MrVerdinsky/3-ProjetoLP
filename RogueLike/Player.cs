@@ -6,14 +6,43 @@ namespace RogueLike
     /// </summary>
     sealed internal class Player : Position
     {
+        /// <summary>
+        /// Auto-implemented property that creates the player's HP
+        /// based on Level's rows and columns size
+        /// </summary>
+        /// <value> Player's HP  </value>
         static internal int HP = (Game.rows * Game.columns) / 4;
+
+        /// <summary>
+        /// Auto-implemented property that creates the number of the player's 
+        /// movement
+        /// </summary>
+        /// <value> Number of times the player can move</value>
         internal int    Movement        { get; private set; }
+
+         /// <summary>
+        /// Auto-implemented property that checks the players Status
+        /// movement
+        /// </summary>
+        /// <value>True if the player still has Hp left or False if it 
+        /// hits 0</value>
         internal bool   IsAlive         { get; private set; }
+
+         /// <summary>
+        /// Auto-implemented property that checks if the player 
+        /// as reached the exit </summary>
+        /// <value>True if the player reached the exit or false if not</value>
         internal bool   HasLeft         { get; private set; }
+
+         /// <summary>
+        /// Auto-implemented property that checks if the player has moved
+        /// </summary>
+        /// <value> True if the player changes position otherwise false</value>
         internal bool   Walked          { get; private set; }
         
         /// <summary>
-        /// Creates the player
+        /// Creates the player's position
+        /// 
         /// </summary>
         /// <param name="row">Sets a player row</param>
         /// <param name="column">Sets a player column</param>
@@ -24,14 +53,7 @@ namespace RogueLike
             IsAlive     = true;
             Walked      = false;
         }
-        internal Player (int row, int column, int hp)
-        {
-            HP          = hp;
-            Row         = row;
-            Column      = Column;
-            IsAlive     = true;
-            Walked      = false;
-        }
+        
         /// <summary>
         /// Player loses HP equal to Enemies damage
         /// </summary>

@@ -10,6 +10,9 @@ namespace RogueLike
     /// </summary>
     sealed internal class HighScoreManager
     {
+        /// <summary>
+        /// Creates a list to save the highscores according to the map size
+        /// </summary>
         List<HighScore> scores;
 
         /// <summary>
@@ -24,7 +27,7 @@ namespace RogueLike
         /// <summary>
         /// Saves scores to a new file or a file that already exists
         /// </summary>
-        /// <param name="level">Level Number</param>
+        /// <param name="levelScore">Level Number</param>
         internal void SaveScore(int levelScore)
         {
             if (File.Exists(

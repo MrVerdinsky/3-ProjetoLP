@@ -8,7 +8,8 @@ namespace RogueLike
         /// <summary>
         /// Creates game's map
         /// </summary>
-        /// <param name="position">All squares position's</param>
+        /// <param name="row">Game's max rows</param>
+        /// <param name="column">Games's max columns</param>
         internal Map(int row, int column)
         {
             Row     = row;

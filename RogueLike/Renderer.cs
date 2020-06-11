@@ -10,6 +10,10 @@ namespace RogueLike
     /// </summary>
     sealed internal class Renderer
     {
+        /// <summary>
+        /// List of strings used to print flavor text according to a specific
+        /// action by the user
+        /// </summary>
         List<string> actions;
 
         /// <summary>
@@ -19,7 +23,17 @@ namespace RogueLike
         {
             actions = new List<string>();
         }
-        
+
+        /// <summary>
+        /// Prints the whole game map and information for the player
+        /// </summary>
+        /// <param name="map">All of the game's positions</param>
+        /// <param name="powerUps">Array of PowerUps for the current level</param>
+        /// <param name="enemies">Array of Enemies for the current level</param>
+        /// <param name="player">Player's position and HP</param>
+        /// <param name="turn">Whose turn to play</param>
+        /// <param name="level">level's number</param>
+        /// <param name="firstTurn">Checks if its the first turn</param>
         internal void Map(Map[,] map, PowerUp[] powerUps,Enemy[] enemies,
                         Player player, string turn, int level, bool firstTurn)
         {            

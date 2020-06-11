@@ -7,23 +7,56 @@ namespace RogueLike
     /// </summary>
     sealed internal class Game
     {
-        // Game rows and game columns
+        /// <summary>
+        /// Game's max rows
+        /// </summary>
         static internal int rows;
+
+        /// <summary>
+        /// Game's max columns
+        /// </summary>
         static internal int columns;
+
+        /// <summary>
+        /// Game's seed 
+        /// </summary>
         static internal int Seed;
+
+        /// <summary>
+        /// Checks if the user closed the game
+        /// </summary>
         static internal bool ForceExit;
-        // Controls the game cycle
+        
+        /// <summary>
+        /// Checks if the game is over by win or lost consdition
+        /// </summary>
         private bool gameOver;
-        //Holds all positions of the game
+        
+        /// <summary>
+        /// Holds all of the game's positions
+        /// </summary>
         private Map[,] map;
+
+        /// <summary>
+        /// Holds of the level elements
+        /// </summary>
         private Level level;
+
+        /// <summary>
+        /// Checks if the player loaded a save file or if its a new game
+        /// </summary>
         private bool LoadedGame = false;
+
+        /// <summary>
+        /// Creates an instance of the save class
+        /// </summary>
         private Save save = new Save();
+
         /// <summary>
         /// Set the game properties to the given paramaters
         /// </summary>
-        /// <param name="rows">Number of Rows</param>
-        /// <param name="columns">Number of Columns</param>
+        /// <param name="gameRows">Number of Rows</param>
+        /// <param name="gameColumns">Number of Columns</param>
         /// <param name="seed">Seed of the game</param>
         internal Game(int gameRows, int gameColumns, int seed)
         {
@@ -305,6 +338,7 @@ namespace RogueLike
         /// <summary>
         /// Checks if the player can move
         /// </summary>
+        /// <param name="player">Player's position</param>
         /// <returns>Returns true if the player is stuck, otherwise 
         /// false</returns>
         private bool NoRemainingMoves(Player player)

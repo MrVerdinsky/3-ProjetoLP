@@ -13,38 +13,65 @@ namespace RogueLike
         /// Auto-implemented property that represents number of 
         /// enemies per level.
         /// </summary>
-        /// <value>Gets/Sets the value for the int EnemyNum</value>
+        /// <value>Number of enemies per level</value>
         private int EnemyNum            { get; set; }
 
         /// <summary>
         /// Auto-implemented property that represents number of 
         /// PowerUps per level.
         /// </summary>
-        /// <value>Gets/Sets the value for the int PowerUpNum</value>
+        /// <value>Number of PowerUps per level</value>
         private int PowerUpNum          { get; set; }
 
         /// <summary>
         /// Auto-implemented property that represents the level's number
         /// </summary>
-        /// <value>Gets/Sets the value for the int LevelNum</value>
+        /// <value>Levels Number</value>
         internal int LevelNum           { get; set; }
 
         /// <summary>
         /// Auto-implemented property that represents the level's playable area
         /// </summary>
-        /// <value>Gets/Sets the value for the int AvailableArea</value>
+        /// <value>Size of Playable Area</value>
         private int AvailableArea        { get; set; }
 
         /// <summary>
         /// Auto-implemented property that represents the number of obstacles
         /// per level.
         /// </summary>
-        /// <value>Gets/Sets the value for the int ObstacleNum</value>
+        /// <value>Number of obstacles per level</value>
         private int ObstacleNum         { get; set; }
+
+        /// <summary>
+        /// Auto-implemented property that creates an array of enemies
+        /// with the number of enemies per level.
+        /// </summary>
+        /// <value>Array of enemies in the current level</value>
         internal Enemy[] Enemies        { get; set; }
+
+        /// <summary>
+        /// Creates an instance of the built in class Random
+        /// </summary>
         private Random random;
+
+        /// <summary>
+        /// Auto-implemented property that creates an array of power ups
+        /// with the number of power ups per level.
+        /// </summary>
+        /// <value>Array of powerups in the current level</value>
         internal PowerUp[] PowerUps     { get; set; }
+
+        /// <summary>
+        /// Auto-implemented property that creates the player's position
+        /// </summary>
+        /// <value>Player's Position</value>
         internal Player player          { get; set; }
+
+        /// <summary>
+        /// Auto-implemented property creates a random number for the 
+        /// enemies movement
+        /// </summary>
+        /// <value>Number used for the Enemies Movement</value>
         internal int EnemyMoveNum       { get; private set; }
  
         /// <summary>
@@ -360,6 +387,7 @@ namespace RogueLike
         /// Gets Random amount of power up types 
         /// </summary>
         /// <param name="powerUpNum">Number of power ups</param>
+        /// <returns> Returns the heal value of the power up</returns>
         private int GetPowerUpType(int powerUpNum)
         {
             // Index of the power up

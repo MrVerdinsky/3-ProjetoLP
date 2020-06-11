@@ -7,7 +7,18 @@ namespace RogueLike
     /// </summary>
     sealed internal class HighScore : IComparable<HighScore>
     {
+        /// <summary>
+        /// Auto-implemented read only property that representes the 
+        /// player's highscore name
+        /// </summary>
+        /// <value>Player's Highscore name</value>
         internal string Name { get; }
+
+        /// <summary>
+        /// Auto-implemented read only property that represents the 
+        /// player's score after he dies
+        /// </summary>
+        /// <value>Player's Score</value>
         internal int Score { get; }
 
         /// <summary>

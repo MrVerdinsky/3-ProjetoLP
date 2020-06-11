@@ -65,6 +65,7 @@ encontra um obstáculo. Utilizamos vários *try-catch* durante o código para
 eliminar erros ao verificar posições fora do mapa.
 
 ### Diagrama UML
+![Diagrama](diagrama_uml.png)
 
 ### Trocas de ideias/referências
 
